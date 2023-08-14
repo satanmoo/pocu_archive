@@ -1,0 +1,80 @@
+package academy.pocu.comp2500.lab3;
+
+import java.util.ArrayList;
+
+public class ListItem {
+    private String text;
+    private ArrayList<ListItem> sublistItems;
+    private char bulletStyle = '*';
+    private int stepNumber;
+
+    public ListItem(String text, char bulletStyle) {
+        this.text = text;
+        this.bulletStyle = bulletStyle;
+
+        sublistItems = new ArrayList<ListItem>();
+
+        this.stepNumber = 0;
+    }
+
+    public ListItem(String text) {
+        this(text, '*');
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public char getBulletStyle() {
+        return this.bulletStyle;
+    }
+
+    public void setBulletStyle(char bulletStyle) {
+        this.bulletStyle = bulletStyle;
+    }
+
+    public ListItem getSublistItem(int index) {
+        return this.sublistItems.get(index);
+    }
+
+    private void updateStepNumberInSublistItem() {
+        for (ListItem listItem : this.sublistItems) {
+            listItem.stepNumber = this.stepNumber + 1;
+
+            if (listItem.sublistItems.size() > 0) {
+                listItem.updateStepNumberInSublistItem();
+            }
+        }
+    }
+
+    public void addSublistItem(ListItem sublistItem) {
+        this.sublistItems.add(sublistItem);
+    }
+
+    public void removeSublistItem(int index) {
+        this.sublistItems.remove(index);
+    }
+
+    public String toString() {
+        this.updateStepNumberInSublistItem();
+
+        String tmpString = "";
+        int spaceCount = 4 * this.stepNumber;
+        for (int i = 0; i < spaceCount; ++i) {
+            tmpString += " ";
+        }
+        tmpString += this.bulletStyle + " " + this.text + System.lineSeparator();
+
+        if (this.sublistItems.size() > 0) {
+            for (ListItem listItem : this.sublistItems) {
+                tmpString += listItem.toString();
+            }
+        }
+
+        return tmpString;
+    }
+}

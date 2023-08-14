@@ -1,0 +1,62 @@
+package academy.pocu.comp2500.lab3;
+
+import java.util.ArrayList;
+
+public class ListItem {
+    private String text;
+    private char bulletStyle = '*';
+    private ArrayList<ListItem> sublistItems;
+    private String result;
+
+    public ListItem(String text) {
+        this(text, '*');
+    }
+
+    public ListItem(String text, char bulletStyle) {
+        this.text = text;
+        this.bulletStyle = bulletStyle;
+        this.sublistItems = new ArrayList<ListItem>();
+    }
+
+    public char getBulletStyle() {
+        return this.bulletStyle;
+    }
+
+    public void setBulletStyle(char bulletStyle) {
+        this.bulletStyle = bulletStyle;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void addSublistItem(ListItem listItem) {
+        this.sublistItems.add(listItem);
+    }
+
+    public void removeSublistItem(int index) {
+        this.sublistItems.remove(index);
+    }
+
+    public ListItem getSublistItem(int index) {
+        return this.sublistItems.get(index);
+    }
+
+    public String toString() {
+        this.result = "";
+        addToStringResultRecursive(this, 0);
+        return this.result;
+    }
+
+    private void addToStringResultRecursive(ListItem node, int depth) {
+        this.result += "    ".repeat(depth).toString() + node.bulletStyle + " " + node.getText() + System.lineSeparator();
+
+        for (ListItem sublistItem : node.sublistItems) {
+            addToStringResultRecursive(sublistItem, depth + 1);
+        }
+    }
+}

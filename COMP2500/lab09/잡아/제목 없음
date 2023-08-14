@@ -1,0 +1,248 @@
+//----------------------Book.java----------------------
+
+package academy.pocu.comp2500.lab9;
+
+import java.util.UUID;
+
+public final class Book {
+    private final UUID sku;
+    private final String title;
+    private final int price;
+    private final int publishedYear;
+
+    public Book(final UUID sku, final String title, final int price, final int publishedYear) {
+        this.sku = sku;
+        this.title = title;
+        this.price = price;
+        this.publishedYear = publishedYear;
+    }
+
+    public int getPrice() {
+        return this.price;
+    }
+
+    public int getPublishedYear() {
+        return this.publishedYear;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public UUID getSku() {
+        return this.sku;
+    }
+}
+
+
+//----------------------Cart.java----------------------
+
+package academy.pocu.comp2500.lab9;
+
+import java.util.ArrayList;
+
+public final class Cart {
+    private ArrayList<Book> books = new ArrayList<>();
+
+    public Book getBookOrNull(final int index) {
+        if (this.books.size() <= index) {
+            return null;
+        }
+
+        return this.books.get(index);
+    }
+
+    public int getBookCount() {
+        return this.books.size();
+    }
+
+    public void addBooks(ArrayList<Book> books) {
+        for (int i = 0; i < books.size(); ++i) {
+            this.books.add(books.get(i));
+        }
+    }
+
+    public void addBook(Book book) {
+        this.books.add(book);
+    }
+
+    public boolean remove(final int index) {
+        if (this.books.size() <= index) {
+            return false;
+        }
+
+        this.books.remove(index);
+
+        return true;
+    }
+
+    public int getTotalPrice(PricingModel pricingModel) {
+        return pricingModel.getTotalPrice(this.books);
+    }
+}
+
+
+//----------------------PricingModel.java----------------------
+
+package academy.pocu.comp2500.lab9;
+
+import java.util.ArrayList;
+
+public abstract class PricingModel {
+    public int totalPrice;
+
+    public abstract int getTotalPrice(ArrayList<Book> books);
+}
+
+
+//----------------------SimplePricing.java----------------------
+
+package academy.pocu.comp2500.lab9;
+
+import java.util.ArrayList;
+
+public class SimplePricing extends PricingModel {
+
+    @Override
+    public int getTotalPrice(ArrayList<Book> books) {
+        int price = 0;
+
+        for (Book book : books) {
+            price += book.getPrice();
+        }
+        return price;
+
+    }
+}
+
+
+//----------------------BuyOneGetOneFree.java----------------------
+
+package academy.pocu.comp2500.lab9;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
+
+public class BuyOneGetOneFree extends PricingModel {
+    private HashSet<UUID> skus;
+
+    public BuyOneGetOneFree(HashSet<UUID> skus) {
+        super();
+        this.skus = skus;
+    }
+
+    @Override
+    public int getTotalPrice(ArrayList<Book> books) {
+        this.totalPrice = 0;
+        HashMap<UUID, Integer> dict = new HashMap<>();
+
+        for (Book book : books) {
+            if (this.skus == null) {
+                this.totalPrice += book.getPrice();
+                continue;
+            }
+            
+            for (UUID sku : this.skus) {
+                if (book.getSku() == sku) {
+                    if (dict.containsKey(sku)) {
+                        dict.put(sku, dict.get(sku) + 1);
+                    } else {
+                        dict.put(sku, 1);
+                    }
+                    break;
+                }
+            }
+
+            if (dict.containsKey(book.getSku()) && (dict.get(book.getSku()) % 2 == 0)) {
+                continue;
+            } else {
+                this.totalPrice += book.getPrice();
+            }
+        }
+
+        return this.totalPrice;
+    }
+}
+
+
+//----------------------DecadeMadness.java----------------------
+
+package academy.pocu.comp2500.lab9;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class DecadeMadness extends PricingModel {
+
+    @Override
+    public int getTotalPrice(ArrayList<Book> books) {
+        double totalPrice = 0;
+        HashMap<Integer, ArrayList<Integer>> dict = new HashMap<>();
+
+        // 시대별 책들의 가격들 저장함
+        for (Book book : books) {
+            int number = book.getPublishedYear() / 10;
+            if (dict.containsKey(number)) {
+                ArrayList<Integer> newValue = dict.get(number);
+                newValue.add(book.getPrice());
+                dict.put(number, newValue);
+            } else {
+                ArrayList<Integer> newValue = new ArrayList<>();
+                newValue.add(book.getPrice());
+                dict.put(number, newValue);
+            }
+        }
+
+        // 저장된 정보로 가격 정책 기준 부합 판단, 가격 책정
+        for (Integer key : dict.keySet()) {
+            if (dict.get(key).size() > 1) {
+                for (int price : dict.get(key)) {
+                    totalPrice += price * 0.8;
+                }
+            } else {
+                totalPrice += dict.get(key).get(0);
+            }
+        }
+        return (int) totalPrice;
+    }
+
+}
+
+
+//----------------------SkyIsTheLimit.java----------------------
+
+package academy.pocu.comp2500.lab9;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class SkyIsTheLimit extends PricingModel {
+    private int price;
+
+    public SkyIsTheLimit(int price) {
+        super();
+        this.price = price;
+    }
+
+    @Override
+    public int getTotalPrice(ArrayList<Book> books) {
+        double totalPrice = 0;
+        ArrayList<Double> prices = new ArrayList<>();
+
+        for (Book book : books) {
+            totalPrice += book.getPrice();
+            prices.add((double) book.getPrice());
+        }
+
+        if (totalPrice >= this.price && books.size() >= 5) {
+            Collections.sort(prices, Collections.reverseOrder());
+            totalPrice -= prices.get(0) / 2;
+            totalPrice -= prices.get(1) / 2;
+        }
+
+        return (int) totalPrice;
+
+    }
+}

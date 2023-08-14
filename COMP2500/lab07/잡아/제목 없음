@@ -1,0 +1,359 @@
+//----------------------Author.java----------------------
+
+package academy.pocu.comp2500.lab7;
+
+public class Author {
+    private String firstName;
+    private String lastName;
+
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String toString() {
+        return firstName + " " + lastName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj == null
+                || !(obj instanceof Author)
+                || this.hashCode() != obj.hashCode()) {
+            return false;
+        }
+
+        Author other = (Author) obj;
+        return (this.firstName.equals(other.getFirstName()))
+                && (this.lastName.equals(other.getLastName()));
+    }
+
+    @Override
+    public int hashCode() {
+        return this.firstName.hashCode()
+                ^ (this.lastName.hashCode() << 16);
+    }
+}
+
+
+//----------------------Genre.java----------------------
+
+package academy.pocu.comp2500.lab7;
+
+public enum Genre {
+    SCIENCE_FICTION,
+    ROMANCE,
+    BIOGRAPHY,
+    FANTASY,
+    MYSTERY,
+    SUSPENSE
+}
+
+
+//----------------------Book.java----------------------
+
+package academy.pocu.comp2500.lab7;
+
+public class Book {
+    private String title;
+    private Author author;
+    private int year;
+    private Genre genre;
+
+    public Book(String title, Author author, int year, Genre genre) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.genre = genre;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public String toString() {
+        return String.format("%s [%s]", this.title, this.author);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj == null
+                || !(obj instanceof Book)
+                || this.hashCode() != obj.hashCode()) {
+            return false;
+        }
+
+        Book other = (Book) obj;
+        return (this.year == other.getYear() &&
+                this.title.equals(other.getTitle()) &&
+                this.author.equals(other.getAuthor()) &&
+                this.genre == other.getGenre());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        hash = hash * 31 + this.year;
+        hash = hash * 31 + this.title.hashCode();
+        hash = hash * 31 + this.author.hashCode();
+        hash = hash * 31 + this.genre.hashCode();
+        return hash;
+    }
+}
+
+
+//----------------------Bookshelf.java----------------------
+
+package academy.pocu.comp2500.lab7;
+
+import java.util.ArrayList;
+
+// 상속은 구현하지 않음
+public class Bookshelf {
+    private int maxBooks;
+    private ArrayList<Book> books;
+
+    public Bookshelf(int maxBooks) {
+        this.maxBooks = maxBooks;
+        this.books = new ArrayList<>();
+    }
+
+    public int getMaxBooks() {
+        return maxBooks;
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
+    public boolean add(Book book) {
+        if (book == null || this.maxBooks == this.books.size()) {
+            return false;
+        }
+
+        // 같은 책이지만 다른 개체이면 추가해도 말이됨.
+        // 같은 책에 같은 개체를 계속 추가하는건 말이 안됨. 그러나 구현은 미룸.
+        books.add(book);
+        return true;
+    }
+
+    public boolean remove(Book book) {
+        if (books.size() == 0) {
+            return false;
+        }
+
+        for (Book book2 : books) {
+            if (book2.equals(book)) {
+                books.remove(book2);
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+
+//----------------------Bundle.java----------------------
+
+package academy.pocu.comp2500.lab7;
+
+import java.util.ArrayList;
+
+// 상속은 구현하지 않음
+public class Bundle {
+    private String name;
+    private final int maxBooks;
+    private ArrayList<Book> books;
+
+    public Bundle(String name) {
+        this.name = name;
+        this.maxBooks = 4;
+        this.books = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMaxBooks() {
+        return maxBooks;
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
+    public boolean add(Book book) {
+        if (book == null || this.books.size() == this.maxBooks) {
+            return false;
+        }
+
+        for (Book book2 : books) {
+            if (book2.equals(book)) {
+                return false;
+            }
+        }
+        books.add(book);
+        return true;
+    }
+
+    public boolean remove(Book book) {
+        for (Book book2 : books) {
+            if (book2.equals(book)) {
+                books.remove(book);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj == null
+                || !(obj instanceof Bundle)
+                || this.hashCode() != obj.hashCode()) {
+            return false;
+        }
+
+        Bundle other = (Bundle) obj;
+        for (int i = 0; i < books.size(); ++i) {
+            if (!(this.books.contains(other.getBooks().get(i)))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        hash = hash * 31 + this.name.hashCode();
+
+        hash = hash * 31;
+        for (int i = 0; i < this.books.size(); ++i) {
+            hash += this.books.get(i).hashCode();
+        }
+        return hash;
+    }
+}
+
+
+//----------------------ReadingList.java----------------------
+
+package academy.pocu.comp2500.lab7;
+
+import java.util.ArrayList;
+import java.lang.StringBuilder;
+
+// 상속은 구현하지 않음
+public class ReadingList {
+    private String readingList;
+    private ArrayList<Book> books;
+
+    public ReadingList(String readingList) {
+        this.readingList = readingList;
+        this.books = new ArrayList<>();
+    }
+
+    public String getReadingList() {
+        return readingList;
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
+    public void add(Book book) {
+        if (book != null) {
+            this.books.add(book);
+        }
+
+    }
+
+    public boolean remove(Book book) {
+        for (Book book2 : books) {
+            if (book.equals(book2)) {
+                books.remove(book);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder strings = new StringBuilder();
+        int i = 0;
+        for (Book book : books) {
+            strings.append(String.format("%d. %s%s",
+                    ++i,
+                    book.toString(),
+                    System.lineSeparator()));
+        }
+
+        return strings.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null
+                || !(obj instanceof ReadingList)
+                || obj.hashCode() != this.hashCode()) {
+            return false;
+        }
+
+        ReadingList other = (ReadingList) obj;
+        for (int i = 0; i < books.size(); ++i) {
+            if (!(other.getBooks().get(i).equals(this.books.get(i)))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        hash = hash * 31 + this.readingList.hashCode();
+        for (int i = 0; i < this.books.size(); ++i) {
+            hash = hash * 31 + this.books.get(i).hashCode();
+        }
+        return hash;
+    }
+}

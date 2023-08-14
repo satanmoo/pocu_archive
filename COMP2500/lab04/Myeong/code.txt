@@ -1,0 +1,425 @@
+//----------------------Menu.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+import java.util.ArrayList;
+
+public class Menu {
+
+    protected int price;
+    protected boolean isPizza;
+
+    protected int meatCount;
+    protected int veggieCount;
+    protected int cheeseCount;
+    protected int maxMeatCount;
+    protected int maxVeggieCount;
+    protected int maxCheeseCount;
+
+    protected ArrayList<Dessert> desserts = new ArrayList<>();
+    protected ArrayList<Appetizer> appetizers = new ArrayList<>();
+    protected ArrayList<MainCourse> mainCourses = new ArrayList<>();
+
+    protected Menu() {
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public boolean isValid() {
+        boolean result = true;
+        if (isPizza) {
+            if (maxMeatCount != Integer.MAX_VALUE) {
+                result = result && (this.meatCount == maxMeatCount);
+            }
+            if (maxVeggieCount != Integer.MAX_VALUE) {
+                result = result && (this.veggieCount == maxVeggieCount);
+            }
+            if (maxCheeseCount != Integer.MAX_VALUE) {
+                result = result && (this.cheeseCount == maxCheeseCount);
+            }
+        } else {
+            if (price == 20) {
+                result = result && this.desserts.size() == 4;
+            }
+
+            if (price == 15) {
+                result = result && this.appetizers.size() == 2 && this.desserts.size() > 0;
+            }
+
+            if (price == 25) {
+                result = result && this.appetizers.size() > 0 && this.mainCourses.size() > 0
+                        && this.desserts.size() > 0;
+            }
+        }
+        return result;
+    }
+}
+
+
+//----------------------Pizza.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public class FreeSoulPizza extends Pizza {
+    private static final int PRICE = 25;
+    private static final int MAX_MEAT_COUNT = 2;
+    private static final int MAX_VEGGIE_COUNT = 2;
+    private static final int MAX_CHEESE_COUNT = 1;
+
+    public FreeSoulPizza() {
+        super();
+        price = PRICE;
+        isPizza = true;
+        maxMeatCount = MAX_MEAT_COUNT;
+        maxVeggieCount = MAX_VEGGIE_COUNT;
+        maxCheeseCount = MAX_CHEESE_COUNT;
+    }
+
+    public boolean addTopping(Topping topping) {
+        return addToppingParent(topping);
+    }
+
+    public boolean removeTopping(Topping topping) {
+        return removeToppingParent(topping);
+    }
+}
+
+
+//----------------------HousePizza.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public class HousePizza extends Pizza {
+    private static final int PRICE = 20;
+    private static final int MAX_MEAT_COUNT = 2;
+
+    public HousePizza() {
+        super();
+        price = PRICE;
+        isPizza = true;
+        maxMeatCount = MAX_MEAT_COUNT;
+
+        this.toppings.add(Topping.BLACK_OLIVES);
+        this.toppings.add(Topping.RED_ONIONS);
+        this.toppings.add(Topping.GREEN_PEPPERS);
+        this.toppings.add(Topping.MOZZARELLA_CHEESE);
+        veggieCount += 3;
+        cheeseCount += 1;
+    }
+
+    public boolean addBacon() {
+        return addToppingParent(Topping.BACON);
+    }
+
+    public boolean addPeperoni() {
+        return addToppingParent(Topping.PEPERONI);
+    }
+
+    public boolean addSausages() {
+        return addToppingParent(Topping.SAUSAGES);
+    }
+
+    public boolean removeBacon() {
+        return removeToppingParent(Topping.BACON);
+    }
+
+    public boolean removePeperoni() {
+        return removeToppingParent(Topping.PEPERONI);
+    }
+
+    public boolean removeSausages() {
+        return removeToppingParent(Topping.SAUSAGES);
+    }
+}
+
+
+//----------------------MeatLoverPizza.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public class MeatLoverPizza extends Pizza {
+    private static final int PRICE = 21;
+    private static final int MAX_VEGGIE_COUNT = 1;
+
+    public MeatLoverPizza() {
+        super();
+        price = PRICE;
+        isPizza = true;
+        maxVeggieCount = MAX_VEGGIE_COUNT;
+
+        this.toppings.add(Topping.BACON);
+        this.toppings.add(Topping.PEPERONI);
+        this.toppings.add(Topping.HAM);
+        this.toppings.add(Topping.SAUSAGES);
+        this.toppings.add(Topping.CHEDDAR_CHEESE);
+        meatCount += 4;
+        cheeseCount += 1;
+    }
+
+    public boolean addBlackOlives() {
+        return addToppingParent(Topping.BLACK_OLIVES);
+    }
+
+    public boolean addRedOnions() {
+        return addToppingParent(Topping.RED_ONIONS);
+    }
+
+    public boolean addGreenPeppers() {
+        return addToppingParent(Topping.GREEN_PEPPERS);
+    }
+
+    public boolean removeBlackOlives() {
+        return removeToppingParent(Topping.BLACK_OLIVES);
+    }
+
+    public boolean removeRedOnions() {
+        return removeToppingParent(Topping.RED_ONIONS);
+    }
+
+    public boolean removeGreenPeppers() {
+        return removeToppingParent(Topping.GREEN_PEPPERS);
+    }
+}
+
+
+//----------------------FreeSoulPizza.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public class FreeSoulPizza extends Pizza {
+    private static final int PRICE = 25;
+    private static final int MAX_MEAT_COUNT = 2;
+    private static final int MAX_VEGGIE_COUNT = 2;
+    private static final int MAX_CHEESE_COUNT = 1;
+
+    public FreeSoulPizza() {
+        super();
+        price = PRICE;
+        isPizza = true;
+        maxMeatCount = MAX_MEAT_COUNT;
+        maxVeggieCount = MAX_VEGGIE_COUNT;
+        maxCheeseCount = MAX_CHEESE_COUNT;
+    }
+
+    public boolean addTopping(Topping topping) {
+        return addToppingParent(topping);
+    }
+
+    public boolean removeTopping(Topping topping) {
+        return removeToppingParent(topping);
+    }
+}
+
+
+//----------------------VeggiePizza.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public class VeggiePizza extends Pizza {
+    private static final int PRICE = 17;
+    private static final int MAX_CHEESE_COUNT = 2;
+
+    public VeggiePizza() {
+        super();
+        price = PRICE;
+        isPizza = true;
+        maxCheeseCount = MAX_CHEESE_COUNT;
+
+        this.toppings.add(Topping.BLACK_OLIVES);
+        this.toppings.add(Topping.RED_ONIONS);
+        this.toppings.add(Topping.GREEN_PEPPERS);
+        veggieCount += 3;
+    }
+
+    public boolean addMozzarellaCheese() {
+        return addToppingParent(Topping.MOZZARELLA_CHEESE);
+    }
+
+    public boolean addCheddarCheese() {
+        return addToppingParent(Topping.CHEDDAR_CHEESE);
+    }
+
+    public boolean addFetaCheese() {
+        return addToppingParent(Topping.FETA_CHEESE);
+    }
+
+    public boolean removeMozzarellaCheese() {
+        return removeToppingParent(Topping.MOZZARELLA_CHEESE);
+    }
+
+    public boolean removeCheddarCheese() {
+        return removeToppingParent(Topping.CHEDDAR_CHEESE);
+    }
+
+    public boolean removeFetaCheese() {
+        return removeToppingParent(Topping.FETA_CHEESE);
+    }
+}
+
+
+//----------------------Combo.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+import java.util.ArrayList;
+
+public class Combo extends Menu {
+
+    protected Combo() {
+        super();
+    }
+
+    public ArrayList<Appetizer> getAppetizers() {
+        assert (appetizers.size() != 0) : "call isValid() first!";
+        return appetizers;
+    }
+
+    public ArrayList<MainCourse> getMainCourses() {
+        assert (mainCourses.size() != 0) : "call isValid() first!";
+        return mainCourses;
+    }
+
+    public ArrayList<Dessert> getDesserts() {
+        assert (desserts.size() != 0) : "call isValid() first!";
+        return desserts;
+    }
+}
+
+
+//----------------------NoHeavyMeal.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public class NoHeavyMeal extends Combo {
+    private static final int PRICE = 15;
+
+    public NoHeavyMeal() {
+        super();
+        price = PRICE;
+        isPizza = false;
+    }
+
+    public void setAppetizers(Appetizer appetizer1, Appetizer appetizer2) {
+        this.appetizers.clear();
+        this.appetizers.add(appetizer1);
+        this.appetizers.add(appetizer2);
+    }
+
+    public void setDessert(Dessert dessert) {
+        this.desserts.clear();
+        this.desserts.add(dessert);
+    }
+}
+
+
+//----------------------ThreeCourseMeal.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public class ThreeCourseMeal extends Combo {
+    private static final int PRICE = 25;
+
+    public ThreeCourseMeal() {
+        super();
+        price = PRICE;
+        isPizza = false;
+    }
+
+    public void setMainCourse(MainCourse mainCourse) {
+        this.mainCourses.clear();
+        this.mainCourses.add(mainCourse);
+    }
+
+    public void setAppetizer(Appetizer appetizer) {
+        this.appetizers.clear();
+        this.appetizers.add(appetizer);
+    }
+
+    public void setDessert(Dessert dessert) {
+        this.desserts.clear();
+        this.desserts.add(dessert);
+    }
+}
+
+
+//----------------------DeathByDesserts.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public class DeathByDesserts extends Combo {
+    private static final int PRICE = 20;
+
+    public DeathByDesserts() {
+        super();
+        price = PRICE;
+        isPizza = false;
+    }
+
+    public void setDesserts(Dessert dessert1, Dessert dessert2, Dessert dessert3, Dessert dessert4) {
+        this.desserts.clear();
+        this.desserts.add(dessert1);
+        this.desserts.add(dessert2);
+        this.desserts.add(dessert3);
+        this.desserts.add(dessert4);
+    }
+}
+
+
+//----------------------Topping.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public enum Topping {
+    CHICKEN,
+    PEPERONI,
+    SAUSAGES,
+    HAM,
+    BACON,
+    BLACK_OLIVES,
+    RED_ONIONS,
+    GREEN_PEPPERS,
+    MOZZARELLA_CHEESE,
+    CHEDDAR_CHEESE,
+    FETA_CHEESE
+}
+
+
+//----------------------MainCourse.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public enum MainCourse {
+    JAMBALAYA_FETTUCCINE,
+    FISH_AND_CHIPS,
+    AHI_TUNA_POKE,
+    BOMBAY_BUTTER_CHICKEN,
+    FILET_MIGNON,
+    TERIYAKI_CHICKEN_RICE_BOWL
+}
+
+
+//----------------------Dessert.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public enum Dessert {
+    MANGO_PUDDING,
+    GREEN_TEA_ICE_CREAM,
+    CHOCOLATE_MOUSSE,
+    APPLE_PIE,
+    ITALIAN_DONUTS
+}
+
+
+//----------------------Appetizer.java----------------------
+
+package academy.pocu.comp2500.lab6;
+
+public enum Appetizer {
+    CALAMARI,
+    GYOZA,
+    SPINACH_DIP,
+    NACHOS
+}

@@ -1,0 +1,93 @@
+package academy.pocu.comp2500.lab3;
+
+
+import java.util.ArrayList;
+
+public class ListItem {
+    private static char default_bulletStyle = '*';
+    private char bulletStyle;
+    private String text;
+    private ArrayList<ListItem> lists;
+
+    public ListItem(String text) {
+        this(text, default_bulletStyle);
+    }
+
+    public ListItem(String text, char bulletStyle) {
+        assert text != null;
+        assert bulletStyle != '\0';
+
+        this.text = text;
+        this.bulletStyle = bulletStyle;
+        this.lists = new ArrayList<>();
+    }
+
+    public void setBulletStyle(char bulletStyle) {
+        assert bulletStyle != '\0';
+
+        this.bulletStyle = bulletStyle;
+    }
+
+    public char getBulletStyle() {
+        return this.bulletStyle;
+    }
+
+    public void setText(String text) {
+        assert text != null;
+        this.text = text;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public void addSublistItem(ListItem listItem) {
+        assert listItem != null;
+        this.lists.add(listItem);
+    }
+
+    public ListItem getSubListItem(int index) {
+        assert index >= 0;
+        return this.lists.get(index); // 위험!! but, 복사본을 만들라는 이야기가 없었으므로 그대로 반환.
+    }
+
+    private void removeItemRecursive(ListItem list) {
+        if (list.lists.size() == 0) {
+            return ;
+        }
+
+        for (ListItem listItem : list.lists) {
+            removeItemRecursive(listItem);
+        }
+
+        list.lists.clear();
+    }
+
+    public void removeSublistItem(int index) {
+        assert index >= 0;
+
+        ListItem removed = this.lists.get(index);
+        this.lists.remove(removed);
+        removeItemRecursive(removed);
+    }
+
+    private void toStringRecursive(StringBuilder sb, ListItem li, String indent, int depth) {
+        sb.append(String.format("%s%s %s%s", indent.repeat(depth), li.bulletStyle, li.text, System.lineSeparator()));
+
+        if (li.lists.size() == 0) {
+            return;
+        }
+
+        for (ListItem list : li.lists) {
+            toStringRecursive(sb, list, indent, depth + 1);
+        }
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        toStringRecursive(sb, this, "    ", 0);
+        return sb.toString();
+    }
+
+}
+	
