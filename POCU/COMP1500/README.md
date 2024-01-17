@@ -4,3 +4,21 @@
 - [week2](./docs/week2.md)
 - [week3](./docs/week3.md)
 - [week4](./docs/week4.md)
+- [week5](./docs/week5.md)
+  - switch 문
+- [week6](./docs/week6.md)
+  - 함수
+    - 배열의 길이 프로퍼티
+    - 함수의 정의
+    - 함수의 시그니처
+    - 함수의 반환형
+    - 함수의 매개변수 목록
+    - 메인함수
+    - 범위
+    - 지역변수
+    - 값에 의한 전달
+    - 참조에 의한 전달
+  - 열거형
+    - 열거형 원소
+    - 열거형을 변수처럼 사용
+  - Assert
