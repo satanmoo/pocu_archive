@@ -147,13 +147,13 @@ static float Divide(float numerator, float denominator)
 
 ![내포된 범위](../image/week6/image.png)
 
-상위 범위에서 선언한 변수/상수는 하위 범위(내포된 범위)에서 사용할 수 있다.
+- 상위 범위에서 선언한 변수/상수는 하위 범위(내포된 범위)에서 사용할 수 있다.
+- 상위 범위의 변수와 같은 이름을 가진 변수를 하위 범위에 선언할 수 없다.
 
 ### 함수의 범위
 
 - 기본적으로 함수 안에서 선언한 모든 것은 그 함수에서만 사용 가능하다.
 - 이를 지역 변수(local variable)라고 부른다.
-- 기본적으로 함수 밖의 변수/상수는 사용할 수 없다.
 - 함수 매개변수, 반환 값 모두 복사된다.(pass by vlaue)
 
 ```<C#>
@@ -282,7 +282,7 @@ static void Main(string[] args)
 - 프로그래머의 실수를 막을 수 있는 좋은 방법이다!
 
 - 정수형(int, long) 상수의 집합
-  - 컴퓨터가 이해할 때는 정수와 다르지 않다. 컴파일러는 ENUM 이외의 값이 들어오면 컴파일 에러로 잡아줄 수 있다.
+  - 컴퓨터가 이해할 때는 정수와 다르지 않다. 컴파일러는 ENUM 이외의 값이 들어오면 `컴파일 에러`로 잡아줄 수 있다.
 - 각 원소마다 고유의 이름을 가진다.
 - 집합(ENUM)도 고유의 이름을 가진다.
 - 변수로 사용이 가능하다.
@@ -362,7 +362,7 @@ enum EDirection
 EDirection direction = EDirection.North
 ```
 
-- 해당 열거형 변수를 대입하지 않으면 `컴파일 에러`가 발생한다.
+- 해당 열거형 변수에 열거형 원소가 아닌 값을 대입하면 `컴파일 에러`가 발생한다.
   - 이를 통해 의도하지 않은 값을 대입하는 실수를 막을 수 있다!
 
 ### 함수 블랙박스에서 Enum의 장점
@@ -473,8 +473,7 @@ out 매개변수의 주요 특징은 다음과 같습니다
 ## Assert
 
 - 단언(강한 개연성)
-- 이 단언이 틀리면 알려주세요!
-
+- 이 단언이 `틀리면` 알려주세요!
 - 코드 검증을 위한 코드
 - 절대 발생하지 않아야할 상황을 `런타임 중`에 검사한다!
   - 선조건 검사에 적당하다.
@@ -491,3 +490,42 @@ out 매개변수의 주요 특징은 다음과 같습니다
 Debug.Assert(false, "message");
 Debug.Assert(<Boolean Expression>, <어서트 메세지>)
 ```
+
+### 예시
+
+```<C#>
+enum EMenu
+{
+  Menu1 = 1,
+  Menu2,
+  Menu3,
+  Menu4,
+  Menu5
+}
+
+static double GetPrice(EMenu menu)
+{
+  switch (menu)
+  {
+    case Emenu.Menu1:
+      return 1000.0;
+    case Emenu.Menu2
+      return 1200.0
+    case Emenu.Menu3:
+      return 1053.0;
+    case Emenu.Menu4:
+      return 1123.0;
+    case Emenu.Menu5:
+      return 900.0;
+    default:
+      Debug.Assert(false, "Wrong menu number!")
+      return -1;
+  }
+}
+```
+
+위의 코드에서 잘못된 메뉴 번호가 들어오면 default의 Assert가 실행된다. 조건이 false이기 때문에 프로그램은 종료되고 메시지를 출력하게 된다.
+
+메뉴를 정상적으로 입력했다면 default까지 갈 이유가 없다는 것을 알기에 이렇게 Assert문을 활용할 수 있다.
+
+만약 ENUM에 메뉴 6이 추가된다면 어떨까? Menu6을 추가했는데 실수로 GetPrice에서 Case를 추가하지 않고 실행하면, 6번 메뉴를 골랐을 때 default로 가서 Assert문이 실행되고 프로그램이 종료되어 프로그래머의 실수를 막을 수 있다.
