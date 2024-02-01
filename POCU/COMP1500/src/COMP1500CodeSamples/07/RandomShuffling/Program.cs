@@ -24,6 +24,14 @@ namespace RandomShuffling
 
             Console.WriteLine("After shuffling:");
             Console.WriteLine($"[{string.Join(", ", numbers)}]");
+            
+            int num1 = 5;
+            int num2 = 15;
+            int num3 = 2;
+            
+            int result3 = (num2 + num1) / num1 + ++num1;
+            Console.WriteLine($"result3: {result3}");
+            Console.WriteLine($"num1: {num1}, num2: {num2}, num3: {num3}");
         }
     }
 }
