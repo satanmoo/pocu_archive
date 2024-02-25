@@ -731,7 +731,7 @@ static double GetPrice(EMenu menu)
 
 메뉴를 정상적으로 입력했다면 default까지 갈 이유가 없다는 것을 알기에 이렇게 Assert문을 활용할 수 있다.
 
-만약 ENUM에 메뉴 6이 추가된다면 어떨까? Menu6을 추가했는데 실수로 GetPrice에서 Case를 추가하지 않고 실행하면, 6번 메뉴를 골랐을 때 default로 가서 Assert문이 실행되고 프로그램이 종료되어 프로그래머는 자신이 GetPrice 함수에 6번 메뉴를 추가하지 않았다는 실수를 확인할 수 있다.r
+만약 ENUM에 메뉴 6이 추가된다면 어떨까? Menu6을 추가했는데 실수로 GetPrice에서 Case를 추가하지 않고 실행하면, 6번 메뉴를 골랐을 때 default로 가서 Assert문이 실행되고 프로그램이 종료되어 프로그래머는 자신이 GetPrice 함수에 6번 메뉴를 추가하지 않았다는 실수를 확인할 수 있다.
 
 ```C#
 using System;

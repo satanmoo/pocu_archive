@@ -500,6 +500,86 @@ while (true)
 
 ```
 
+### pass by value, pass by reference
+
+```C#
+public class Program
+{
+	public static void Main()
+	{
+		int originalNumber = 10;
+		
+		Plus(ref originalNumber);
+		
+		Console.WriteLine(originalNumber);
+		
+		Plus(originalNumber);
+		
+		Console.WriteLine(originalNumber);
+	}
+	
+	public static void Plus(ref int number)
+	{
+		int plusNumber = 5;
+		number += plusNumber;
+	}
+
+	public static int Plus(int number)
+	{
+		int plusNumber = 5;
+		return number + plusNumber;
+	}
+}
+
+>> 15, 15 출력
+```
+
+### 열거형의 특징
+
+- 컴퓨터가 이해할 때 정수형 상수로 이해함
+- ENUM에 정의되지 않은 값이 들어오면 컴파일 에러
+- 기본값은 0
+- 기본적으로 원소들은 순서대로 1씩 증가한 값을 가짐
+
+### 열거형 원소에 숫자로 평가되는 값 입력
+
+```<C#>
+enum EDirection
+{
+	North = 5,
+	South = 10,
+	East = 15,
+	West = East + 5
+}
+```
+
+```<C#>
+enum EDirection
+{
+	North = 5,
+	South,	// 6
+	East,	// 7
+	West	// 8
+}
+```
+
+```C#
+enum EOperator
+    {
+        Plus = '+',
+        Minus = '-',
+        Multiply = '*',
+        Divide = '/',
+        Mod = '%'
+    }
+```
+
+- 부동소수점 형은 안 됨
+
+### Assert는 디버그 모드에서만 사용
+
+- 조건이 거짓일 때 프로그램 종료, 메시지 출력
+
 ## Lab2
 
 ### 1. 아래 코드가 컴파일 에러가 나는 이유
@@ -593,4 +673,3 @@ string result = string.Format("{0," + width + "} " +
 ```C#
 result += $"{num5,25:f3}\n";
 ```
-
