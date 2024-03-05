@@ -310,7 +310,7 @@ int[][,] ohMyGod;
 
 ## Substring()
 
-![Alt text](../image/week8/-10.png)
+![Alt text](../image/week8/image-10.png)
 
 [참고문서](https://learn.microsoft.com/ko-kr/dotnet/api/system.string.substring?view=net-8.0)
 
