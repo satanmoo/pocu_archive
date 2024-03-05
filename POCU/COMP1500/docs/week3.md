@@ -343,6 +343,8 @@ namespace IncrementAndDecrementOperators
 비트 끼리 연산하기 때문에 같은 위치(자리 수와 유사함)끼리 해당 연산을 하면 된다. and 연산은 두 비트 모두 켜져있어야 켜진다. 즉 1이다. 직렬 연결 생각하면 편하다.
 다른 경우는 모두 0이다.
 
+int 자료형이라 32개 비트를 모두 고려해서 계산하면 됨
+
 ### |(or)
 
 ![or](../image/week3/image-11.png)
