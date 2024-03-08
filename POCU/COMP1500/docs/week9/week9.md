@@ -1,813 +1,589 @@
-# Week9
+# Week8
 
-## 문자열 빌더
+## 2D 배열의 문제
 
-### 왜 문자열 빌더가 필요할까?
-
-문자열은 굉장히 많이 사용된다. 하지만 문자열은 컴퓨터가 바로 이해할 수 있는 자료형이 아니기 때문에 문자열을 조작하다 보면 `성능`에서 문제가 생길 수 있다.
-
-### 문자열 합치기는 느리다
-
-![alt text](image.png)
-
-연산자의 우선순위를 생각해보자. 더하기라는 동일한 연산자가 있을 때 연산자의 우선 순위는 왼쪽의 연산자가 높다.
-문자열을 더할 때도 왼쪽에서 오른쪽으로 우선적으로 평가된다.
-
-왼쪽에서 오른쪽으로 문자열을 더할 때 한 번 연산자가 평가될 때 마다 임시 문자열이 생성되고 이를 다음 더하기 연산에 사용하게 된다. 임시 문자열은 다음 더하기 연산에만 사용되고 버려진다.
-
-```C#
-string message = "hi";
-int result = 1;
-for (int i = 1; i <= 100; ++i) {
-	message = message + result + " ";
-}
-```
-
-위 코드는 공백을 구분자로 result의 값을 문자열에 합치는 코드다. [String.join](https://learn.microsoft.com/ko-kr/dotnet/api/system.string.join?view=net-8.0)과 유사하게 동작한다.
-
-여기서 생각해볼 점은 join도 성능 면에서 효율적이지 않다는 것이다. join은 내부에서 위의 코드와 마찬가지로 반복문을 통해 문자를 더하기 때문에 버려지는 임시 문자열을 많이 생성하게 된다.
-
-### 임시 문자열은 컴퓨터에서 어떻게 버릴까? GC(garbage collector)
-
-C#은 가비지 수집기라는 시스템이 자동으로 임시 문자열을 지워준다. 문자열을 치울 때 문자열을 일일히 확인하면서 이 문자열이 진짜 사용되는지, 임시로 사용됬는지 여부를 확인하고 지운다.
-문자열을 일일히 확인하는 과정에서 성능 저하가 오게된다.
-
-### 다시 문자열 빌더가 필요한 이유
-
-문자열 합치기 과정에서 임시 문자열의 수가 늘어나면 가비지 컬렉터의 성능 저하를 불러올 수 있다는 것을 확인했다. 따라서 `임시 문자열의 수를 줄이는 해결책`이 문자열 빌더(StrinigBuilder)다.
-
-문자열 빌더는 문자열 합치기라는 매우 매우 자주하는 연산을 최적화한 라이브러리다.
-
-### 문자열 빌더의 동작 방법
-
-1. 문자열은 char 배열이라서 할당되고 크기 변경이 불가능하다. 따라서 긴 문자열을 담을 수 있는 충분한 공간(배열의 크기)을 미리 확보한다.  
-2. 추가되는 문자열들로 그 공간을 차례대로 채워나간다.  
-3. 필요한 문자열로 공간을 채우면 최종적으로 문자열을 만들어서 반환한다.
-
-### 문자열 빌더 사용 예제
-
-#### 라이브러리 추가와 선언 방법
-
-```C#
-// 파일 제일 위에서 라이브러리 추가
-using System.Text;
-
-// 사용하는 함수 안에서
-StringBuilder builder = new StringBuilder(4096);
-```
-
-![alt text](image-1.png)
-
-미리 충분한 공간(배열)의 크기가 maxCharCount의 값이다.
-
-#### append 함수
-
-```C#
-StringBuilder builder = new StringBuilder(4096);
-builder.Append("hi!");
-builder.AppendLine("Kim");
-```
-
-Append는 문자열을 미리 확보한 공간에 추가하는 함수, AppendLine은 문자열과 줄바꿈을 함께 미리 확보한 공간에 추가하는 함수다.
-
-이 함수들은 [여려 가지 오버로드 함수들이](https://learn.microsoft.com/ko-kr/dotnet/standard/base-types/stringbuilder) 다양하다.
-
-![alt text](image-2.png)
-
-문자열이 아닌 다양한 자료형도 문자열에 합칠 수 있다!
-
-#### StrinbBuilder의 용량과 길이
-
-![alt text](image-3.png)
-
-```C#
-builder.Capacity // 총 용량
-builder.Length // 현재 사용중인 길이
-```
-
-StringBuilder의 프로퍼티로 내부 배열의 총 용량과 길이 값을 가지고 있다.
-길이를 size라고 표현하는 프로그래밍 언어도 있다.
-
-#### 추가 공간 확보
-
-![alt text](image-4.png)
-
-```C#
-builder.EnsureCapacity(1024);
-```
-
-주목할 점은 ensure이라는 동사다. 1024의 공간을 확보한 상태에서 512로 공간을 줄일 수 있을까? 불가능하다. EnsureCapacity함수는 공간을 늘리는 기능만 제공한다. 공간의 용량을 마음대로 변화시키는 것은 아니다.  
-ensure의 확보라는 뜻은 최소 그 공간은 확보한다는 말이고, 그 이후 확보된 공간을 줄이면 말의 뜻에 맞지 않다.
-
-#### 최종 문자열 반환
-
-![alt text](image-5.png)
-
-#### StringBuilder가 과연 얼마나 임시 문자열을 줄였는지 확인해보자!
-
-![alt text](image-6.png)
-
-#### 처음 확보해 둔 공간을 다 쓰면?
-
-![alt text](image-7.png)
-
-```C#
-StringBuilder builder = new StringBuilder(10);
-builder.Append("asdfadfa");
-builder.AppendLine("gggg");
-```
-
-처음 10개를 확보했는데 Append로 추가할 때 10개를 넘을 것으로 보인다. 실행해도 아무런 문제 없이 잘 실행된다.  
-StringBuilder은 클래스라서 내부에서 알아서 공간을 늘려서 확보하도록 작동한다. 따라서 자동으로 내부 공간을 2배로 늘린 뒤 기존 공간의 모든 데이터를 복사하게된다.
-→ 최대한 처음부터 넉넉하게 잡자. 보통(512, 1024...)
-
-### 문자열 빌더의 기타 함수
-
-#### Insert
-
-![alt text](image-9.png)
-
-어디에 삽입 해야하는지 정하기 위해 index가 필요하다. 
-Insert의 특징은 덮어쓰는 것이 아니라 기존의 문자열들이 뒤로 밀린다.
-
-#### Replace
-
-![alt text](image-8.png)
-
-start 번째임을 주의하자.
-count는 개수를 세는 의미를 가진다. start부터 몇 개를 지운다고 생각하자
-
-#### Remove
-
-![alt text](image-10.png)
-
-length는 길이다. 지워지는 문자열의 길이라고 생각하자.
-
-#### Clear
-
-![alt text](image-11.png)
-
-## 코드 보기
-
-```C#
-using System;
-using System.Text;
-
-namespace StringBuilderExample
+```<C#>
+static void Main(string[] args)
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            const int CAPACITY = 1000;
-            StringBuilder builder = new StringBuilder(CAPACITY);
-            builder.Append("Hello World!");
-            builder.AppendLine(" Welcome to COMP1500!");
-            builder.AppendLine("Are you having fun yet?");
+	const int CLASS_COUNT = 3;
+	const int STUDENT_COUNT = 5;
 
-            Console.WriteLine(builder.ToString());
+	string[,] classrooms = new string[CLASS_COUNT, STUDENT_COUNT]
+	{
+		{"a", "b", "c", "", ""},
+		{"a", "b", "", "", ""},
+		{"a", "b", "c", "d", "e"}
+	};
 
-            builder.Insert(12, " Going to insert this here.");
-
-            Console.WriteLine(builder.ToString());
-
-            builder.Replace(" Going to insert this here.", " And replace this.");
-
-            Console.WriteLine(builder.ToString());
-
-            builder.Remove(12, 19);
-
-            Console.WriteLine(builder.ToString());
-
-            builder.Clear();
-
-            Console.WriteLine(builder.ToString());
-        }
-    }
+	for (int i = 0; i < CLASS_COUNT; ++i)
+	{
+		for (int j = 0; j < STUDENT_COUNT; ++j)
+		{
+			// do something
+		}
+	}
 }
 ```
 
-주목할 점은 Replace에서 string을 string으로 대체할 수 있다!
+- 2D 배열은 직사각형 형태의 데이터만 지원 가능
+- 하지만 위의 예시처럼 각 행마다 열 수가 달라질 수 있다.
+- 1D 배열에서는 없는 새로운 문제가 생겼다!
+
+## 배열의 배열
+
+- 바깥 배열(다른 배열을 포함하는 배열)
+	- 1D 배열
+	- 각 요소의 형은 1D 배열(안쪽 배열)
+- 안쪽 배열
+	- 1D 배열
+	- 각 요소의 형은 실제 자료형
+
+## 배열의 배열을 만드는 법
+
+```<text>
+<자료형>[][] <변수명> = new <자료형>[<바깥 배열 원소 개수>][];
+string[][] classrooms = new string[3][];
+```
+
+![배열의 배열](image.png)
+
+## 바깥 배열의 원소에 접근하기
+
+```<text>
+<자료형>[] <변수명> = <배열의 배열 이름>[<바깥 배열 색인>];
+int classIndex = 0;
+string[] studentNames = classrooms[classIndex];
+```
+
+## 안쪽 배열 만들기
+
+안쪽 배열(1반 학생 정보를 담은 배열)의 길이를 출력
+
+```<C#>
+static void Main(string[] args)
+{
+	string[][] classrooms = new string[3][];
+
+	int classIndex = 0;
+	string[] studentNames = classrooms[classIndex];
+
+	Console.WriteLine(studentNames.Length);
+}
+```
+
+출력해보면 예외가 발생한다. 예외의 정체는 뭘까?
+
+![예외 발생](image-1.png)
+
+### null
+
+- 아무것도 없다는 개념
+
+```<C#>
+int CLASS_COUNT = 3;
+string[][] classrooms = new string[CLASS_COUNT][];
+```
+
+바깥 배열에서 CLASS_COUNT 수만큼의 문자열 배열을 담을 공간을 만든다. 하지만 이 문자열 배열은 비어있다. 안쪽 배열의 원소가 몇 개인지는 선언할 때 입력하지 않았고 원소도 입력하지 않았다.
+
+안쪽 배열의 원소 개수를 선언해보자
+
+```<C#>
+classroom[0] = new string[3];
+classroom[1] = new string[2];
+classroom[2] = new string[5];
+```
+
+```<C#>
+<바깥 배열 이름>[<색인>] = new string[<안쪽 배열 원소 개수>]
+```
+
+이렇게 안쪽 배열의 원소 개수를 선언하면 안쪽 배열이 null이 아니게 되어, 배열의 길이를 출력할 수 있다.
+
+```<C#>
+static void Main(string[] args)
+{
+	const int CLASS_COUNT = 3;
+	int[] STUDENT_COUNT_PER_CLASS = { 3, 2, 5 };
+	string[][] classrooms = new string[CLASS_COUNT][];
+
+	for (int i = 0; i < CLASS_COUNT; ++i)
+	{
+		classrooms[i] = new string[STUDENT_COUNT_PER_CLASS[i]];
+	}
+
+	int classIndex = 0;
+	string[] studentNames = classrooms[classIndex];
+
+	Console.WriteLine(studentNames.Length);
+}
+```
+
+## 안쪽 배열의 원소에 접근하기
+
+```<C#>
+int classIndex = 0;
+int studentIndex = 0;
+
+// 방법 1
+classrooms[classIndex][studentIndex] = "kim";
+
+// 방법 2(더 좋음)
+stirng[] class1 =  classroom[classIndex];
+class1[studentIndex] = "kim";
+```
+
+```<C#>
+- 방법1
+<바깥 배열 이름>[바깥 배열 색인][안쪽 배열 색인] = 값;
+
+- 방법2
+<안쪽 배열 자료형> <변수명> = <바깥 배열 이름>[바깥 배열 색인];
+<변수명>[안쪽 배열 색인] = 값;
+```
+
+방법 2가 좋은 이유
+
+- 방법 1에서는 하드웨어 적으로 바깥 배열, 안쪽 배열 이렇게 접근하면 두 번 접근해서 비효율적이다.
+
+- 방법 1은 개념적으로도 불편하다. 어떤 반의 출석을 부를 때 3반에서 1,2,3번 이렇게 부르면 되는 것을 3반의 1번, 3반의 2번, 3반의 3번... 이렇게 부르게 된다.
+
+## 안쪽 배열은 복사본인가 원본인가?
+
+![복사본?](image-2.png)
+
+```<C#>
+static void Main(string[] args)
+{
+	const int CLASS_COUNT = 3;
+	int[] STUDENT_COUNT_PER_CLASS = { 3, 2, 5 };
+	string[][] classrooms = new string[CLASS_COUNT][];
+
+	for (int i = 0; i < CLASS_COUNT; ++i)
+	{
+		classrooms[i] = new string[STUDENT_COUNT_PER_CLASS[i]];
+	}
+
+	int classIndex = 0;
+	int studentIndex = 0;
+
+	string[] studentNames = classrooms[classIndex];
+	studentNames[studentIndex] = "kay"
+
+	Console.WriteLine(classrooms[classIndex][studentIndex]);
+}
+```
+
+해보면 원본임을 알 수 있다. 원본이 바뀐다!!
+
+new로 만든 건 기본적으로 그 자체가 참조형 데이터이기 때문에 원본을 들고 있다. pass by reference!
+
+C#에서 배열은 참조형이다.
+
+![참조형](image-3.png)
+
+## 안쪽 배열을 늘리기
+
+```<C#>
+const int CLASS_COUNT = 3;
+int[] STUDENT_COUNT_PER_CLASS = { 3, 2, 5 };
+string[][] classrooms = new string[CLASS_COUNT][];
+
+for (int i = 0; i < CLASS_COUNT; ++i)
+{
+	classrooms[i] = new string[STUDENT_COUNT_PER_CLASS[i]];
+}
+```
+
+- 안쪽 배열은 1D 배열이라서 각각 길이가 3, 2, 5로 결정됨 따라서 원소를 추가할 수 없음
+
+- 원소를 추가하기 위한 방법
+  1. 크기가 n짜리 배열을 새로 만든다.
+  2. for 문을 통해 기존의 안쪽 배열 데이터를 새 배열로 복사한다.
+  3. 새 배열을 바깥 배열에 대입한다.
+
+```<C#>
+string[][] classrooms = new string[CLASS_COUNT][];
+
+string[] classroom2 = classrooms[1]
+
+// 기존 배열 복사
+string[] newClassroom2 = new string[classroom2.Length + 1];
+for (int i = 0 ; i < classroom2.Length; ++i)
+{
+	newClassroom2[i] = classroom2[i];
+}
+
+newClassroom2[newClassroom2.Length - 1] = "newby"
+
+classrooms[1] = newClassromm2;
+```
+
+### Array.Copy()를 이용한 복사
+
+for문을 사용하는 방법 대신 Array.Copy()를 사용해도 됩니다!
+
+```<C#>
+string[][] classrooms = new string[CLASS_COUNT][];
+
+string[] classroom2 = classrooms[1]
+
+// 기존 배열 복사
+string[] newClassroom2 = new string[classroom2.Length + 1];
+Array.Copy(classroom2, bewClassroom2, classroom2.Length);
+
+newClassroom2[newClassroom2.Length - 1] = "newby"
+
+classrooms[1] = newClassromm2;
+```
+
+![Array.Copy](image-4.png)
+
+## 배열의 안쪽 배열에 2D 배열 등등 뭐든지 가능!
+
+```
+int[][,] ohMyGod;
+```
+
+### string.IsNullOrEmpty 함수
+
+[공식 문서](https://learn.microsoft.com/ko-kr/dotnet/api/system.string.isnullorempty?view=net-8.0)
+
+## 문자열 분할
+
+### Key-value
+
+몬스터 데이터 형식을 만들었다.
+
+![Alt text](image-5.png)
+
+현재 문제점은 한 몬스터의 데이터를 하나의 파일에 저장한다는 것이다. 여러 몬스터를 저장하면 많은 파일을 사용하게 된다.  
+
+많은 파일을 사용하게 되면 디스크에서 파일을 읽어올 때 마다 성능 손해가 심하다.  
+
+그래서 한 파일에 문자열로 key-value 쌍들을 저장하자.
+![Alt text](image-6.png)
+
+짜잔! 이것이 Json이다. 예전에는 XML도 많이 썼다.
+
+### 표
+
+![Alt text](image-7.png)
+
+엑셀파일은 텍스트 파일이 아니라서 CSV라는 포멧으로 저장한다!
+
+- 각 값은 쉼표(comma)로 분리
+- 쉼표를 구분문자(delimiter)라고 함!
+
+![Alt text](image-8.png)
+
+## CSV 읽는 법
+
+1. 한줄을 읽는다.
+  a. 다음 쉼표까지 문자열을 읽어 문자열 목록에 추가
+  b. 읽어올 위치를 쉼표 다음으로 옮김
+  c. 아직 읽어올 문자열이 있다면 a로 돌아감
+   - 이번 줄에 문자열이 없으면 d로
+  d. 읽어 온 데이터를 몬스터 정보에 저장
+   - 데이터 개수를 확인해야한다. name, hp, mp 이렇게 3개가 잘 들어왔는지
+2. 아직 읽어올 줄이 있다면 1로 돌아감
+
+## 토큰(token)을 읽어 오는 법
+
+- 토큰 : 연속된 데이터에서 쪼갤 수 있는 가장 작은 단위
+
+문자열의 다양한 함수를 알아보자!
+
+## IndexOf()
+
+![Alt text](image-9.png)
+
+다양한 버전의 IndexOf()는 함수 오버로딩
+
+참고로 LastIndexOf는 가장 마지막에 나타난 곳의 색인 반환
+
+객체 지향에서 함수 호출은 `변수.함수(인자)` 변수(데이터)에서 함수가 나왔다는 것에 주목
+
+절차적 언어에서는 indexOf(message, 'v'); 이렇게 컴퓨터는 함수와 데이터를 따로 본다.
+
+[참고문서](https://learn.microsoft.com/ko-kr/dotnet/api/system.string.indexof?view=net-8.0)
+
+## Substring()
+
+![Alt text](image-10.png)
+
+[참고문서](https://learn.microsoft.com/ko-kr/dotnet/api/system.string.substring?view=net-8.0)
+
+## 첨자 연산자 []
+
+![Alt text](image-11.png)
+
+문자열도 배열이라는 것!
+
+### 직접 Tokenizer을 구현해보자! IndexOf(), Substring(), 첨자 연산자[] 활용하기
 
 ```C#
-using System;
-using System.Diagnostics;
-using System.Text;
-
-namespace StringConcatVsStringBuilder
-{
-    class Program
-    {
-        static void Main(string[] args)
+public static string[] MyTokenizer(string origin, char[] delimiters)
         {
-            const int LOOP_COUNT = 1000;
+            List<string> res = new List<string>(origin.Length);
 
-            Stopwatch stopWatch = new Stopwatch();
-
-            #region USING_CONCATENATION
-            stopWatch.Start();
-
-            string concatenated = string.Empty;
-            for (int i = 0; i < LOOP_COUNT; i++)
+            int startIndex = 0;
+            while (startIndex < origin.Length)
             {
-                concatenated += "test";
+                int delimiterIndex = findDelimiterIndex(origin, delimiters, startIndex);
+
+                if (delimiterIndex == -1)
+                {
+                    res.Add(origin.Substring(startIndex));
+                    break;
+                }
+
+                string token = origin.Substring(startIndex, delimiterIndex - startIndex);
+                res.Add(token);
+                startIndex = delimiterIndex + 1;
             }
-
-            stopWatch.Stop();
-            Console.WriteLine($"Time elapsed in ms (Concatenated): {stopWatch.Elapsed.TotalMilliseconds}");
-            #endregion
-
-            stopWatch.Reset();
-
-            #region USING_STRING_BUILDER
-            stopWatch.Start();
-
-            StringBuilder stringBuilder = new StringBuilder(4096);
-            for (int i = 0; i < LOOP_COUNT; i++)
+            if (startIndex == origin.Length)
             {
-                stringBuilder.Append("test");
+                res.Add("");
             }
-
-            string s = stringBuilder.ToString();
-
-            stopWatch.Stop();
-            Console.WriteLine($"Time elapsed in ms (StringBuilder): {stopWatch.Elapsed.TotalMilliseconds}");
-            #endregion
+            
+            return res.ToArray();
         }
-    }
-}
 
+        private static int findDelimiterIndex(string input, char[] delimiters, int start)
+        {
+            for (int i = start; i < input.Length; i++)
+            {
+                foreach (char delimiter in delimiters)
+                {
+                    if (input[i] == delimiter)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
 ```
 
-## decimal 형
+## 문자열 토크나이저 Split()
 
-decimal은 소수점을 나타낸다. 부동소수점과 차이점에 유의하자
+![Alt text](image-12.png)
 
-### 부동소수점형의 정밀도 문제
+- 인자는 delimiter
+- `원본 문자열은 변경 없이 그대로 유지`
+- 쪼갠 문자열을 문자열의 배열(string [])로 반환
+
+## 여러 개의 구분 문자가 문자열에 있는 경우
+
+![Alt text](image-13.png)
+
+- delimiters는 string []
+
+## 구분 문자 사이가 비어있다면?
+
+![Alt text](image-15.png)
+
+![Alt text](image-14.png)
+
+[열거형 : RemoveEmptyEntries](https://learn.microsoft.com/ko-kr/dotnet/api/system.stringsplitoptions?view=net-8.0)
+
+## 불필요한 공백 지우기
+
+![Alt text](image-16.png)
+
+[Trim 시리즈](https://learn.microsoft.com/ko-kr/dotnet/api/system.string.trim?view=net-8.0)
+
+- 원본 문자열은 변경 없이 유지
+- 가지친 새로운 문자열 반환
+- TrimEnd, TrimStart 도 알아두세용
+
+## 문자열 대체하기
 
 ```C#
 static void Main(string[] args)
-{
-    float num1 = 0.0999999999999f;
-    float num2 = 0.1f;
-
-    if (num1 == num2)
-    {
-        Console.WriteLine("The numbers are equal");
-    }
-}
-```
-
-num1 과 num2의 값이 같음
-부동소수점형의 정밀도(precision) 문제
-이를 해결하기 위해서 앱실론(Machine Epsilon)이라고 아주 작은 수를 이용하는 방법이 있음
-
-### 부동소수점 정밀도 문제 해결 1
-
-- 모든 달러를 센트 단위로 곱해서 사용하기
-  - EX) $10.10 + $0.01 = $10.11 => 1010 + 1 = 1011
-- 화면에 보여줄 때는 다시 100으로 나누고 소수점 3번째 자리에서 반올림해서 보여줌
-
-한계 1. 더하기, 빼기에만 올바른 방법(근데 돈 계산할 때 곱하는 경우가 거의 없긴함)
-
-한계 2. 정수가 표현할 수 있는 범위까지 표현함
-
-### 부동소수점 정밀도 문제 해결 2
-
-- 문자열은 무한의 길이를 가지니 문자열로 저장
-  - EX) "10.10" 더하기 "0.01"
-- 계산할 때 각 자리의 수를 정수형으로 바꿔서 계산 후 문자열에 저장
-  - 받아 올림, 내림할 때 쉽지 않음
-
-### 부동소수점 정밀도 문제를 해결한 decimal
-
-- CPU 자체에서 지원하는 자료형 X
-- 금융권에서 돈 계산에 쓰기에 적합
-- Java의 경우 BigDecimal
-
-```C#
-decimal num1 = 10.12345678987654321234567899m;
-decimal num2 = 10.12345678987654321234567899; // 컴파일 오류
-decimal num3 = 10m;
-decimal num4 = 10;
-long num5 = 123m; // 컴파일 오류
-decimal num6 = 1.2345f;  // 컴파일 오류
-double num7 = 1.2345m;  // 컴파일 오류
-double num8 = (double)1.2345m;  // 명시적 변환 허용
-decimal num9 = (decimal)1.2345f;  // 명시적 변환 허용
-```
-
-- 접미사 m사용
-- 값이 정수일 때 decimal 형으로 묵시적 변환 허용
-- 값이 decimal형일 때 정수형으로 묵시적 변환 불가능
-  - 부동소수점 형을 정수형으로 묵시적 변환할 때 소수점이 잘리니까 허용 안 해주는 것과 원리가 동일
-- 값이 부동소수점 형일 때 decimal 형으로 묵시적 변환 불가능
-- 값이 decimal형일 때 부동소수점 형으로 묵시적 변환 불가능
-  - decimal과 다른 부동소수점형의 정밀도가 다르기 때문
-
-> 암기
->> 정수 일 때는 정수형에서 decimal로 묵시적 허용  
->> 부동소수점일 때는 반드시 명시적 형변환 해줘야함
-
-## 코드보기 : decimal
-
-- 함수 오버로딩
-- 정밀도 순서 : float < double < decimal
-
-## 컬렉션(Collection)
-
-### 컬렌션이란?
-
-- collection은 무리, 더미라는 뜻을 가짐
-- 다른 언어에서는 container(컨테이너)라고 부름
-- `동일한 형`의 여러 자료를 저장하는 공간
-- 자료 구조의 일부
-
-동일한 형의 여러 자료를 저장하는 가장 기본적인 자료 구조가 배열이다. 따라서 배열과의 비교를 해보자.
-
-### 배열과 비교
-
-![alt text](image-12.png)
-
-컬렉션은 배열과 비교해서 사용하기 편리하다. 요소의 수를 바꿀 수 있고, 유용한 함수를 기본적으로 제공한다.
-
-반면 배열은 사람이 사용하기 불편하지만 컴퓨터가 처리하기 쉬운 자료 구조다. 배열의 형태가 그대로 메모리에 일직선으로 저장되는 구조와 오프셋의 개념인 인덱스 모두 컴퓨터 친화적이다.
-
-### 컬렉션의 또 다른 장점
-
-배열로 표현하기 힘든 자료 구조를 표현할 수 있다.
-
-그래서 다양한 컬렉션 종류가 있음
-
-### 다양한 컬렉션 중 결정 시 고려 사항
-
-- 색인(index)의 종류
-  - 정형화된 색인(배열과 같은 방식이라고 생각하면 됨 0,1,2... 순서대로 증가)
-  - 임의의 key 값(어떤 자료형이든 가능하나 배열의 색인처럼 순서가 존재할 수도 아닐 수도 있음 즉 정형화된 색인이 아님)
-
-- 데이터 접근 패턴
-  - 처음부터 끝까지 데이터를 순회할 것인가?
-  - 컬렉션 중간에 데이터를 자주 넣고 빼는가?
-  (자세한 내용은 자료구조/알고리즘)
-
-### 리스트
-
-- 사용하기 편한 배열
-- 색인(0부터 n)을 통해 데이터에 접근할 수 있음
-- 배열의 길이(담을 수 있는 최대 요소 수)를 언제든 바꿀 수 있음
-
-#### 리스트 생성
-
-```C#
-List<int> scores = new List<int>();
-List<string> names = new List<string>();
-List<T> <변수명> = new List<T>();
-```
-
-<T>는 어떤 자료형을 담을지 표현하는 제너릭(generic) 프로그래밍의 일부
-
-- 생성 시 리스트의 현재 길이(Count)는 0이다. 아무 요소도 안에 들어있지 않기 때문이다. 즉 길이는 요소의 개수와 같다.
-
-#### 리스트 생성 총 용량(capacity)과 함께
-
-```C#
-List<int> scores = new List<int>(3);
-List<string> names = new List<string>(6);
-List<T> <변수명> = new List<T>(int capacity);
-```
-
-count와 capacity는 다르다는 것을 염두하자
-
-#### 리스트에 데이터를 삽입하기
-
-```C#
-Add(T data);
-```
-
-![alt text](image-13.png)
-
-리스트의 `가장 마지막 원소 다음` 데이터를 삽입함
-
-#### 리스트에 데이터를 여러 개 삽입하기
-
-![alt text](image-14.png)
-
-```C#
-int [] dummy = new int[3] {1, 2, 3};
-
-List<int> list = new List<int>(5);
-list.AddRange(dummy);
-```
-
-```C#
-List<string> dummy = new List<string>(5);
-dummy.Add("hi");
-dummy.Add("boo");
-
-List<string> list = new List<string>(5);
-list.AddRange(dummy);
-```
-
-주의할 점은 List<T>를 AddRange의 함수 인자로 넣을 수 있다는 것!
-
-\* 리스트를 생성할 때 용량을 정해주지 않으면 용량의 기본값으로 정해짐
-
-#### 데이터가 리스트에 있는지 확인
-
-![alt text](image-15.png)
-
-\* 내부적으로 for문 돌아서 확인하게 됨!
-
-#### 이 데이터가 리스트의 "어디에" 있나요?
-
-![alt text](image-16.png)
-
-\* 왜 반환값이 int일까? 유효하지 않은 색인값 -1을 반환하기 위해!
-
-#### 이 데이터가 리스트의 "어디에" 있나요(2)?
-
-![alt text](image-17.png)
-
-\* 가장 마지막 인덱스 부터 찾아서 해당 데이터가 마지막으로 나타난 위치의 색인을 반환하게 됨
-
-#### 리스트 중간에 데이터 넣기
-
-![alt text](image-18.png)
-
-\* 넣을 곳 뒤의 원소들을 모두 뒤로 한 칸 밀어버림
-
-배열에서 이 동작을 하려면 for문 돌면서 요소 하나씩 밀어줘야함
-
-#### 총 용량과 길이
-
-![alt text](image-19.png)
-
-#### 잘 못된 색인을 넣으면?
-
-![alt text](image-20.png)
-
-총 용량이 3이라서 최대 인덱스는 2인데 10의 인덱스에 값을 삽입하려고 해서 예외가 발생함
-
-#### 리스트에서 요소 삭제하기
-
-![alt text](image-21.png)
-
-#### 리스트의 요소에 접근하기
-
-![alt text](image-22.png)
-
-인덱스 2에 아무런 요소가 없기 때문에 접근해도 값이 없다. 따라서 예외가 발생함!
-
-#### 리스트에 순차적으로 접근하기(순회)
-
-![alt text](image-23.png)
-
-#### 리스트에서 배열로 변경하기
-
-![alt text](image-24.png)
-
-\* 내부적으로는 for문으로 일일히 원소를 배열에 대입함
-
-#### 리스트의 모든 요소 지우기
-
-![alt text](image-25.png)
-
-\* 용량을 바꾸진 않음!
-
-## 코드보기 : List
-
-```C#
-List<int> list = new List<int>();
-
-for (int i = 0; i < ELEMENTS_COUNT; i++)
-{
-    list.Add(i);
-}
-
-Console.WriteLine($"[ {string.Join(", ", list)} ]");
-```
-
-\* string.Join()의 인자로 List<int>를 받았다는 것을 주목해야함!
-
-정수형을 문자열로 표현할 수 있음
-
-## 딕셔너리
-
-### 딕셔너리란?
-
-![alt text](image-26.png)
-
-- 색인(0~n)이 아니라 임의의 자료형 key를 사용함
-
-- 키가 동일하면 언제나 같은 값을 가리킴
-- 다른 언어에서는 Map이라고 부름
-- 내부 데이터 저장은 배열처럼 연속된 메모리에 할 수 없음
-
-### 딕셔너리 생성
-
-```C#
-Dictionary<int, string> students = new Dictionary<int, string>();
-```
-
-![alt text](image-27.png)
-
-### 딕셔너리에 데이터 추가
-
-![alt text](image-28.png)
-
-내부에서는 Key, Value가 메모리에 순서대로 저장되는 것을 보장하지 않음
-
-이미 들어있는 키로 새로운 데이터를 추가하면? Add 함수의 함수명을 생각하자. 함수명이 Add or Replace가 아니라 오직 Add임
-리스트의 경우 리스트의 마지막 원소 뒤에 계속 추가가 되는 것을 Add라고 명명할 수 있음 하지만 딕셔너리의 경우 키가 있는데 같은 키를 Add할 수 없기 때문에 예외가 발생함!
-
-![alt text](image-29.png)
-
-### 딕셔너리에 중복된 키를 확인하고 추가
-
-\* Try라는 표현을 추가 Try가 붙은 함수는 보통 boolean값을 반환함
-
-![alt text](image-30.png)
-
-### 딕셔너리의 모든 요소 삭제
-
-![alt text](image-31.png)
-
-### 딕셔너리 키 존재하는지 확인
-
-![alt text](image-32.png)
-
-### 딕셔너리 안에 값이 있는지 확인
-
-![alt text](image-33.png)
-
-### 딕셔너리 안의 요소 삭제
-
-![alt text](image-34.png)
-
-![alt text](image-35.png)
-
-\* 의문점
-
-왜 어떤 함수는 예외를 던지고, 어떤 함수는 예외를 안 던질까?  Remove도 못찾았으면 못찾았다고 예외를 던지는게 좋은게 아닌가?  
-삭제를 한다는 목적에서 생각해봤을 때 만약에 Key가 없어서 지우는 것을 실패해도 원래 Key가 없기 때문에 없다. Key가 있다면 결국 삭제되고 없어진다. 즉 어떻게 되든 결과는 원소가 없다는 것임. 이것이 프로그래머가 의도한 결과이기 때문에 예외를 던지지 않는다.
-
-다른 경우를 생각해보자. List의 insert에서 길이가 3인데 5번째 색인에 삽입하려고 하면 예외가 발생한다. 프로그래머의 의도가 5번째 색인에 넣는 것인데 만약 Add를 해서 마지막 원소 뒤에 삽입한다고 해도 4번째 색인에 넣는 것과 결과가 동일하다. 따라서 프로그래머의 의도대로 결과가 나오지 않는다는 것을 알리기 위해 예외를 던진다.
-
-### 딕셔너리에서 키와 매핑된 값 가져오기
-
-![alt text](image-36.png)
-
-보통 if문으로 TryGetValue의 반환값에 따라 out 매개변수를 사용할지 말지를 결정함
-
-### 또 다른 요소 추가/접근법 []
-
-![alt text](image-37.png)
-
-\* Add와 다른점에 주의하자 Add는 없는 키에 대응하는 요소를 추가하려 하면 예외가 발생한다. 하지만 `[]`는 다르다. 키가 없다면 키와 값을 새로운 원소로 추가한다.
-
-![alt text](image-38.png)
-
-물론 키가 없을 때 접근하면 예외가 발생한다.
-
-[] 는 접근 기능 + 추가 기능을 모두 가짐
-
-### 딕셔너리를 사용하면 좋은 경우
-
-- 배열처럼 순서대로 저장하기 힘든 경우 즉 Key가 순서가 없는 개념을 가질 수 있음
-
-- 배열 중간에 데이터 삽입 및 삭제를 자주해야할 경우
-
-## 코드보기 : 딕셔너리
-
-```C#
-using System;
-using System.Collections.Generic;
-
-namespace DictionaryExample
-{
-    class Program
-    {
-        static void Main(string[] args)
         {
-            List<int> list = new List<int>();
+            string textMessage = File.ReadAllText(@"TextMessage.txt");
 
-            Random random = new Random();
+            // [ "[POCU Web Message]", "Monday 2019-04-15 13:21:54.456", "student1234@fakeemail.com     ", "Course                COMP1500", "Term                    201905" ]
+            string[] lines = textMessage.Split('\n');
 
-            for (int i = 0; i < 20; i++)
-            {
-                int number = random.Next(0, 10);
-                list.Add(number);
-            }
+            // [ "Monday", "2019-04-15", "13:21:54.456" ]
+            string[] dateTimeString = lines[1].Split(' ');
+            string nameOfDay = dateTimeString[0];
 
-            Console.WriteLine($"[ {string.Join(", ", list)} ]");
+            // [ "2019", "04", "15" ]
+            string[] date = dateTimeString[1].Split('-');
 
-            Dictionary<int, bool> dictionary = new Dictionary<int, bool>();
+            int year = int.Parse(date[0]);
+            int month = int.Parse(date[1]);
+            int day = int.Parse(date[2]);
 
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (dictionary.ContainsKey(list[i]))
-                {
-                    list.Remove(list[i]);
-                }
-                else
-                {
-                    dictionary.Add(list[i], true);
-                }
-            }
+            // [ "13", "21", "54.456" ]
+            string[] time = dateTimeString[2].Split(':');
 
-            Console.WriteLine($"[ {string.Join(", ", list)} ]");
+            int hours = int.Parse(time[0]);
+            int mins = int.Parse(time[1]);
+            float seconds = float.Parse(time[2]);
+
+            string email = lines[2].Trim();
+
+            string courseCode = lines[3].Replace("Course", "").Trim();
+            string term = lines[4].Replace("Term", "").Trim();
+
+            Console.WriteLine($"Name of Day: {nameOfDay}");
+            Console.WriteLine($"Year: {year}");
+            Console.WriteLine($"Month: {month}");
+            Console.WriteLine($"Day: {day}");
+            Console.WriteLine($"Hours: {hours}");
+            Console.WriteLine($"Minutes: {mins}");
+            Console.WriteLine($"Seconds: {seconds}");
+            Console.WriteLine($"Email: {email}");
+            Console.WriteLine($"Course Code: {courseCode}");
+            Console.WriteLine($"Term: {term}");
         }
-    }
-}
 ```
 
-- list의 capacity는 20이다. count도 20이다. 각 원소는 0~9중 무작위의 수가 들어가있음
+- [Replace 함수](https://learn.microsoft.com/ko-kr/dotnet/api/system.string.replace?view=net-8.0)
+
+- string변수.메서드1.메서드2.... 이렇게 .으로 메서드 연속 호출하는 것을 `메서드 체이닝!`
+
+## 함수 오버로딩
+
+![Alt text](image-17.png)
+
+- 굳이 함수 이름에 FromInts, FromFloats를 붙여야할까? 함수의 매개변수 형에서 이미 유추가 가능
+- int[] , float[]이라는 매개변수는 배열이니까 같은 형의 입력값의 평균을 구함을 알 수 있음
+  - 이걸 보고 각기 다른 형의 평균을 구하면 사용자 잘못임
+- 따라서 동일한 이름에 매개 변수만 바꾸어 사용해보자는 의도
+
+### 참고 : float이 double에 비해 CPU에서 처리하는 속도가 빠름
+
+정밀도가 double이 높긴 한데, 보통은 float을 사용합니다!
+
+### 함수 오버로딩 조건
+
+- 동일한 이름
+- 매개변수 목록이 다르다.
+- 함수의 시그니처가 이름 + 매개변수 목록이라서 이름이 같아도 매개변수 목록이 다르면 컴퓨터가 함수를 식별할 수 있다
+- 반환형은 함수의 시그니처에 포함되지 않는다. 따라서 반환형만 다르고 함수의 이름과 함수의 매개변수 목록이 같은 함수가 있으면 `컴파일 에러`가 발생한다.
+  - 오버로딩 여부에서 반환형은 무시하고 생각하자!
 
 ```C#
-Dictionary<int, bool> dictionary = new Dictionary<int, bool>();
-
-for (int i = 0; i < list.Count; i++)
-{
-    if (dictionary.ContainsKey(list[i]))
-    {
-        list.Remove(list[i]);
-    }
-    else
-    {
-        dictionary.Add(list[i], true);
-    }
-}
+static void Print(int score);               // (1)
+static void Print(string name);             // (2)
+static void Print(float gpa, string name);  // (3)
+static int Print(int score);                // (4)
+static int Print(float gpa);                // (5)
 ```
 
-- dictionary의 value의 자료형은 무엇을 하던 상관없다. 어차피 key만 사용하기 때문이다.
+(4)에서 컴파일 에러가 발생한다. 위에서 부터 컴파일러는 읽고, (1)과 (4)를 컴파일러는 구분할 수 없다.
 
-- 위 코드에서 list에서 처음 등장한 수는 dicionary에 추가되고, 여러 번 등장한 수는 list에서 삭제된다.
+### 코딩 표준 : 함수 오버로딩
 
-- 결과적으로 dicionary의 키들은 list에서 중복되는 원소를 제거한 결과임
+- 매개변수의 수가 다른 경우 : 오버로딩 OK
+- 승격/묵시적 변환을 해도 상관없는 경우 : 오버로딩 OK
+![Alt text](image-18.png)
+- 매개변수가 아예 승격이 불가능한 경우 : 오버로딩 OK
+![Alt text](image-19.png)
 
-- 이 코드는 정상적으로 작동하지 않을 수 있음. 이는 Remove와 for문에서 문제가 있다. `list.count를 for문을 돌 때마다 호출하게 되는데 Remove를 호출하면 count가 변한다.`
-따라서 정상적으로 작동하지 않고 인덱스를 벗어나 예외가 발생할 수 있음.
-`Remove는 값을 찾아서 앞에서(0 색인)부터 찾아서 지운다. 즉 같은 값을 가진 원소를 지우는 것이지 중복된 원소를 지우는 것이 아니다.` 따라서 원소가 지워지면서 원소들이 밀리기 때문에 어떤 원소는 건너뛸 수 도 있음!
+## 기본값 인자
 
-- 그렇다면 정상적으로 고치기 위해서는 어떻게 해야할까?
+### Optional Paramter
+
+기본값 인자는 매개변수의 값을 생략할 수 있다는 관점에서 optional paramter라고 부른다.
+
+### 약간만 차이나는 함수들
 
 ```C#
-for (int i = list.Count - 1; i >= 0; i--)
-{
-    if (dictionary.ContainsKey(list[i]))
-    {
-        list.RemoveAt(i);
-    }
-    else
-    {
-        dictionary.Add(list[i], true);
-    }
-}
+static string getFullAddress(string street, string city);
+static string getFullAddress(string street, string city, string state);
 ```
 
-- 뒤에서 부터 찾으면서 지우면 된다. 두가지 원인을 모두 해결했다.
+함수를 오버로딩 할 때 중복된 매개변수가 많다면, 함수를 구현할 때 중복 코드가 많이 생기기 마련이다.
 
-1. 우선 list.Count는 변하지만 한 번만 호출해서 모든 원소에 접근할 수 있다.
-
-2. 지울 때 중복된 원소를 바로 제거한다.
-
-## HashSet
-
-딕셔너리와 차이점은 해시셋은 키만 있음! (중복이 안됨!)
-
-### HashSet 생성
-
-![alt text](image-39.png)
-
-### HashSet 요소 추가
-
-![alt text](image-40.png)
-
-![alt text](image-41.png)
-
-예외를 던지지 않는다. 요소를 추가하는데 실패하더라도 이미 해시셋에 그 원소가 있으니까 프로그래머가 의도한 결과는 결국 동일하다.
-
-### 이 요소가 해시셋에 있나요?
-
-![alt text](image-42.png)
-
-### 해시셋의 요소 삭제하기
-
-![alt text](image-43.png)
-
-예외를 던지지 않는다는 것에 주목하자. 프로그래머의 의도한 결과와 같다!
-
-### 해시셋의 모든 요소 삭제
-
-![alt text](image-44.png)
-
-### 해시셋의 요소 가져오기
-
-![alt text](image-45.png)
-
-### 해시셋은 언제 사용할까?
-
-중복을 제거할 때!
-
-## 컬렉션과 같이 쓰면 유용한 것들 : foreach
-
-i라는 인덱스가 왜 필요한가? 실수를 줄여준다.
-
-읽기도 편함!
-
-![alt text](image-46.png)
-
-break만 없으면 끝까지 순회하면서 모든 원소에 접근한다!
-
-### 딕셔너리와 foreach문
-
-![alt text](image-47.png)
-
-KeyValuePair이 특이하다!
-
-### 해시셋과 foreach문
-
-![alt text](image-48.png)
-
-### 배열과 foreach문
-
-![alt text](image-49.png)
-
-### foreach문의 한계
-
-1. 방문하는 요소의 값을 바꿀 수 없다.
-
-![alt text](image-50.png)
-
-\* 컴파일 오류가 발생하는 것에 주목하자
-
-2. 현재 방문 중인 요소의 색인을 알 방법이 없다.
-
-![alt text](image-51.png)
-
-\* 별도의 변수 int index를 활용했음
-
-3. 컬렉션이나 배열을 거꾸로 탐색할 수 없음
-
-![alt text](image-52.png)
-
-## 코드보기 : foreach문
+### 기본값 인자의 효과
 
 ```C#
-List<int> list = new List<int>();
-
-Random random = new Random();
-
-for (int i = 0; i < 20; i++)
-{
-    int number = random.Next(0, 10);
-    list.Add(number);
-}
+static string getFullAddress(string street, string city, string state = "");
 ```
 
-- 이 부분은 배열에 원소를 추가하는 코드다. 배열을 순회하는 것이 아니라서 foreach문을 사용할 수 없다!
+- 호출 시 아래와 같이 인자를 생략할 수 있다.
 
 ```C#
-Dictionary<string, int> dictionary = new Dictionary<string, int>
-            {
-                { "key1",  1 },
-                { "key2",  2 },
-                { "key3",  3 },
-                { "key4",  4 },
-                { "key5",  5 },
-                { "key6",  6 },
-            };
+static string getFullAddress("main street", "city", "state");
+static string getFullAddress("main street", "city");
 ```
 
-- 딕셔너리에 원소를 추가하면서 초기화하는 코드(이렇게도 할 수 있다!)
+- 함수에서 기본값 인자는 하나 이상 선언할 수 있다.
 
-## 컬렉션과 같이 쓰면 유용한 것들 : var
+```C#
+static string getFullAddress(string street, string city = "", string state = "");
+```
 
-var은 variable 변수에서 따왔음
+- 매개변수 기본값 인자들은 noraml 매개변수 뒤에 써줘야한다.
 
-### 딕셔너리 foreach문의 문제점
+```C#
+static string getFullAddress(string street, string city = "", string state);
+// 컴파일 에러, 중간에 기본값 매개변수가 있다.
+```
 
-![alt text](image-53.png)
+### 기본값 인자의 문제점
 
-길고 보기 싫다.
+- 1) 나중에 누군가 기본값 인자를 중간에 추가할 때 문제가 발생한다.
 
-### var로 수정하자
+![Alt text](image-20.png)
 
-![alt text](image-54.png)
+- 수정 된 함수를 호출하는 다른 사람이 의도하지 않게 호출하게 된다.
 
-### var 키워드의 정체
+![Alt text](image-21.png)
 
-- 묵시적 자료형
-  - 컴파일러가 알아서 자료형을 추론해줌
+- 2) 기본값 인자가 도중에 변경된 경우 기존의 코드에서 문제가 발생할 수 있다. 
 
-- 지역 변수에서만 사용가능
-  - 클래스를 배우면 당연한 것을 알게 될 것임
+![Alt text](image-22.png)
 
-- 반드시 선언과 동시에 대입을 해야함
-  - 그래야지 컴파일러가 추론할 수 있음
-![alt text](image-55.png)
-\* 컴파일 에러에 주목하자
+- 함수 내부에서 difficulty를 곱할 때 연산이 0부터 시작에서 1부터 시작으로 변경되었을 때 이런 일이 발생한다.
 
-### 코딩 표준 : 자료형이 명백할 때만!
+### 코딩 표준 : 기본 인자값
 
-![alt text](image-56.png)
+- 새 기본 매개변수는 언제나 뒤에 둘 것
+  - 컴파일러가 에러 발생시켜서 막아주긴 함
+- 기본값은 언제나 0으로 할 것
+- 매개변수를 직접 넣어주게 강요하는 것이 안전할 수 있다.
+  - 실수를 막을 수 있다
+
+## out 매개변수
+
+### 나누기 함수 개선
+
+![Alt text](image-23.png)
+
+이렇게 하면 TryDivide의 반환값을 통해서 조건문을 만들고 result의 값을 사용할지 말지를 분기할 수 있다.
+
+1. 문제점 : result값을 대입하는 코드(result = numerator / denominator 을 빼먹거나..)에 실수가 있는 경우
+
+2. 문제점 : ref 키워드가 붙은 매개변수에 값을 넘기기 위해서 result를 선언과 동시에 초기화해야 한다. 이 때 대입 값은 굳이 쓸 필요가 없는데 컴파일러의 문법상 어쩔 수 없다.
+
+### ref를 개선한 out
+
+![Alt text](image-24.png)
+
+- 1) 주목할 점: denominator가 0일 때도 result에 값을 대입했다.
+- 2) 주목할 점: 함수 밖에서 초기화할 필요 없다!
+  - 오직 출력값만 의미한다. out!
+
+### out 매개변수의 특징
+
+- 함수 안에서 대입 안 하면 컴파일 오류
+  - 이를 통해 문제점 1을 막을 수 있음
+
+![Alt text](image-25.png)
+
+### 키보드 입력
+
+![Alt text](image-26.png)
+
+- 어떤 상황에서 Try함수를 사용하는지 생각하자. 운영 환경에서 예상하지 못한 값이 들어올 때! 키보드 입력의 경우에도 숫자가 입력된 것을 막을 수 없다.
+  - 만약 들어오는 값을 통제할 수 있다는 확신을 할 수 있다면(개발 환경이겠죠?) assert를 넣고 개발 환경에서 디버깅한다고 생각하면 된다.
+- num에 값을 대입해준다.
+- 예외 상황을 처리할 수 있다.

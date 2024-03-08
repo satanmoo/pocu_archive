@@ -44,7 +44,9 @@ namespace OutParameterModifier
                 Console.WriteLine($"Failed to get an integer greater than {someNumber}");
             }
         }
-
+        
+        // Out 변수를 사용하여 output이 input보다 큰 경우만 사용하기
+        // output은 random으로 함수 내부에서 결정
         static bool TryGetIntegerGreaterThan(int input, out int output)
         {
             var random = new Random();
