@@ -24,6 +24,7 @@ namespace ReadAndWriteFileUsingFileStream
 
             byte[] bytes = new byte[fsRead.Length];
             fsRead.Read(bytes, 0, bytes.Length);
+            // ReadAllBytes와 기능이 동일
 
             fsRead.Close();
 
@@ -36,6 +37,7 @@ namespace ReadAndWriteFileUsingFileStream
             Console.WriteLine($"CanSeek: {fsWrite.CanSeek}");
 
             fsWrite.Write(bytes, 0, bytes.Length);
+            // WriteAllBytes와 기능이 동일
 
             fsWrite.Close();
         }

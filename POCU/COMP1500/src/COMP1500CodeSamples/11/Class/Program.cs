@@ -22,7 +22,10 @@ namespace Class
             warrior.GetStatus();
 
             warrior.Health -= 200;
-            //warrior.mHealth = 5000;
+            
+            warrior.GetStatus();
+            
+            warrior.Health = 5000;
 
             warrior.GetStatus();
         }

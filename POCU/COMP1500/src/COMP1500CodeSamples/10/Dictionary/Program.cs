@@ -20,7 +20,7 @@ namespace DictionaryExample
             Console.WriteLine($"[ {string.Join(", ", list)} ]");
 
             Dictionary<int, bool> dictionary = new Dictionary<int, bool>();
-
+            // 코드 수정 부탁
             for (int i = 0; i < list.Count; i++)
             {
                 if (dictionary.ContainsKey(list[i]))

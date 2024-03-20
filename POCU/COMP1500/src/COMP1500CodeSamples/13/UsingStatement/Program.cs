@@ -24,11 +24,12 @@ namespace UsingStatement
                 Console.WriteLine(allText);
                 Console.WriteLine("----------------------------------");
             }
-
+            // Reader가 사용하는 Stream까지 닫아줌
             List<string> allLines = new List<string>();
             using (StreamReader reader2 = new StreamReader(File.Open(INPUT_FILE_FULL_PATH, FileMode.Open, FileAccess.Read)))
             {
                 allLines = new List<string>();
+                
                 while (!reader2.EndOfStream)
                 {
                     allLines.Add(reader2.ReadLine());
@@ -51,9 +52,15 @@ namespace UsingStatement
                     writer.WriteLine(line);
                 }
 
+                writer.Flush();
                 writer.BaseStream.Seek(0, SeekOrigin.Begin);
                 writer.Write("Overwritten text");
             }
+
+            // using (StreamWriter writer = new StreamWriter(File.Open(OUTPUT_FILE_FULL_PATH, FileMode.OpenOrCreate, FileAccess.Write)))
+            // {
+            //     writer.WriteLine("우와");
+            // }
         }
 
         private static void setup()

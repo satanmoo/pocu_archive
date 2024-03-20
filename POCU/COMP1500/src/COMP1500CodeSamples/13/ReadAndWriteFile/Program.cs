@@ -62,7 +62,7 @@ namespace ReadAndWriteFile
             if (!Directory.Exists(OUTPUT_FOLDER_PATH))
             {
                 Directory.CreateDirectory(OUTPUT_FOLDER_PATH);
-            }
+            }   // 출력할 디렉토리가 없어서 크래시가 날 경우를 방지
         }
     }
 }

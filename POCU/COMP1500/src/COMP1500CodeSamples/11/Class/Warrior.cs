@@ -27,6 +27,7 @@ namespace Class
             }
             set
             {
+                // 이 코드가 필요한 이유 setter니까!
                 mHealth = value;
 
                 if (mHealth < 0)
