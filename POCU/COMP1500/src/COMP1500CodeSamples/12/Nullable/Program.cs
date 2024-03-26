@@ -42,7 +42,7 @@ namespace Nullable
                 new Bar(3)
             };
 
-            //Bar bar1 = First(bars, 2);
+            // Bar bar1 = First(bars, 2);   // Nullable<T>를 T형에 대입할 수 없음
             Bar? bar2 = First(bars, 2);
 
             if (bar2 == null)
