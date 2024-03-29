@@ -44,11 +44,13 @@ namespace TryCatchFinally
             {
                 Console.WriteLine("The divisor is 10. Oh noez!!");
                 Console.WriteLine(e);
+                Console.WriteLine(e.StackTrace);
             }
             catch (DivideByZeroException e)
             {
                 Console.WriteLine("The dividend is being divided by 0");
                 Console.WriteLine(e);
+                Console.WriteLine(e.StackTrace);
             }
             finally
             {

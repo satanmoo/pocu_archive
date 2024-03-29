@@ -52,14 +52,16 @@ namespace UsingStatement
                     writer.WriteLine(line);
                 }
 
-                writer.Flush();
-                writer.BaseStream.Seek(0, SeekOrigin.Begin);
+                // writer.Flush();  // way 1 buffer flush
+                writer.BaseStream.Seek(0, SeekOrigin.Begin); // Flush 후 BaseStream을 0으로 해야함
                 writer.Write("Overwritten text");
+                StreamWriter writer2 =
+                    new StreamWriter(File.Open(OUTPUT_FILE_FULL_PATH, FileMode.OpenOrCreate, FileAccess.Write));
             }
 
             // using (StreamWriter writer = new StreamWriter(File.Open(OUTPUT_FILE_FULL_PATH, FileMode.OpenOrCreate, FileAccess.Write)))
             // {
-            //     writer.WriteLine("우와");
+            //     writer.WriteLine("이건 overwrite됩니다. StreamWriter을 초기화 했기 때문에 버퍼도 초기화 됨");
             // }
         }
 

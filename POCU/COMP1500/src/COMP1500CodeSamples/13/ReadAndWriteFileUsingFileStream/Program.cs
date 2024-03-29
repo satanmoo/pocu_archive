@@ -19,7 +19,7 @@ namespace ReadAndWriteFileUsingFileStream
             //fsRead.Write(new byte[] { 1, 2, 3 }, 0, 3);
 
             Console.WriteLine($"CanRead: {fsRead.CanRead}");
-            Console.WriteLine($"CanWrite: {fsRead.CanWrite}");
+            Console.WriteLine($"CanWrite: {fsRead.CanWrite}");  // False
             Console.WriteLine($"CanSeek: {fsRead.CanSeek}");
 
             byte[] bytes = new byte[fsRead.Length];
@@ -32,7 +32,7 @@ namespace ReadAndWriteFileUsingFileStream
 
             FileStream fsWrite = File.Open(OUTPUT_FILE_FULL_PATH, FileMode.Create, FileAccess.Write);
 
-            Console.WriteLine($"CanRead: {fsWrite.CanRead}");
+            Console.WriteLine($"CanRead: {fsWrite.CanRead}");   // False
             Console.WriteLine($"CanWrite: {fsWrite.CanWrite}");
             Console.WriteLine($"CanSeek: {fsWrite.CanSeek}");
 

@@ -27,6 +27,15 @@ return값이 -1인지 확인하면 됨
 
 16진수 숫자 2자리로 나타내는 비트 패턴은 16 * 16 하면 2^8이다. 즉 Byte(8bit) 단위임
 
+// data1.encoded.bin의 이진 데이터
+/*
+08 41 06 46 07 44 07 53 06 20 06 73
+*/
+
+이진 데이터를 해석하는 방법 16진수 08을 10진수로 바꿔보자. 8 따라서 byte 8을 저장하면 저렇게 저장된다.
+
+16진수 44의 경우 68이다. 즉 byte 68을 저장하면 저렇게 저장된다.
+
 ### BinaryReader에서 끝인지 확인하는 방법
 
 https://learn.microsoft.com/ko-kr/dotnet/api/system.io.binaryreader.readbyte?view=net-8.0
