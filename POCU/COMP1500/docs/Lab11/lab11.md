@@ -81,6 +81,12 @@ class Program
 }
 ```
 
+BinaryReader에서는 EndOfStream 프로퍼티를 지원하지 않음. 수업에서 StreamReader의 경우 EndOfStream 프로퍼티를 사용했음
+
+```C#
+
+```
+
 ## C# character 반복하는 String 만들기
 
 ### C# 11이상
