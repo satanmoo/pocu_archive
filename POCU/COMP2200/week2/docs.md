@@ -508,7 +508,7 @@
 
 ![img_80.png](img_80.png)
 
-- 현재 working directory에서 먼저 헤더파일을 검색함
+- 현재 `working directory`에서 먼저 헤더파일을 검색함
   - 없으면 시스템 경로에서 검색
 - 보통 개발자가 구현한 헤더 파일을 검색할 때 사용
   - 우리가 직접 만듬 ㅇㅇ
@@ -535,6 +535,7 @@
 ![img_85.png](img_85.png)
 
 - 인클루드 파일을 복붙함
+  - 이 때 working directory, system directory에서 찾음
 - 헤더 파일의 내용을 그대로 가져다 붙임
 
 ![img_86.png](img_86.png)
