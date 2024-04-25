@@ -1,0 +1,4 @@
+# ninja log v5
+2	90	1713978571691584657	CMakeFiles/min_max.dir/main.c.o	e472c1ae4e0abc90
+3	90	1713978571691585324	CMakeFiles/min_max.dir/my_algorithm.c.o	cabb0be6a1656aca
+90	204	1713978571804815273	min_max	80499f13cb031cc3
