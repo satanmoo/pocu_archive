@@ -1010,7 +1010,7 @@ static 변수 next 선언
 - 표준 스트림이라고 부른다.
 - fprintf()에서 stdout, stderr을 사용한다.
 
-## stdouot
+## stdout
 
 ![img_117.png](img_117.png)
 
@@ -1083,8 +1083,6 @@ static 변수 next 선언
 - 크기를 정해주는 n이 붙은 함수들, 함수마다 널캐릭터 붙여주는 함수도 있고, 아닌 함수도 있다.
 - 서식과 포멧
 - printf, fprintf, sprintf 모두 비슷하다.
-
-
 
 
 

@@ -5,11 +5,17 @@ int is_alpha(int c) {
 }
 
 int to_upper(int c) {
-    return c & ~0x20;
+    if (is_alpha(c)) {
+        return c & ~0x20;
+    }
+    return c;
 }
 
 int to_lower(int c) {
-    return c | 0x20;
+    if (is_alpha(c)) {
+        return c | 0x20;
+    }
+    return c;
 }
 
 void string_toupper(char* str) {

@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.0)
+project(week4)
+
+add_subdirectory(get_length)
+add_subdirectory(my_buffer)
+add_subdirectory(my_concat_string)
+add_subdirectory(my_copy_string)
+add_subdirectory(my_strstr)
+add_subdirectory(my_strtok)
+add_subdirectory(string_toupper_tolower)
+add_subdirectory(print_ascii_table)
