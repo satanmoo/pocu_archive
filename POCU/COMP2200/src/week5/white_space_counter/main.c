@@ -1,3 +1,9 @@
-//
-// Created by 인교 on 5/5/24.
-//
+#include "a.h"
+
+int main(void)
+{
+    print_whitespace_stat();
+
+    return 0;
+
+}
