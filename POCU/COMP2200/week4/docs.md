@@ -424,21 +424,34 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 
 ## 코드 샘플: 대소문자 구분없는 문자열 비교
 
-- 각 문자열의 첫 글자를 읽어서 소문자로 바꾸고 저장한다.
-  - 첫 글자부터 읽어도 괜찮나요? yes
-  - C스타일 문자열에서는 빈 문자열이 없다. 널문자가 있으니까!!
+```c++
+int string_case_insensitive_compare(const char* str0, const char* str1)
+{
+    int c1;
+    int c2;
 
-- tolower은 제공되는 함수
+    c1 = tolower(*str0);
+    c2 = tolower(*str1);
 
-- *++str0에서 연산자 우선순위로 정확하게 평가해보자
-  - 전위 증감 연산자와 *의 연산자 우선순위는 동일하다.
-  - 오른쪽에서 왼쪽으로 평가가 진행된다.
-  - ++str0을 먼저 평가하고, 그 다음에 *을 평가한다.
-  - 전위 연산자는 평가되면 str0 + 1로 평가된다. 즉 다음 글자로 평가된다.
-  - 그리고 *가 평가되어서, c1에는 다음 글자의 소문자형태가 저장된다.
-- 엥 그러면 첫번째 글자는 비교 안 하나요?
-  - while문의 조건식에서 비교하고 넘어온거임
-- 왜 전위 연산자를 썼는지 알겠죠? 이미 첫번째 글자는 비교했으니까~
+    while (c1 != '\0' && c1 == c2) {
+        c1 = tolower(*++str0);
+        c2 = tolower(*++str1);
+    }
+
+    if (c1 == c2) {
+        return 0;
+    }
+
+    return c1 > c2 ? 1 : -1;
+}
+```
+
+- strcmp와 동작이 동일
+- 한 문자열 널문자열 만날때 까지 순회
+- 같은 인덱스의 문자를 비교
+  - 비교하기 전 소문자로 변환
+  - 다르면 반복문 종료
+- 반복문이 종료되면 아스키 코드값으로 뺄셈을 이용해 결과 반환
 
 ## 문자열 복사
 
@@ -446,14 +459,21 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 
 - 매개변수에서 dest는 const가 아니고, src는 const네요?
   - 프로그래머의 의도가 dest `문자 값`에 변경이 생긴다는 거죠?
+- 얼마만큼 복사하나요? `길이`
+  - const char* src가 C 스타일 문자열이다. 따라서 널 문자를 통해 길이를 구할 수 있음
+- 복사가 끝나면 dest도 C 스타일 문자열 상태가 되어야한다. 
+  - 마지막에 널 문자 추가하기 
 
-- while 블록 안에서 dest++, src++가 문제없는 이유는 무엇일까요?
-  - dest, src는 주소값을 복사해서 지역변수로 사용하죠?
-  - 이 주소값은 const로 선언되지 않았습니다.
-  - 그리고 복사하려면 주소값을 변경해서 가리키는 char 값을 찾아 복사해야합니다. 
-  - 결국 주소값의 변경이 필요하다는 것!
-
-- while 문 끝나고 널문자 추가하는 것을 잊지 말자!
+- while 블록 안에서 dest++, src++가 컴파일 오류가 아니라 정상적인 이유는 무엇일까요?
+  - dest, src는 지역변수는 주소값(pass by value)
+  - 주소값은 const로 선언되지 않음
+    - 포인터 읽는 방법에서 pointer to char const, pointer to char 
+  - 이 포인터 변수에는 대입이 가능하다.
+    - 배열 변수와 차이점
+    - 주소값을 포인터 산술 연산으로 변경
+- dest에는 함수 밖에서 char []로 선언해서 넘겨야한다. 스택의 주소를 넘겨야함
+  - 이유는 C에서 매개변수로 문자열 다룰 때 국룰
+  - 함수 블록 안에서 메모리 할당, 댕글링 포인터를 만들지 말자
 
 ![img_52.png](img_52.png)
 
@@ -461,9 +481,8 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 
 ![img_53.png](img_53.png)
 
-- 이 함수 반환값 이상함 --;
-- 아무도 안 쓴다네요 ㅋㅋ
-- C11에서는 strcpy_s로 대체 에러코드 반환!
+- 이 함수 반환값 이상함 --; 업계에서 반환값 안 쓴다고 보면 됨
+- C11에서는 strcpy_s로 대체 에러코드 반환! (나중에 배움)
 
 ## 그런데 dest가 src보다 짧으면?
 
@@ -487,9 +506,10 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 
 - count는 복사할 문자의 개수
 - src를 변경해서 널 문자를 만나면 복사를 중단한다.
-- src 크기가 count보다 작으면, 나머지 공간은 널문자로 채워진다.
-- src의 크기 < dest의 크기의 문제를 해결하기 위해서 이 함수가 등장했다.
-  - 그래서 count = dest_size로 설정하는 것이 국룰이다.
+- src 길이가 count보다 작으면, 나머지 공간은 널문자로 채워진다.
+- src 길이가 count보다 같거나 크면, dest에 src를 count만큼 복사하고 널 문자를 넣지 않는다.
+  - dest 길이가 count 보다 긴 경우, dest[strlen(src)] = '\0'; , dest[count] = '\0'; 이렇게 널문자를 넣어줘야함
+  - dest 길이가 count 보다 짧은 경우, dest[DEST_SIZE - 1] = '\0' 이렇게 널문자를 넣어줘야함
 
 ![img_58.png](img_58.png)
 
@@ -498,26 +518,36 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 
 ![img_59.png](img_59.png)
 
-- count는 dest의 크기와 동일하게 설정합니다.
-- dest의 마지막은 널문자로 변경해줍니다.
-- 이것이 국룰임 ㅇㅇ;
+- 좋은 습관: count는 dest의 크기와 동일하게 설정
+- dest의 마지막은 널문자로 변경
 
 ![img_60.png](img_60.png)
-![img_61.png](img_61.png) 
+![img_61.png](img_61.png)
 
-- 이렇게 하는 방식을 습관으로 사용하면 src크기가 count보다 작은 경우에도 사용하게 됩니다.
-- 그래도 괜찮은게, src크기가 count보다 작은 경우 어차피 dest에 src만큼 문자를 제외하고 뒷 부분은 널문자로 채워집니다.
-- 어차피 마지막은 원래 널문자니까, 널문자로 변경하는 코드를 해도 결과에는 동일하죠?
-- 즉 실수할 여지가 없습니다.
+- src의 길이가 count보다 작은 경우 예시
 
 ![img_62.png](img_62.png)
 
-- src크기가 count보다 큰 경우 원래 의도대로 dest의 마지막에 널문자를 넣어줍니다.
-- count = dest_size 기억합시다!   
+- src의 길이가 count보다 큰 경우 예시(DEST_SIZE == 3, count == 3, strlen(src) == 5
+
+- src 길이가 count보다 작으면, src 길이만큼 dest에 복사하고, 나머지 공간 널문자로 채움
+  - DEST_SIZE > strlen(src)의 경우, dest[strlen(src)] = '\0'; 이렇게 널문자를 넣어줘야함
+  - DEST_SIZE <= strlen(src)의 경우, 복사 후 dest에 널문자가 없음, dest[DEST_SIZE - 1] = '\0'; 로 널문자 넣어줘야함
+- src 길이가 count보다 크면, count만큼 dest에 복사함
+  - DEST_SIZE > count의 경우, dest[count] = '\0'; 이렇게 널문자를 넣어줘야함
+  - DEST_SIZE <= count의 경우, 복사 후 dest에 널문자가 없음, dest[DEST_SIZE - 1] = '\0'; 로 널문자 넣어줘야함
+- 따라서 DEST_SIZE가 MIN(strlen(src), count)보다 큰 경우, dest[DEST_SIZE-1] = '\0'으로 C 스타일 문자열을 만들 수 없음
+  - 예를 들어 DEST_SIZE = 6, MIN(strlen(src), count) = 3
+  - char dest[] = {'a', 'b', 'c', '?', '?', '\0'}; 이렇게 되버려서, 중간에 이상한 값이 들어 올 수 있음
+  - 그래서 좋은 습관이 DEST_SIZE == count로 설정하는 것이다.
+    - 사용 의도를 생각해보면, dest를 길이 n으로 먼저 선언을 하고, strncpy에서 count 값을 n으로 똑같이해서 호출하면, 문자열 n - 1자를 복사해 새로운 C 스타일 문자열을 만듬
 
 ## 정리: strcpy()와 strncpy()
 
 ![img_63.png](img_63.png)
+
+- strcpy는 널문자를 `항상` 넣어줌!
+- strncpy는 널문자를 넣어줄 수도, 아닐 수도!
 
 ## 문자열 합치기1: strcat()
 
@@ -526,8 +556,8 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 
 - strcpy와 매우 유사하다.
 - dest의 끝을 찾아서 즉 널문자를 찾으면 되죠?
-- 널문자를 제거해! 그리고 뒤에 src의 문자를 차례차례 복사하면 됩니당
-- const char* src = "POCU"; 로 선언해도, 컴파일러가 알아서 널문자 포함해서 스택에 메모리 잡아주는거 잊지마시고.
+- 널문자를 제거해! 그리고 널문자가 있던 위치부터 src의 문자를 차례차례 복사하면 됩니당
+- 캡처에서 확인할 것: dest에 "Hello "이후 모두 널문자 
 
 ![img_66.png](img_66.png)
 ![img_67.png](img_67.png)
@@ -535,6 +565,8 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 - 여기서 생각해볼 점은 dest의 길이가 충분해야 하겠구나~ 라는 것 (src를 덧붙여도 충분한 공간이 필요)
 - 만약 dest의 길이가 부족하다면? 소유하지 않은 메모리에 덮어쓰게 됩니다...
 - 정의되지 않은 결과가 발생합니다.
+- src 전체를 붙이기 때문에 널문자를 넣어줌
+  - 하지만 dest를 작게 설정해 "Hello POCU\0"와 같이 정의되지 않을 수 있음!
 
 ## 문자열 합치기2: strncat()
 
@@ -561,69 +593,124 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 ![img_75.png](img_75.png)
 
 - 그래서 국룰은 count에 dest의 남은 공간을 넣어주는 것입니다.
-  - 그래서 `조금 더` 안전한 함수라고 표현하는 것입니다.
+  - 그래서 `조금 더` 안전한 함수라고 표현하는 것입니다. (dest를 작게 잡으면 안전하게 작동하지 않음
 - dest의 남은 공간은 어떻게 구할까요?
   - dest의 크기 - 현재 사용중인 dest공간 - 널문자 공간
   - DEST_COUNT - strlen(dest) - 1
   - strlen은 널문자를 제외한 길이를 뽑죠!
 - 여기서 추가적으로 strlen 쓰면 for문 도니, dest를 선언할 때 "HI ";의 크기를 알 수 있죠? 변수로 size_t n = 4; 이렇게 선언하는 것을 추천합니다.
-- 참고로 count에 src의 길이보다 큰 값을 넣으면 그냥 src를 붙임 ㅇㅇ; 어차피 널
+- 참고로 count에 src의 길이보다 큰 값을 넣으면 src를 그대로 붙여넣음
 
 ## 정리: strcat()과 strncat()
 
 ![img_76.png](img_76.png)
 
+- 둘다 dest의 끝에 널문자 넣어줌
+
 ## 코드샘플: 문자열 버퍼를 이용한 출력
 
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+#include <string.h>
+
+#include "buffered_print.h"
+
+#define BUFFER_LENGTH (32)
+
+static size_t s_buffer_index = 0u;
+static char s_buffer[BUFFER_LENGTH];
+
+/*
 - 버퍼는 char 배열로 선언합니다.
-- 이 때 중요한 것은 함수 블록 안의 지역변수로 선언하면 안 됩니다. 함수가 끝나면 메모리가 해제되기 때문입니다.
+- 버퍼에 대한 인덱스를 저장하는 변수를 함수 블록 안의 지역변수로 선언하면 안 됩니다. 함수가 끝나면 메모리가 해제되기 때문입니다.
 - 그래서 함수 밖에 선언하는데, 외부에서 막 가져다 쓸 수 없도록 static으로 선언합니다.
+ */
 
-- src에서 남은 복사할 글자 개수를 나타내는 변수입니다. 처음에는 src의 길이와 동일하게 설정합니다.
-  - 여기서 의도가 strlen을 한 번만 호출하고 싶다는 것입니다.
-  - 한번 호출해서 변수에 저장하고, 감소시키면서 사용하면 됩니다.
-- num_left가 0이 아니면, src에서 남은 글자를 버퍼에 복사합니다.
-  - 그래서 while문의 조건으로 사용합니다.
+void buffered_print(const char* src)
+{
+    size_t num_left;
+    const char* p = src;
 
-- copy_count는 버퍼의 길이 - 지금 버퍼 인덱스 - 1 입니다.
-  - 버퍼의 마지막에 널 문자를 넣어야하기 때문에 -1을 해줍니다.
-- 얼마나 복사할 것인지 count하는 함수
+    num_left = strlen(src);
+    
+    /*
+    * - src에서 남은 복사할 글자 개수를 나타내는 변수입니다. 처음에는 src의 길이와 동일하게 설정합니다.
+    - strlen을 한 번만 호출해 src의 길이를 저장, 변수의 값을 감소시키면서 사용할 예정
+    - num_left가 0이 아니면, src에서 남은 글자를 버퍼에 복사합니다.
+    - num_left가 0이면 더 이상 복사할 글자가 없다는 뜻
+    * */
 
-- 버퍼가 비어있는 경우는 strncpy를 통해 버퍼에 복사하면 됩니다.
-  - 이 때 얼마나 복사하냐?가 copy_count죠
-- 마지막 문자에 널문자를 넣어주는 것을 잊지말자! (strncpy는 버퍼의 공간보다 긴 문자를 복사하는 경우 널문자를 넣지 않죠.)
+    while (num_left > 0) {
+        size_t copy_count = BUFFER_LENGTH - 1 - s_buffer_index;
+        /*
+        - 버퍼에 한번에 얼마나 복사할 것인지 count하는 변수
+            - 최대 BUFFER_LENGHT - 1 (널문자 공간을 제외)
+            - 최소 0
+        - strncpy를 사용할 때, 버퍼와 count 매개변수에 사용할 예정
+        * */
 
-- 버퍼가 비어있지 않다면 concat으로 버퍼에 이어붙이면 되죠?
-  - strncat은 자동으로 널 문자 넣어줍니다.
-  - 그리고 어차피 copy_count의 최대값이 버퍼에서 널 문자 들어갈 자리를 뺀 31이죠? 즉 copy_count를 미리 계산해서, 버퍼에 널 문자 들어갈 자리를 비워두는 것
+        const int buffer_empty = s_buffer_index == 0;
+        /*
+        - 버퍼가 비어있으면, strncpy로 버퍼(dest)의 인덱스 0부터 문자 값을 복사
+        - 비어있지 않으면, strncat으로 버퍼(dest)의 인덱스 s_buffer_index부터 문자 값을 이어붙임
+        * */
 
-- 복사할 위치 이동
+        if (num_left < copy_count) {
+            copy_count = num_left;
+        }
+        /*
+        - src에서 복사할 남은 글자 개수가 한 번에 버퍼에 복사할 글자 개수보다 작은 경우 num_left 만큼 복사
+        * */
 
-- 만약 버퍼가 가득찼다면 프린트하고, 버퍼 인덱스 0으로
+        s_buffer_index += copy_count;
+        num_left -= copy_count;
+        /*
+        - num_left > copy_count 인 경우
+        - 버퍼에 채울 것이라, 인덱스 증가
+        - src에서 num_left만큼 복사할 것이라, num_left 감소
+        * */
 
-- 한 번 알고리즘을 순서대로 정리해보자.
-- num_left: src에서 남은 글자 개수
-- 복사할 크기를 구함, strncpy와 strncat에 사용
-  - case1: 버퍼의 남은 공간, 복사할 크기는 버퍼의 남은공간
-  - case2: 버퍼의 남은 공간보다 num_left가 작은 경우, 복사할 크기는 num_left
+        if (buffer_empty) {
+            strncpy(s_buffer, p, copy_count);
+            s_buffer[s_buffer_index] = '\0';  
+        } else {
+            strncat(s_buffer, p, copy_count);
+        }
+        /*
+        - 버퍼가 비어있으면, strncpy로 버퍼(dest)의 인덱스 0부터 문자 값을 복사
+         - strncpy는 마지막 널문자 보장 X
+        - 비어있지 않으면, strncat으로 버퍼(dest)의 인덱스 s_buffer_index부터 문자 값을 이어붙임
+         - strncat은 마지막 널문자 보장 
+        * */
 
-- 복사할 크기만큼 src의 인덱스 이동
-- 복사할 크기만큼 num_left 감소(변수에 담아두어, strlen을 반복 호출하지 않는 전략)
-- 복사
-  - case1: 버퍼 인덱스가 0인경우, 즉 버퍼가 빈 경우 -> strncpy
-  - case2: 버퍼 인덱스가 0이 아닌 경우, 즉 버퍼에 이미 어떤 문자열이 들어가있는 경우 -> strncat
+        p += copy_count;
+        /*
+        * 복사한 글자 수 만큼 src의 인덱스 이동 
+        * strncpy, strncat에 src 매개변수를 싱크
+        * */
 
-- 복사할 크기만큼 버퍼의 인덱스 이동
-- 버퍼가 가득찼다면, 프린트
+        if (s_buffer_index == BUFFER_LENGTH - 1) {
+            printf("%s\n", s_buffer);
+            s_buffer_index = 0;
+        }
+        /*
+        * 버퍼가 가득차면 출력
+        * */
+    }
+}
+```
 
-- num_left가 0이될 때 까지 반복
+```c++
+buffered_print("Hello, ");             /* Hello, */
+buffered_print("World. ");             /* Hello, World. */
+buffered_print("C is awesome! ");      /* Hello, World. C is awesome! */
+buffered_print("C# is awesome too! "); /* Hello, World. C is awesome! C# */
+buffered_print("Is Java better? ");    /* is awesome too! Is Java better? */
+```
 
-- 팁은 버퍼를 채우는 행위가 이 함수의 주요 목적이다. 따라서 어떻게 버퍼를 채울 것인가에 집중하자.
-  - src가 버퍼의 남은 공간보다 작으면, src를 그냥 버퍼에 추가(복사 or concat)하면 된다.
-    - 여기서 복사 or concat을 구분하는 것이 중요한게, strncpy는 버퍼의 마지막에 널 문자 넣으려구..
-  - src가 버퍼의 남은 공간보다 크면, src에서 버퍼의 남은 공간 만큼 버퍼에 추가한다.
-  - 이와 독립적으로 출력은 버퍼가 가득 찼을 때 해준다고 생각하며 된다.
-
+- 사용 예를 통해서 버퍼가 어떻게 사용되는지 이해
 
 ## 문자열 찾기
 
@@ -639,8 +726,8 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 - 만약에 못 찾으면 무엇을 반환해야할지 고민해보자..
   - 찾으면 어떤 문자열을 반환하고, 못 찾으면?
   - NULL을 반환해도될까? NULL을 출력하면?
-  - 정의되지 않은 행동인데..?
-  - 그래서 어떤 컴파일러는 NULL이라고 출력해줌
+  - NULL을 printf로 출력하는 것은 정의되지 않은 행동인데..?
+  - 그래서 어떤 컴파일러는 NULL이라고 알아서 출력해줌
 
 ![img_78.png](img_78.png)
 
@@ -653,17 +740,16 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 - 포인터를 옮기고 반환한다.
 - 즉 찾은 문자열 이후로 쭉 출력됩니다.
 - 결국 이 함수는 어떤 문자열에서 시작 위치를 찾는다.
-- 왜 그럴까?
 
 ![img_80.png](img_80.png)
 
 - 다시 돌아와서 대상이되는 문자열에 char []로 선언하고, 넘겼었는데 매개변수에서는 const char*로 받는다.
-- 흠 왜 그럴까?
 - 이 함수의 반환값 때문이다. 매개변수는 const char*이다. 하지만 반환값은 char*이다.
 - 따라서 const char*에서 어떤 위치를 찾아서 반환하면, 반환값에서 접근해서 char값을 수정해버릴 수 있다.
 - 아니 이러면 매개변수를 const char*로 한 의미가 없잖아?!
 - 그래서 변경의 위험이 있어서, 여기 넘길 문자열을 char []로 스택에 복사해와서 넘기는 것이다.
 - 데이터 색션을 참조하도록 const char*로 넘겼다면, 데이터 섹션에 접근해서 크래쉬가 나겠죠?
+  (strcpy, strcat 에서도 마찬가지로 src에 char []로 스택에 복사했었음)
 
 - 알고리즘 (직접 구현하기)
   - str을 순회하면서 substr의 첫번째 글자를 찾음
@@ -760,7 +846,7 @@ int compare_string_n(const char* str1, const char* str2, size_t n) {
 - 알고리즘을 생각해보자
 - 토큰화 시작 주소를 저장하는 static 변수를 선언한다.
 - str이 NULL이면 토큰화 시작 주소부터 순회한다.
-- str이 NULL이 아니면 토큰화 시작 주소에 str을 대입하고 순회한다.
+- str이 NULL이 아니면 토큰화 시작 주소에 str을 대입하고(갱신) 순회한다.
 - 순회:
   - delims가 연속하는 경우를 제거하기 위해, delims가 아닌 문자까지 토큰화 시작 주소를 이동한다.
   - 반환용으로 delims가 아닌 첫번째 문자의 주소를 시작 주소 변수에 저장한다.
@@ -823,24 +909,58 @@ static 변수 next 선언
 ![img_95.png](img_95.png)
 
 - 매개변수를 보고 원본을 변경하는지, 아닌지 판단하자
-- 변경하더라도, 보통 사본을 변경하죠!!! (strtok)
+- 변경하더라도, 보통 사본을 변경하죠!!!
 - 핵심은 원본은 변경하지 않는다! 그리고 절대 새로운 문자열을 만들지 않는다.
 
 ## 코드샘플: 문자열을 대문자 또는 소문자로 바꾸기
 
+```c++
+#include "string_utils.h"
+
+int is_alpha(int c)
+{
+   return (c >= 'A' && c <= 'Z')
+        || (c >= 'a' && c <= 'z');
+}
+/*
+- 컴파일 할 때는 c >= 'A' 라고 해도 숫자(아스키 코드)로 검사하죠
+* */
+
+int to_upper(int c)
+{
+    if (is_alpha(c)) {
+        return c & ~0x20;
+    }
+
+    return c;
+}
+
+int to_lower(int c)
+{
+    if (is_alpha(c)) {
+        return c | 0x20;
+    }
+
+    return c;
+}
+/*
 - to_upper, to_lower은 왜 int를 반환하나요?
-  - 원래 표준 라이브러리가 그렇게 되어있음...
-  - char -> int로 변환이 되기 때문에..
-  - 뭐 어쩌겠음..
-- string_toupper, string_tolower은 모두 void를 반환한다. 즉 원본을 수정합니다.
-  - 이런 원본 수정을 `inplace`라고 합니다.
-
-- isAlpha: 아스키 코드로 검사하면 됨 ㅇㅇ;
-  - 컴파일 할 때는 c >= 'A' 라고 해도 숫자(아스키 코드)로 검사하죠
-
+- 원래 표준 라이브러리가 그렇게 되어있음...
+- char -> int로 변환이 되기 때문에..
+- 뭐 어쩌겠음..
 - to_upper, to_lower에서 isAlpha를 사용해서 알파벳인지 검사후 비트 연산을 해야함니다.
-  - 비트 연산 자체가 알파벳 범위에만 적용되는거라..
+  - 비트 연산 자체가 알파벳 범위의 아스키 값에만 적용되는거라.. (32를 더하고 빼고)
+* */
 
+void string_toupper(char* str)
+{
+    while (*str != '\0') {
+        *str = to_upper(*str);
+        ++str;
+    }
+}
+
+/*
 - to_upper은 비트 마스킹을 이용합니다.
   - 대문자로 바꾸려면 32를 빼면 됩니다.
   - 0x20은 32입니다. 비트 패턴 0010 0000, not으로 바꾸면 1101 1111이죠? &연산하면 32를 빼는 연산이랑 동일함
@@ -848,6 +968,21 @@ static 변수 next 선언
     - 대문자 A: 0100 0001(65), Z: 0101 1010(90)
   - 소문자로 바꾸려면 32를 더하면 됩니다. 비트 패턴 0010 0000, or연산하면 32를 더하는 연산이랑 동일함
 - 아스키라서 1바이트 기준으로 비트 패턴을 표시한거지, 실제로 int를 받기 때문에 32비트인데 0으로 채우면 됩니다. ㅇㅇ;
+* */
+
+void string_tolower(char* str)
+{
+    while (*str != '\0') {
+        *str = to_lower(*str);
+        ++str;
+    }
+}
+
+/*
+- string_toupper, string_tolower은 모두 void를 반환한다. 즉 원본을 수정합니다.
+- 이런 원본 수정을 `inplace`라고 합니다.
+* */
+```
 
 ## 출력, 서식 지정(formatted) 출력, 서식 문자열(format string)
 
@@ -958,28 +1093,66 @@ static 변수 next 선언
 
 ## 코드보기: ASCII 표 그리기
 
-- MIN_ASCII = 32, 빈칸 문자, 화면에 출력 가능한 가작 작은 문자
-- MAX_ASCII = 126, ~ 문자, 화면에 출력 가능한 가장 큰 문자
-- 출력 가능한 문자는 95개 126 - 32 + 1
-- COLUMN 3개로 보기 좋게 그리자.
-- ROW수 구하는 논리
-  - 총 95개 문자에, 3열로 나눌꺼니까, 3으로 나눠서 몫을 구해보자.
-  - 95 / 3 = 31, 95 % 3 = 2
-  - 31행 3열로 그리면 2개가 남는다. 그래서 1행 추가
-  - 이 논리가 결국 나눠떨어지지 않으면 올림을 하는 논리이다.
-  - if (95 % 3 != 0) row++; 나머지를 포함할 행을 추가하는 것
-  - 수식으로 표현하면 이렇다. NUM_CHARS + NUM_COLS - 1 / NUM_COLS
-  - 이렇게 하면 나눠떨어지지 않아도 올림을 해준다.
-  - 나눠 떨어지면 나누는 수 - 1을 더해봤자 몫이 증가하지 않음
-  - 나눠 떨어지지 않으면 나머지의 최소값이 1이니까 나누는 수 - 1을 더하면 반드시 몫이 증가함
-- 마지막 줄이랑 for문을 분리했다.
-  - for문 안에 if문 넣기 싫어서
-- 마지막줄을 출력할 때 이미 r값이 마지막 줄 offset(NUM_ROWS - 1)이다.
-  - 여기서 for문은 column을 건너뛰면서 컬럼 하나씩 출력하는 용도다.
-  - 각 row를 출력하는 반복문에서는 하나의 row에서 출력문을 3개 작성해서 굳이 2중 for문을 작성하지 않도록 했다.
-  - for문을 만들지 않는게 더 효율적임(컴파일러에서도 이렇게 최적화를 많이 하곤 합니다.)
+```c++
+#include <stdio.h>
+
+#include "print_ascii_table.h"
+
+void print_ascii_table(void)
+{
+    const int MIN_ASCII = 32;
+    // - MIN_ASCII = 32, 빈칸 문자, 화면에 출력 가능한 가작 작은 문자
+    const int MAX_ASCII = 126;
+    // - MAX_ASCII = 126, ~ 문자, 화면에 출력 가능한 가장 큰 문자
+    const int NUM_CHARS = MAX_ASCII - MIN_ASCII + 1;
+    // - 출력 가능한 문자는 95개 126 - 32 + 1
+    const int NUM_COLS = 3;
+    const int NUM_ROWS = (NUM_CHARS + NUM_COLS - 1) / NUM_COLS;
+    /*
+    - ROW수 구하는 논리
+    - 총 95개 문자에, 3열로 나눌꺼니까, 3으로 나눠서 몫을 구해보자.
+    - 95 / 3 = 31, 95 % 3 = 2
+    - 31행 3열로 그리면 2개가 남는다. 그래서 1행 추가
+    - 이 논리가 결국 나눠떨어지지 않으면 올림을 하는 논리이다.
+    - if (95 % 3 != 0) row++; 나머지를 포함할 행을 추가하는 것
+    - 수식으로 표현하면 이렇다. NUM_CHARS + NUM_COLS - 1 / NUM_COLS
+    - 이렇게 하면 나눠떨어지지 않아도 올림을 해준다.
+    - 나눠 떨어지는 경우 나누는 수 - 1을 더해봤자 몫이 증가하지 않음
+    - 나눠 떨어지지 않으면 나머지의 최소값이 1이니까 나누는 수 - 1을 더하면 반드시 몫이 증가함
+    * */
+
+    int r;
+    int ch;
+
+    printf("Dec Hex  Char\tDec Hex  Char\tDec Hex  Char\n");
+
+    for (r = 0; r < NUM_ROWS - 1; ++r) {
+        ch = MIN_ASCII + r;
+        printf("%03d %#X %c\t", ch, ch, ch);
+
+        ch += NUM_ROWS;
+        printf("%03d %#X %c\t", ch, ch, ch);
+
+        ch += NUM_ROWS;
+        printf("%03d %#X %c\n", ch, ch, ch);
+    }
+
+    /* last row doesn't have all columns */
+    for (ch = MIN_ASCII + r; ch <= MAX_ASCII; ch += NUM_ROWS) {
+        printf("%03d %#X %c\t", ch, ch, ch);
+    }
+    /*
+    - 마지막줄을 출력할 때 이미 r값이 마지막 줄 offset(NUM_ROWS - 1)이다.
+    - 여기서 for문은 column을 건너뛰면서 컬럼 하나씩 출력하는 용도다.
+    - 각 row를 출력하는 반복문에서는 하나의 row에서 출력문을 3개 작성해서 굳이 2중 for문을 작성하지 않도록 했다.
+    - for문을 만들지 않는게 더 효율적임(컴파일러에서도 이렇게 최적화를 많이 하곤 합니다.)
+    * */
+}
+```
 
 ## 코드보기: 바이트 단위 변환 표
+
+(시험 대비 디버그 모드로 출력 해보기, 굳이 코드 작성하면서 공부할 거리는 아님)
 
 - 메크로를 무더기로 정의할 수 있음
 - 제목들(칼럼 이름)은 배열로 따로 저장해서 출력
@@ -1032,8 +1205,8 @@ static 변수 next 선언
 ![img_119.png](img_119.png)
 
 - 지금은 콘솔에 똑같이 나오는데요?
-- 왜 분리했나요???
 - 다음 주에 배워요
+  - 리디렉션
 
 ## 다른 스트림은 뭐가 있을까?
 
@@ -1083,15 +1256,3 @@ static 변수 next 선언
 - 크기를 정해주는 n이 붙은 함수들, 함수마다 널캐릭터 붙여주는 함수도 있고, 아닌 함수도 있다.
 - 서식과 포멧
 - printf, fprintf, sprintf 모두 비슷하다.
-
-
-
-
-
-
-
-
-
-
-
-
