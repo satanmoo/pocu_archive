@@ -310,6 +310,7 @@
 ![img_49.png](img_49.png)
 
 - 새 줄을 만나서 끝났을 때와 아닐 때를 구분하기 위함
+  - gets의 경우 어차피 뉴라인까지 읽고, 버퍼에서는 뉴라인이 없으니까, 버퍼를 사용할 때 알아서 뉴라인을 넣어서 써!
 - 위는 count가 4인경우 예시
 - fgets는 count-1만큼 읽어서 str에 저장하고, 마지막에 '\0'을 넣어줌
 - 따라서 3개의 문자를 읽죠?
@@ -325,6 +326,7 @@
 - 첫번째 매개변수: 버퍼
 - 두번째 매개변수: 최대 읽는 글자 수
     - 널 문자를 포함한 수라서, count - 1개를 실제로 읽음
+    - str[count] = '\0'
 - 세번째 매개변수: 파일 스트림, 키보드 입력을 읽어오고 싶다면 stdin
 
 ## stream 자료형이 이상해요
@@ -453,7 +455,7 @@ while (fgets(line, 10, stdin) != NULL) {
 - 모든 프로그램의 공통사항인데, CPU 안에서 모든 것을 돌릴 때 가장 빠르다.
     - 메모리에서 읽어오면, 느려진다. 이 때 여러번 읽는 것 보다 한 번에 읽는게 빠르다.
 - CPU를 벗어나서 외부 구성요소로부터 읽어올 때 여러번 읽어올 때 과부하가 크다. 한 번에 많이 읽어오는게 빠르다!
-- 그래서 버퍼도 충분히 크게 잡죠
+- 그래서 버퍼도 충분히 크게 잡죠, 버퍼 오버플로도 방지하고!
 
 ![img_67.png](img_67.png)
 
@@ -493,9 +495,8 @@ while (fgets(line, 10, stdin) != NULL) {
 
 ![img_72.png](img_72.png)
 
-- 주소를 넣고, 주소에 저장된 값을 바꾸자
-- 그냥 num을 넣는다고 생각하면, 값이 복사되죠? 함수 블록 안에서 지역변수는 사라집니다.ㅋㅋ
-- 원본을 못바꿈
+- 주소를 넣고, 주소에 저장된 값을 바꾸자 (pass by reference)
+- 그냥 num을 넣는다고 생각하면, 값이 복사되죠? 함수 블록 안에서 지역변수는 사라집니다.ㅋㅋ 원본을 못바꿈 (pass by value)
 
 ## 매개변수에 주소 안 넣고, 각 타입에 맞게 반환하면 안 되나유?
 
@@ -803,7 +804,7 @@ while (fgets(line, 10, stdin) != NULL) {
 ![img_125.png](img_125.png)
 
 - line마다 길이가 변할 수 있으니, strlen으로 변수에 저장
-- [질문] sprintf의 retunr값을 사용해도 되나요? https://en.cppreference.com/w/cpp/io/c/fprintf 레퍼런스: Number of characters written if
+- [질문] sprintf의 return값을 사용해도 되나요? https://en.cppreference.com/w/cpp/io/c/fprintf 레퍼런스: Number of characters written if
   successful (not including the terminating null character)
 
 ![img_126.png](img_126.png)
@@ -904,8 +905,9 @@ int main(void)
 
 ![img_141.png](img_141.png)
 
-## fread() 함수
+## fread() 함수, fwrite() 함수
 
+### [fread 함수]
 ![img_142.png](img_142.png)
 
 - 퀵 소트 함수랑 엄청 비슷하네요.
@@ -924,6 +926,8 @@ int main(void)
 - EOF를 먼저 만난다면 count보다 적은 수를 읽을 수 있다.
 - 그래서 반환값이 실제로 읽은 개수
     - EOF를 만나거나, count 만큼 읽거나.
+
+### [fwrite 함수]
 - 비슷한 함수로 fwrite가 있다.
     - 첫번째 매개변수는 const void*로, 읽기만 가능하다.
     - buffer에서 읽는데, size 만큼 count개를 읽어서 스트림에 저장한다.
@@ -1221,10 +1225,14 @@ append_file("test.txt");
     - 누가 중간에 지웠을 수도...
     - 근데 C에는 예외처리가 없는데?
 
+### [fopen이 실패하면? 오류는 어떻게 처리?] 
+
 ![img_178.png](img_178.png)
 
 - fopen은 실패하면 NULL을 반환한다. 
   - 생각하는 방법: fopen의 반환값이 FILE* 이잖아요..? 즉 포인터죠? 포인터에서 아무 것도 없음을 나타내는 방법은 NULL
+
+### [fopen, fclose, fprintf의 오류 시 처리 방식이 각각 다름]
 
 ![img_179.png](img_179.png)
 ![img_180.png](img_180.png)
@@ -1311,7 +1319,7 @@ append_file("test.txt");
 ![img_195.png](img_195.png)
 
 - 원본 파일을 닫는다.
-- 닫는데 실패하면 EOF 반환하니, 에러 메세지 출력한다.  성공하면 0 알지?
+- 닫는데 실패하면 EOF 반환하니, 에러 메세지 출력한다. 성공하면 0 알지?
 
 ![img_196.png](img_196.png)
 
@@ -1385,7 +1393,7 @@ append_file("test.txt");
 - 반환값:
     - 성공하면: 0
     - 실패하면: 0이 아닌 수
-- 참고로 파일의 끝은 표준에서 반드시 강제하고 있지는 않음.
+- 참고로 파일의 끝은 표준에서 반드시 강제하고 있지는 않음. [후기 강조]
     - 이유는 파일에 1바이트를 저장할 때, 디스크에 저장할 수 있는 최소 저장단위인 1kb로 저장한다.
     - 파일을 저장하는 논리적 단위랑 물리적 단위가 다를 수 있음
     - 이 경우 운영체제게 파일 제일 뒤로가라는 SEEK_END를 했을 때 1바이트가 아니라 1kb를 이동할 수 있다.
@@ -1489,20 +1497,18 @@ append_file("test.txt");
 - 알고리즘
   - 도돌이표를 만난 경우
     - !repeating
-      - 처음 만난 경우(pos == -1): pos에 파일 위치 표시자를 저장
-      - 두번째 도돌이표를 만난 경우(pos != -1): fseek로 pos로 이동, repeating을 true로 설정
+      - 처음 만난 경우(pos == -1): pos에 파일 위치 표시자를 저장 (여는 도돌이표의 다음 위치 저장)
+      - 닫는 도돌이표를 만난 경우(pos != -1): repeating을 true로 설정, fseek로 pos(여는 도돌이표)로 이동 
     - repeating
-      - 처음 만난 경우: 아무것도 안 함
-      - 두번째 도돌이표를 만난 경우: pos를 -1로 초기화, repeating을 false로 초기화
+      - 닫는 도돌이표를 만난 경우: pos를 -1로 초기화, repeating을 false로 초기화
 
 - !repeating이면, 이 도돌이표를 처음 방문한다는 것
 - 여기서 pos를 확인하는데
-    - 만약 pos가 -1(즉 초기화 상태면) 도돌이표를 처음 만나는 것이다. 따라서 여는 도돌이표임을 알 수 있다.
+    - 만약 pos가 -1(즉 초기화 상태면) 여는 도돌이표를 처음 만난 것
 
 ![img_223.png](img_223.png)
 
-- 이미 도돌이표는 읽어서 25번째 줄 if문에서 false가 되었음
-- 그래서 파일 스트림에서 파일 위치 표시자는 도돌이표 다음을 가리키는 중
+- 파일 스트림에서 파일 위치 표시자는 도돌이표 다음을 가리키는 중 (이미 도돌이표는 읽었기 때문)
 - fgetc로 읽으면, 파일 위치 표시자는 읽은 뒤 문자를 가리킴 
 
 ![img_224.png](img_224.png)
@@ -1525,8 +1531,9 @@ append_file("test.txt");
 
 ![img_228.png](img_228.png)
 
-- reapting이 true이고, 다시 :를 만난 경우
-- 즉 도돌이표로 두번째 반복이 끝났다는 거죠?
+- reapting이 true이고, 다시 :를 만난 경우 닫는 도돌이표를 두번째로 만난거임
+  - 여는 도돌이표는 두번 만날 수 없음
+- 즉 도돌이표로 반복이 끝났다는 거죠?
 - pos를 -1로 초기화하고, repeating을 false로 초기화
 
 ## 입출력 리디렉션
@@ -1757,6 +1764,3 @@ append_file("test.txt");
 
 - 입출력 리디렉션
 - 커맨드 라인 인자
-
-
-
