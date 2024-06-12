@@ -2,17 +2,17 @@
 
 ## 구조체
 
-- 기본 자료형과 다른 개념
-- 데이터를 하나로 묶어주는 개념
+- 여러 다른 데이터를 하나로 묶어주는 개념
 
 ### 구조체란?
 
 ![img.png](img.png)
 
-- strucure: 구조물, 구조체
-- 클래스로 가기 전 중간 단계, 함수는 없고, 데이터만 모아놓음
+- struture: 구조물, 구조체
+- 클래스로 가기 전 중간 단계
+- 함수는 없고, 데이터만 모아놓은 것
 
-### C에서는 모두 값형이다.
+### C 에서는 모두 값형 구조체도 값형
 
 ![img_1.png](img_1.png)
 
@@ -39,7 +39,7 @@
 - 몽말인지 알지
 - 개체지향으로 가는 과정
 
-### 컴파일러는 묵시적으로 변환 가능한 자료형이 실수인지 알 수 없음
+### 컴파일러는 묵시적으로 변환 가능한 자료형이 실수(mistake)인지 알 수 없음
 
 ![img_8.png](img_8.png)
 
@@ -56,7 +56,7 @@
 ![img_11.png](img_11.png)
 ![img_12.png](img_12.png)
 
-## 실수를 막는법
+## 실수를 막는법: atomic operation [후기 강조]
 
 ![img_13.png](img_13.png)
 
@@ -67,17 +67,26 @@
 ![img_14.png](img_14.png)
 
 - 원자성을 보장하는 연산(atomic operation)!
-- 어떤 함수를 호출했을 때 해야할 일 모두 다하고, 결과를 한 번에 돌려주 개념이 원자성
+- 어떤 함수를 호출했을 때 해야할 일 모두 다하고, 결과를 한 번에 돌려주는 개념이 원자성
 
 ## 구조체의 선언 및 사용
 
-- 원자성을 보장하고 실수없이 코드를 작성하는 방법이 구조체
+- 결과를 한 번에 돌려주려면 데이터를 모으는 개념이 필요함
+- 구조체
 
 ![img_15.png](img_15.png)
 
 ### 구조체의 선언
 
 ![img_16.png](img_16.png)
+
+```c++
+struct data {
+    int year;
+    int month;
+    int day;
+};
+```
 
 - 세미콜론 잊지 말 것
 
@@ -100,21 +109,21 @@
 - 멤버 변수에 접근할 때는 `.`을 사용한다.
   - 클래스 개체에서 접근하듯이
 
-## 지역 변수 선언시 0으로 초기화 안 됨
+## 구조체를 지역 변수로 선언하면 당연히 0으로 초기화 안 됨
 
 ![img_23.png](img_23.png)
 
 - 선언 시점에는 그 전에 스택에 위치에 있던 쓰레기값이 들어감
-- 초기화를 직접해줍시다.
+- 지역변수는 반드시 직접 초기화하자! 
 
 ## 구조체는 장황하다.
 
 ![img_24.png](img_24.png)
 ![img_25.png](img_25.png)
 
-- structe date 이렇게 쓰는게 너무 길다. ㅠㅠ
+- struct date 이렇게 쓰는게 너무 길다. ㅠㅠ
 
-## typedef 이란?, typedef 사용법
+## typedef 사용법
 
 ![img_26.png](img_26.png)
 
@@ -127,14 +136,14 @@
 - size_t <=> unsigned int
 - 물론 size_t는 플랫폼마다 다를 수 있음. 각 플랫폼에서 정의한 것이기 때문에
 
-## 구조체에 typedef 사용하기
+## 구조체에 typedef 사용하기1
 
 ![img_28.png](img_28.png)
 
 - 와! 깔끔하다.
 - typedef struct date date_t;
 
-## 사용법 2,3
+## 구조체에 typedef 사용하기2, 3
 
 ![img_29.png](img_29.png)
  
@@ -185,6 +194,8 @@
 ![img_38.png](img_38.png)
 
 - 컴파일러가 기계가 이해하는 코드로 만들 때 알아서 똑같이 만들어줌
+- 배열처럼 스택에 순차적으로 쌓이는 개념
+  - 여기서 응용하면 구조체 변수의 주소는 구조체의 첫번재 멤버의 주소와 동일함!
 
 ## 또 다른 구조체 초기화 방법
 
@@ -207,7 +218,7 @@
 
 - 요소 나열법이 유용한 경우가 딱 하나 있긴한데
 - const로 선언된 구조체 멤버를 초기화할 때
-- 근데 const 멤버 변수를 사용하는 것은 안티패턴
+- 근데 const 멤버 변수를 사용하는 것은 안티 패턴
 
 ## 구조체 매개변수
 
@@ -249,14 +260,15 @@
 
 ## 구조체 매개변수 베스트 프렉티스
 
-### 매개변수에 주소를 전달할까? 값을 복사할까?
+### 매개변수에 주소를 전달할까? 값을 복사할까? 데이터 크기를 고려하라
 
 ![img_53.png](img_53.png)
 
 - 구조체의 경우 배열처럼 데이터의 크기가 클 수 있죠?
-- 배열을 그래서 함수의 매개변수로 전달할 때 첫번째 원소의 주소를 전달해씀
+- 그래서 배열을 함수의 매개변수로 전달할 때 첫번째 원소의 주소를 전달했음
 - 구조체도 마찬가지로 구조체의 주소를 전달해주는게 좋음
   - 스택 메모리 너무 많이 쓰잖아요~
+  - 매개변수는 모두 스택 메모리에 올라감
 - 주소를 전달했기 때문에 원본 변경이 걱정이면? const!
 
 ![img_54.png](img_54.png)
@@ -266,9 +278,9 @@
 ![img_55.png](img_55.png)
 ![img_56.png](img_56.png)
 
-- 이건 그냥 구조체를 전달하는게 좋다고 알면되용
+- 이건 그냥 구조체를 전달하는게 좋다고 알면됨
 
-## 함수 반환값으로서의 구조체, 구조체 배열
+## 함수 반환값으로서의 구조체
 
 ![img_57.png](img_57.png)
 
@@ -305,6 +317,8 @@
 - sizeof(date_t)도 됨
 - 구조체 배열에서 0번째 원소와 1번째 원소를 (char*)로 형변환해서 차이를 구하면
   - char(1byte) 기준 offset을 구할 수 있죠!
+  - 즉 몇 바이트 차이나는지 구할 수 있음
+  - 이것이 배열의 원소의 크기를 알아내는 방법, 여기서는 배열의 원소가 구조체라 구조체 크기를 알 수 있음
 
 ![img_64.png](img_64.png)
 
@@ -343,7 +357,14 @@
 
 - 구조체 변수마다 독자적인 메모리 공간을 만들어주고, 문자열 내용을 복사해야함
 
-## 파일을 읽고 쓸 대도 비슷한 문제
+## 파일을 읽고 쓸 때도 비슷한 문제: 얕은 복사와 깊은 복사
+
+```c++
+typedef struct {
+    char* firstname;
+    char* lastname;
+} name_t;
+```
 
 ![img_71.png](img_71.png)
 
@@ -352,11 +373,16 @@
   - 근데 각 원소가 구조체니까, 구조체의 멤버 변수를 초기화한거임
   - names[0].firstname = "Teemo";
 - 근데 근데 구조체의 멤버 변수가 char*임. 따라서 각 멤버 변수는 char 배열의 첫번째 원소의 주소를 값으로 가짐
+  - 여기서는 문자열을 char* 형 변수에 바로 대입했기 때문에 데이터섹션의 주소값을 가짐(읽기 전용)
 
 ![img_72.png](img_72.png)
+
+- 파일 쓰기
+- 멤버 변수의 주소값(0x009c3006)
+
 ![img_73.png](img_73.png)
 
-- 읽는 코드를 작성했음
+- 방금 쓴 파일을 그대로 읽기
 
 ![img_74.png](img_74.png)
 
@@ -370,6 +396,7 @@
 ![img_76.png](img_76.png)
 
 - fread로 읽어올 때도 값을 정상적으로(주소를) 읽어왔습니다.
+  - 멤버 변수의 주소값(0x009c3006) 동일함
 - 프로그램을 껐다가 켰으니, 메모리의 주소에 저장된 값은 더 이상 유효하지 않다.
 - 프로그램을 켜기 전과 후 메모리의 주소에 들어있는 값은 당연히 달라질 수 있습니다.
 
@@ -378,69 +405,95 @@
 ![img_77.png](img_77.png)
 
 - 8바이트네요?
-- 구조체 멤버 변수 2개, 둘다 4바이트니까 8바이트네요
+- 구조체 멤버 변수 2개, 둘다 char* 4바이트(32비트 컴퓨터의 워드 단위)니까 총 8바이트네요
 - 결국 그래서 주소를 파일에 저장해봤자, 아무런 의미가 없다는 것을 알 수 있다.
+  - 프로그램을 껐다키면, 메모리에 저장된 값은 더 이상 유효하지 않다.
+  - 멤버 변수의 주소값(0x009c3006)에 똑같은 문자열이 저장된다는 보장이 없음
+  - 파일에 얕은복사를 했는데, 프로그램을 끄고 키면서 메모리가 초기화 된거임
 
 ## 구조체 사용 시 포인터 저장의 문제
 
 - 포인터 변수 없는 구조체를 만들어볼까?
 
+```c++
+typedef struct {
+    char firstname[NAME_LEN];
+    char lastname[NAME_LEN];
+} name_t;
+```
+
 ### 구조체로 배열을 복사하가
 
 ![img_78.png](img_78.png)
 
-- 포인터가 아니라 배열로 구조체 멤버 변수를 저장해보자
+- 포인터가 아니라 배열 변수로 구조체 멤버 변수를 저장해보자
 - sizeof(name_t)로 구조체의 크기를 확인해보니까 64임
 - 엇, 원래 배열을 함수의 매개변수로 전달하면 포인터를 전달하잖아?
-- 근데 이렇게 구조체의 멤버 변수로 선언하고, 구조체를 함수의 매개변수로 전달하니까 배열을 복사할 수 있음!!!
+- 근데 이렇게 구조체의 멤버 변수로 선언하고, 구조체를 함수의 매개변수로 전달하니까 배열의 모든 원소를 복사할 수 있음!!!
+- 얉은 복사에서 예시와 다르게 스택 메모리에 저장
 
 ### enum { NAME_LEN = 32 };로 enum에 상수 정의하는 방법도 있음
 
 - C++에서 제대로 배움
-- TODO:메모리에서 확인해보기
 
 ![img_79.png](img_79.png)
 
 - 이렇게 구조체의 멤버변수를 배열로 선언하면, 배열에 어떻게 값을 대입할 것인가를 고민해야한다.
 - char[]인데... 흠, 기존에는 char*였기 때문에 ""를 이용해서 C 스타일 문자열을 대입했다.
-- char[]은 어떻게 초기화하지? strcpy를 쓰면 됨
+- char[]은 어떻게 초기화하지? strncpy를 쓰면 됨
+  [질문]: names[0].firstname = "Teemo"; 이렇게 하면 안되나요? 구조체 변수를 선언하는 순간 배열 변수가 되어서 대입이 불가능?
 - 문자열을 복사하면 된다.
   - 뭐 내부적으로 for문 도는거겠지만 그냥 strcpy쓰면 된다.
-- strcpy는 마지막에 널문자를 보장하지 않는다.
-  - 왜냐하면 src의 길이가 dest보다 길 수도 있음. 위 예시에서는 NUM_NAMES 값보다 길이가 긴 이름을 복사하려고 하면, 그렇게 됨(undefined behavior) 
-    - 그래서 NAME_LEN-1까지 복사하고, 마지막에 널문자를 넣어줘야함
-  - dest 공간이 충분한 경우, strcpy는 src를 널문자 포함해서 복사하기 때문에, dest가 C 스타일 문자열임을 보장함
+- strncpy는 마지막에 널문자를 보장하지 않는다.
+  - 왜냐하면 src의 길이가 dest보다 길 수도 있음. 위 예시에서는 NUM_NAMES 값보다 길이가 긴 이름을 복사하려고 하면, 널 문자를 보장하지 않음 
+    - 그래서 배열의 마지막 자리에(NAME_LEN-1) 널문자를 넣어줘야함
+  - strncpy의 매개변수로 생각해보자
+    - src로 들어오는 문자열의 길이가 모두 count보다 작음
+      - src로 들어오는 문자열의 길이가 count보다 작다면, strncpy에서는 dest에 src의 길이만큼 복사하고, count - src의 남은 공간은 널문자로 채워줌
+    - "Teemo", "Kim", "Lulu", "Lee"(src) 모두 NUM_NAMES(count)보다 작음
+    - names의 멤버 firstname, lastname 모두 크기가 NAME_LEN이다. 따라서 dest 공간이 충분하다. 따라서 dest가 C 스타일 문자열임을 보장함
+  - 지금 예시에서는 strncpy에서 자동으로 널 문자를 넣어주기 때문에 마지막에 널문자로 바꿔주는 코드가 효과가 없지만, 좋은 습관에 따라 넣어주는게 좋다.
+    - 만약 src의 길이가 NAME_LEN과 같거나 크면 dest에 널문자가 들어가지 않기 때문임
 
 ![img_80.png](img_80.png)
 
-- 그렇게 해서 저장하고 파일을 읽어보면, 주소가 아니라 문자 배열의 각 요소들이 잘 저장된 것을 확인할 수 있다.
+- 구조체의 멤버로 배열을 선언하고 배열에 값을 복사해서 파일에 쓰기
 
 ![img_81.png](img_81.png)
+
+- 구조체에 깊은 복사를 하고 파일에 저장 후 파일을 읽어보면, 주소가 아니라 문자 배열의 각 요소값들이 잘 저장된 것을 확인할 수 있다.
+- 파일에 깊은 복사 성공
+
 ![img_82.png](img_82.png)
 
 - 프로그램을 통해서 파일을 읽어보자
   - 여기서 sizeof(names[0])의 값은 얼마일까요?
   - 64임. 배열의 크기와 동일하다.
 - printf로 출력했더니, 정상적으로 잘 출력됬다.
-- 근데 구조체의 멤버 변수가 가지는 주소값이 프로그램을 다시 실행하기 전과 비교했을 때 달라졌다.
+- 근데 구조체의 멤버 변수가 가지는 `주소값`이 프로그램을 다시 실행하기 전과 비교했을 때 달라졌다.
+  - 스택 메모리 주소가 변한 것
+  - 파일에서 저장된 내용을 새로운 스택 메모리의 구조체 변수에 복사했기 때문에, 주소값이 달라진 것
 
 ![img_83.png](img_83.png)
 
-- 구조체를 만들 때 좋은 습관은, 포인터가 없는게 좋음
-- 구조체를 값형처럼!!!
-- 이게 훨씬 편합니다 ㅇㅅㅇ;
+- 구조체를 만들 때 좋은 습관은, 구조체의 멤버에 포인터가 없는게 좋음
+- 구조체를 값형처럼!!! 깊은 복사해서 사용하자
 
 ## 구조체를 다른 구조체의 멤버로 사용하기, 바이트 정렬
 
 ![img_84.png](img_84.png)
 
 - 구조체를 다른 구조체의 멤버 변수로 사용할 수 있음
+- 구조체도 데이터형이기 때문이다. 구조체는 멤버로 여러 데이터 형을 포함할 수 있음
 
 ## 구조체의 크기를 확인해보자
 
 ![img_85.png](img_85.png)
 
 - 파일에 저장할 때는 몇 바이트일까?
+- 이 질문이 왜 중요한가?
+  - 다른 플랫폼과 파일을 공유할 수 있음 따라서 파일을 읽을 때 정확하게 구조체의 크기를 알아야함
+  - 파생적으로 어떻게 효율적으로 저장할지, 어떻게 읽기 편하려면 어떻게 저장해야 좋을지를 고민
 
 ![img_86.png](img_86.png)
 
@@ -454,7 +507,25 @@
   - height는 short인데 4바이트를 차지함
   - age도 short인데 4바이트를 차지함(원래 2바이트)
 - char*로 형변환해서 1바이트 단위로 offset을 바꿨죵
-- 이거 코드 작성 스스로할 줄 알아야함
+
+- [연습] 구조체 각 멤버 변수의 크기를 확인해보자
+```c++
+typedef struct {
+    int id;
+    name_t name;
+    unsigned short  height;
+    float weight;
+    unsigned short age;
+} user_info_t;
+
+user_info_t info;
+
+int struct_addr = (char*)&info.id - (char*)&info;   // 0 구조체 변수는 구조체 시작 주소, 구조체 첫번재 멤버의 시작 주소
+int off_id = (char*)&info.name - (char*)&info  // 4
+int off_name = (char*)&info.height - (char*)&info  // 68
+int off_height = (char*)&info.weight - (char*)&info  // 72
+int off_age = (char*)&info.age - (char*)&info  // 76
+```
 
 ![img_88.png](img_88.png)
 
@@ -463,12 +534,15 @@
 ## 바이트 정렬 요구사항
 
 ![img_89.png](img_89.png)
+
+- 바이트 정렬 요구사항 때문에 패딩(안 쓰는 공간)이 생김
+
 ![img_90.png](img_90.png)
 
-- 4바이트를 꽉 채우면, 구멍이 생기지 않음...
-- 2바이는 구멍을 만든다.
+- 4바이트를 꽉 채우면, 구멍이 생기지 않지만 2바이트는 구멍을 만든다.
 - 4바이트(워드 크기)의 경계에서 데이터를 읽는게 효율적이라서, 컴파일러가 4바이트로 정렬함
   - 4바이트 경계에 정렬된다(aligned)
+
 - 패딩이라고 표현하기도 함
 - 플랫폼 마다 다를 수 있음
 - 교훈은 어떤 구조체를 파일로 저장했는데, 다른 플랫폼에서 이 파일을 읽으면 바이트 수가 안 맞아서 엉뚱한 값이 읽힐 수 있다.
@@ -479,48 +553,89 @@
 
 ![img_92.png](img_92.png)
 
-- 4바이트 경계로 예쁘게 순서대로 해주자.
+- 4바이트 경계로 예쁘게 멤버의 순서를 변경
 - 컴파일러가 패딩을 없앨 수 있음
+  - 패딩은 컴파일러의 재량
 
 ## #pragma pack
 
 ![img_93.png](img_93.png)
 
-- 패딩 넣지 마라라고..
+- 컴파일러에 패딩 넣지 마라라고 지시
 - C 표준 X, Clang은 지원해줌
+- #pragma pack(push, 1): 여기서부터 스택에 1바이트씩 넣음
+- #pragma pack(pop): 스택의 끝
 
 ## 구조체 베스트 프렉티스
 
 ![img_94.png](img_94.png)
 
-- 보통 assert로 구조체 크기 확인
+- 업계에서 보통 assert로 구조체 크기 확인
 
 ![img_95.png](img_95.png)
 
-- 명시적으로 코딩으로 패딩을 넣어도 됨 ㅋㅋ
+- 명시적으로 코딩으로 패딩을 넣어도 된다. 
 
-## 코드보기: 점, 선, 직사각형
+## 코드보기: 점, 선, 직사각형 [연습]
 
 ![img_96.png](img_96.png)
 
+- 구조체를 여러 파일에서 공유하려면 헤더파일에 선언하자
 - 사각형 만들 때 대각선의 두 점을 사용
   - 왼쪽 위, 오른쪽 아래
+- 구조체의 멤버로 다른 구조체를 사용하는 예
 
 ![img_97.png](img_97.png)
 
 - 두 점으로 대각선에 따라 사각형을 만드는 코드
   - x좌표, y좌표 둘다 마찬가지
+- p0이 왼쪽 아래, p1은 오른쪽 아래를 보장하기 위해 검사하는 개념
 
 ![img_98.png](img_98.png)
 
-- 절대값이 있는 이유는, 이 코드의 경우 도우미 함수로 bottom_right.x < top_left.x 가 보장됨
+[도우미 함수]
+```c++ 
+rectangle_t build_rectangle(point_t p0, point_t p1)
+{
+    rectangle_t rect;
+
+    if (p0.x < p1.x) {
+        rect.top_left.x = p0.x;
+        rect.bottom_right.x = p1.x;
+    } else {
+        rect.top_left.x = p1.x;
+        rect.bottom_right.x = p0.x;
+    }
+
+    if (p0.y < p1.y) {
+        rect.top_left.y = p0.y;
+        rect.bottom_right.y = p1.y;
+    } else {
+        rect.top_left.y = p1.y;
+        rect.bottom_right.y = p0.y;
+    }
+
+    return rect;
+}
+```
+
+- 이 코드의 경우 도우미 함수로 bottom_right.x < top_left.x 가 보장됨. 따라서 abs코드는 효과가 없음
 - 근데 구조체의 멤버 변수는 `누구나`접근할 수 있다.
 - 따라서 도우미 함수를 사용하지 않고, 직사각형을 만든 후, 이 직사각형을 get_rectangle_area의 인자로 넘길 수 있다.
-- 혹시나~해서
+  - 어떻게 도우미 함수 없이 만들지? 그냥 구조체 선언하고 멤버에 값 대입하면 됨
+- abs로 도우미 함수를 사용하지 않고 rectangle 구조체를 만들었을 때 get_rectangle_area의 값이 정상적으로 반환될 수 있도록 방어하는 것
+
+```c++
+typedef struct {
+    point_t top_left;
+    point_t bottom_right;
+} rectangle_t;
+
+```
 
 ![img_99.png](img_99.png)
 
-- 원한다면 scanf로 stdin의 입력을 받아봐
+- [연습] scanf로 stdin의 입력을 받아봐, 출력도 해보자
 
 ![img_100.png](img_100.png)
 
@@ -538,7 +653,6 @@
 
 ## 비트 필드
 
-- 구조체의 장점은 여러 데이터를 모은다는 점이다.
 - 프로그래머가 임의로 데이터의 크기를 조절한 자료형을 만들어볼까?
 
 ![img_103.png](img_103.png)
@@ -547,16 +661,35 @@
 
 ![img_104.png](img_104.png)
 
+```csharp
+byte ToBitFlags(bool[] flags)
+{
+    byte result = 0;
+    for (int i = 0; i < flags.Length; i++)
+    {
+        if (flags[i])
+        {
+            result |= (byte)(1 << i);
+        }
+    }
+    return result;
+}
+// 배열은 왼쪽부터 인덱스가 0부터 시작
+// 비트 플래그의 경우 오른쪽 부터 0부터 시작
+// {true, false, true, flase, flase, flase, flase, flase}
+// 00000101
+// 읽는 방법이 다름
+```
+
 - C#에서 bool은 1비트
 - 8개의 bool로 비트 플래그를 만드는 코드
 - 비트 플래그의 자료형은 8비트 즉 byte
-- 11111111
 
-### C에서 구조체를 이용한 비트 플래그
+### C에서 구조체를 이용한 비트 플래그 / : 연산자
 
 ![img_105.png](img_105.png)
 
-- 콜론을 찍으면 1비트만 쓰겠다!
+- `콜론`을 찍으면 1비트만 쓰겠다!
 - 1비트 8개가 들어가서, sizeof(구조체)는 1바이트
 - 콜론없이 했으면 8바이트 나왔겠쥬
 
@@ -566,6 +699,7 @@
 
 ![img_107.png](img_107.png)
 
+- 메모리에 8비트를 쓰니까, 이 flags 구조체의 값이 변하면 붉은색으로 마스킹된 1바이트 값만 변함
 - 4번째 비트를 1로 바꾸면, 비트 패턴이 00001000이 됨
 - 그래서 값이 8이쥬
 
@@ -573,15 +707,15 @@
 
 ![img_108.png](img_108.png)
 
-- 비트 연산을 통해서 플래그를 한 번에 체크할 수 있었는데 ㅠㅠ
+- 구조체의 멤버를 한 번에 동시에 체크하는 방법이 없음
 
-## 하지만 포인터로 할 수 있음!!!
+## 하지만 포인터로 할 수 있음!!! [연습]
 
 ![img_109.png](img_109.png)
  
 - flag의 주소를 char*로 캐스팅하면
-- 이 포인터 변수에서 1바이트를 읽어올 수 있다. indirection으로 ㅇㅇ;
-- 그래서 값을 체크하는거죠
+- 이 포인터 변수에서 1바이트를 통채로 읽어올 수 있다.
+  - 그리고 역참조를 통해 *val의 값을 읽을 수 있어, 이를 정수값과 비교함
 
 ![img_110.png](img_110.png)
 
@@ -605,12 +739,14 @@
 - val, bits 둘다 같은 메모리 주소를 가리키는게 공용체의 특징
 - 공용체 내부의 구조체에 접근할 때 .으로 한번 더 접근해야함
   - 문법이 살짝 달라졌죠
-- 메모리 크기는 가장 큰 멤버 변수의 크기로 결정됨
-- 이 예에서는 둘다 8비트로 동일해서 1바이트ㄴ
+- 공용체의 크기는 `가장 큰 멤버 변수의 크기`로 결정됨
+- 이 예에서는 둘다 8비트로 동일해서 1바이트
 
 ![img_113.png](img_113.png)
+
 - 코드로 보자
 - 우선 0으로 초기화
+  - 초기화 코드 기억하기
 
 ![img_114.png](img_114.png)
 
@@ -618,15 +754,18 @@
 - val의 값이 바뀌는것 주목
 
 ![img_115.png](img_115.png)
-![img_116.png](img_116.png)
 
 - .으로 접근할 때 문법은 depth가 생김
 
+![img_116.png](img_116.png)
+
+- char로 읽음
+
 ![img_117.png](img_117.png)
 
-- 메모리 주소 같은거임 ㅇㅇ;
+- 동일한 메모리 주소에서 어떻게 읽냐?
 
-## 코드보기: 색상 표현하기
+## 코드보기: 색상 표현하기 [연습]
 
 ![img_118.png](img_118.png)
 
@@ -636,7 +775,7 @@
 
 ![img_119.png](img_119.png)
 
-- 8비트 3개라서 2의 24승만큼 숫자를 나타낼 수 이씀
+- 8비트 3개라서 2의 24승만큼 색을 나타낼 수 이씀
 
 ![img_120.png](img_120.png)
 
@@ -645,24 +784,29 @@
 
 ![img_121.png](img_121.png)
 
-- red.val로 모든 비트 패턴을 초기화 하는거죠?
+- red.val로 `모든 비트 패턴`을 초기화 하는거죠?
 
 ![img_122.png](img_122.png)
 
 - 공용체의 대입
-- 값을 복사함
+- 값을 복사함, 초기화
 
 ## 메모리 공유만을 위한 공용체
 
-- 메모리 공유만을 위한다?
-- 메모리를 공유하고, 다르게 해석하는 용도가 아님
-- 그냥 같은 메모리 공간을 공유하는게 주목적
+- 메모리 공유만을 위한다??
+- 방금 전 공용체의 예시는 구성 요소를 따로 따로 해석, 구성 요소 모두를 해석하는 예시였음
+  - 구성 요소를 따로 따로 변경해서 RGBA 색을 바꿈
+  - 구성의 변경이 전체의 변경으로 이어짐
+- 그냥 같은 메모리 공간을 공유하는게 주목적으로 공용체를 사용할 수 있음
+  - 멤버끼리 연관이 없음, 독립적임
 
 ![img_123.png](img_123.png)
 
 - ivalue, dvalue가 서로 의미가 없음
 - 상관관계도 없음, 정수, 실수형이라 비트패턴 해석에서 뭔가 겹칠 일도 없음
 - calculate 함수를 살펴봐야 알죠?
+- 이 공용체의 크기는 8바이트
+  - 가장 큰 멤버의 크기가 double로 8바이트기 때문
 
 ![img_124.png](img_124.png)
 
@@ -677,12 +821,13 @@
 
 ![img_127.png](img_127.png)
 
-- result에서 중요한 것은 4바이트 부분까지만 중요함
+- result를 구할 때 4바이트까지 읽어서 값을 구함
 
 ![img_128.png](img_128.png)
 
 - 부동소수점 IEEE754
 - 8바이트로 표현됨
+
 ![img_129.png](img_129.png)
 - result도 8바이트로 읽어서 출력하면 double값으로 정상 작동
 
@@ -724,27 +869,31 @@
 - 함수도 어디에 저장해 둔 뒤 매개변수로 전달하기 가능?
 - 함수를 변수에 저장할 때, 무엇을 저장해야 함수라고 인식할까?
 
-### 함수 호출 방법을 생각해보자.
+### 함수 호출 과정에서 함수의 시작 주소는 언제 결정될까?
 
 ![img_136.png](img_136.png)
 
-- 어셈블리어로는 그 함수의 시작 주소로 점프하고, return으로 돌아오는 것임
-- 함수의 시작 주소는 언제 결정될까? 컴파일 타임에 결정된다.
-  - 실행 중에 함수의 시작 주소가 바뀌진 않음
+- 함수 호출 코드에서 직접 함수명을 사용함
+- 함수 호출 코드를 어셈블리어로 변환하면 그 함수의 시작 주소로 점프함
+  - 그리고 코드를 실행하다가   리시버의 return문을 만나면 호출자로 점프해 돌아오게 됨
+  - 이 때 리시버의 주소는 스택 프레임에 넣지 않음?
+  - [질문]: 리시버의 주소는 스택 메모리 말고 코드 영역에 저장되어있나요?
+- 함수의 시작 주소는 언제 결정될까? `컴파일 타임`에 결정된다.
+  - 실행 중에 리시버 함수의 시작 주소가 바뀌진 않음
 
-### 실행 중에 메모리에서 주소가 바뀌는 경우가 있을까?
+### 함수가 종료되고 return할 때 돌아가는 호출자의 주소는 언제 결정될까?
 
 ![img_137.png](img_137.png)
 
 - 실행 도중에 메모리 주소가 바뀌는 경우가 있음
-- 호출된 함수를 반환하고 돌아갈 때 호출자의 주소는 실행 중
+- 호출된 함수를 반환하고 돌아갈 때 호출자의 주소는 실행 중 변할 수 있음
   - 어떤 함수를 여러 곳에서 호출할 수 있잖아.
 
 ![img_138.png](img_138.png)
 
-- 돌아갈 주소는 스택 메모리에 저장됨
-- 이 주소 값은 실행 도중에 바뀔 수 있다.
-- 00E211AB 값은 호출자가 누구냐에 따라 실행 중 바뀐다.
+- call 이라는 어셈블리어가 실행되면, (리시버)0E21040h로 점프하고, 돌아갈 코드 주소인 00E211AB를 `스택 메모리`에 저장
+- 돌아갈 코드의 주소 값은 실행 도중에 바뀔 수 있다.
+- 즉 00E211AB 값은 호출자가 누구냐에 따라 실행 중 바뀐다.
 
 ## 모든 것이 다 메모리 주소
 
@@ -752,12 +901,14 @@
 
 - 모든 어셈블리어 명령어는 그 명령어의 주소가 저장되어있음
 - 함수도 마찬가지로, 함수의 시작 주소가 저장되어있음
+- [질문] 이 코드 주소도 코드 영역에 저장되나요?
 
 ## 함수를 매개변수로 전달할 때 필요한 것들, 함수 포인터 선언
 
 ![img_140.png](img_140.png)
 
 - 그러면 함수를 매개변수로 전달하려면, 함수 코드의 시작 주소를 넣으면 된다.
+- 이 주소를 저장하는 자료형이 함수 포인터
 
 ![img_141.png](img_141.png)
 
@@ -775,19 +926,24 @@
 ![img_145.png](img_145.png)
 
 - 다시 함수가 어떻게 실행되는지 떠올려보자.
-- 무선 caculate 함수를 호출하면, double 형 2개를 스택에 복사하게된다.
+- 우선 caculate 함수를 호출하면, double 형 2개를 스택에 복사하게된다.
+  - 하지만 이 매개변수는 calculate의 지역 변수
 - 어떤 함수를 호출하면, 그 함수에서 사용할 매개변수를 먼저 스택에 복사하고, 호출된 함수의 스택프레임이 만들어진다.
 - `매개변수로 전달된 함수`에 대해서 컴파일러 입장에서 아무것도 모른다.
   - `매개변수로 전달된 함수`의 매개변수 목록을 알 수 없다.
   - `매개변수로 전달된 함수`의 반환값도 알 수 없다. (반환값을 알아야 resister에 반환값을 자료형에 따라 저장함)
-- 즉 호출자인 calculate와 reciver인 `매개변수로 전달된 함수`사이에 어떤 규약이 필요하다.
+- 즉 호출자인 calculate와 리시버인 `매개변수로 전달된 함수`사이에 어떤 규약이 필요하다.
 
 ![img_146.png](img_146.png)
 
-- 예시를 확인해보자.
 - func라는 `매개변수로 전달된 함수`는 컴파일러 입장에서 생뚱맞은 상황
+- 단지 이 `매개변수로 전달된 함수`의 시작 주소만 알고 있음
+  - [질문] 여기서 함수의 이름은 결국 주소로 대체되는 건가요? 의미가 없어보이네요. 함수 시그니처의 구성요소로 매개변수 목록, 반환형, 함수의 이름
 - func의 매개변수 목록을 알 수 없다.
+  - 컴파일러 입장에서는 "double r = func(op1, op2);" 에서 검사를 할 때 op1, op2의 자료형을 알아야 검사할 수 있음
 - func의 반환값을 알 수 없다.
+  - 컴파일러 입장에서는 "double r = func(op1, op2);" 에서 검사를 할 때 func의 반환값의 자료형을 알아야 검사할 수 있음. double이 아니면 어쩔건데?
+  - 내부적으로 반환값이 중요한 이유는, void일 때는 레지스터에 반환값을 저장하지 않아도 되고, int일 때는 레지스터에 반환값을 저장해야함.
 
 ![img_147.png](img_147.png)
 
@@ -797,17 +953,14 @@
 
 ![img_148.png](img_148.png)
 
-- func는 변수 이름
+- func는 함수 포인터 변수 이름
 - func에 대입할 때 add함수를 대입가능, ()가 없어야함
 - ()가 있는 순간 호출하려는 것
-- result에는 호출한 반환값 저장
-- 이 문법을 암기해야함 ㅡㅡ
-- 함수 포인터 변수의 선언과 사용
-- 함수 포인터 매개변수의 선언과 사용
+- 함수 포인터 변수를 매개변수로 사용하면 마찬가지로 괄호 없이 대입
 
 ![img_149.png](img_149.png)
 
-- 함수 포인터의 선언
+- 함수 포인터 변수의 선언
 - 함수의 시작 주소를 저정하는 변수
 
 ## 함수 포인터 읽는 방법, 오른쪽-왼쪽 규칙(Right-Left Rule)
@@ -890,6 +1043,45 @@
 
 ## 코드보기: 콜백 함수
 
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+#include <time.h>
+
+#include "error_handler.h"
+
+static void (*s_handler)(const char*) = NULL;   
+// 함수 포인터, 변수명은 s_handler, 반환형은 void, 매개변수는 const char*인 함수 포인터, 초기값은 NULL
+
+void register_error_handler(void (*handler)(const char* msg))
+{
+    // 함수 포인터를 매개변수로 받는 함수
+    s_handler = handler;
+}
+// 등록된 커스텀 에러 핸들러를 호출하는 함수
+void log_error(const char* msg)
+{
+    if (s_handler != NULL) {
+        s_handler(msg);
+    }
+}
+// 기본 에러 핸들러
+void default_error_handler(const char* msg)
+{
+    time_t now;
+    struct tm* local;
+
+    now = time(NULL);
+
+    local = localtime(&now);
+
+    fprintf(stderr, "[%02d:%02d:%02d] %s\n", 
+        local->tm_hour, local->tm_min, local->tm_sec,
+        msg);
+}
+```
+
 ![img_170.png](img_170.png)
 
 - 다른 회사의 라이브러리를 사용하다보면 그 안에서 발생하는 오류를 받아야함. 왜?
@@ -898,7 +1090,8 @@
 ![img_171.png](img_171.png)
 
 - 이럴 때 콜백 함수를 사용함
-- 라이브러리를 사용하다가 문제가 생기면, 함수 포인터로 콜백 함수를 호출해줘
+- 사용자가 라이브러리를 사용하다가 문제가 생기면, 사용자가 함수 포인터로 등록한 콜백 함수를 호출해 에러메시지를 전달함
+- 위 코드가 라이브러리의 일부분이라고 가정하자
 
 ![img_172.png](img_172.png)
 
@@ -906,8 +1099,8 @@
 
 ![img_173.png](img_173.png)
 
-- handler라는 함수 포인터는, c 스타일 문자열을 매개변수로 받고, 아무런 반환값이 없다.
-- 문제가 생기면 이 함수 포인터로 넘긴 콜백함수를 호출해준다.
+- 지역변수 handler라는 함수 포인터는, c 스타일 문자열을 매개변수로 받고, 아무런 반환값이 없다.
+- 문제가 생기면 이 함수 포인터 변수값의 콜백함수를 호출해준다.
 
 ![img_174.png](img_174.png)
 
@@ -946,6 +1139,76 @@
 - 로깅할 때 함수 포인터로 문자열만 전달하는 것은 유용하지 않음
 - 제대로된 오류 처리기는 열거형 변수에 따라서 대응, 오류 메시지의 중요도 구분 등을 해야함
 
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include "error_handler.h"
+
+#define TRUE (1)
+#define FALSE (0)
+
+void simple_stderr_print(const char* msg);
+int run(void);
+
+int main(void)
+{
+    int success;
+
+    success = run();
+
+    register_error_handler(default_error_handler);
+    if (run() == FALSE) {
+        success = FALSE;
+    }
+
+    register_error_handler(simple_stderr_print);
+    if (run() == FALSE) {
+        success = FALSE;
+    }
+
+    return success ? 0 : 1;
+}
+
+int run(void)
+{
+    int numerator;
+    int denominator;
+
+    while (TRUE) {
+        printf("enter numerator: ");
+        if (scanf("%d", &numerator) == 1) {
+            break;
+        }
+    }
+
+    while (TRUE) {
+        printf("enter denominator: ");
+        if (scanf("%d", &denominator) == 1 ) {
+            break;
+        }
+    }
+
+    if (denominator == 0) {
+        log_error("cannot divide by zero");
+        // 커스텀 에러 핸들러가 등록되지 않았다면? log_error는 아무것도 하지 않음
+        return FALSE;
+    }
+
+    printf("%d / %d = %.2f\n",
+        numerator, denominator,
+        numerator / (float)denominator );
+
+    return TRUE;
+}
+
+void simple_stderr_print(const char* msg)
+{
+    fputs(msg, stderr);
+}
+```
+
 ## 배열의 포인터, 퀵 정렬, void 포인터
 
 ![img_183.png](img_183.png)
@@ -956,13 +1219,16 @@
 
 - 배열 전체를 모두 가리키는 포인터도 있음
 - pointer to array
-- 배열의 배열이라고 생각하면 됨
+- 배열 전체를 가리키기 때문에, 요소 3개인 배열을 가리키는 포인터에 요소 5개인 배열의 주소를 대입할 수 없음
 
 ### 배열의 포인터
 
 ![img_185.png](img_185.png)
 ![img_186.png](img_186.png)
 ![img_187.png](img_187.png)
+
+- matrix 지역변수는 포인터인데 int 10개 배열을 가리킴
+- *(matrix + 1)의 결과 int 10개 배열
 
 ## 함수 포인터의 예: 퀵 정렬
 
@@ -994,6 +1260,55 @@
 
 ## 코드보기: 구조체를 사용한 퀵 정렬
 
+```c++
+typedef enum {
+    SEX_MALE,
+    SEX_FEMALE,
+    SEX_UNKNOWN
+} sex_t;
+
+typedef struct {
+    unsigned short id;
+    unsigned char age;
+    sex_t sex;
+} userdata_t;
+
+#include "userdata.h"
+#include "user_sorter.h"
+
+int compare_age_id(const void* p0, const void* p1)
+{
+    const userdata_t* user0 = p0;
+    const userdata_t* user1 = p1;
+
+    if (user0->age == user1->age) {
+        return user0->id - user1->id;
+        // 음수 반환: user0이 user1보다 앞에 있어야함, 순서 안 변함
+        // 0 반환: 순서 바꾸지 않음
+        // 양수 반환: user0이 user1보다 뒤에 있어야함, 따라서 순서가 바뀜
+    }
+
+    return user0->age - user1->age;
+}
+
+int compare_age_desc_sex(const void* p0, const void* p1)
+{
+    // 외부에서 호출할 때, p0,p1이 user_date_t의 주소라는 가정
+    const userdata_t* user0 = p0;
+    const userdata_t* user1 = p1;
+
+    if (user0->age == user1->age) {
+        return user0->sex - user1->sex;
+        // MALE < FEMALE < UNKNOWN
+    }
+
+    return user1->age - user0->age;
+    // 음수 반환: user0이 user1보다 앞에 있어야함, user0의 age > user1의 age => 내림차순, 큰게 먼저 나옴
+    // 0 반환: 순서 바꾸지 않음
+    // 양수 반환: user0이 user1보다 뒤에 있어야함, 순서 바뀜
+}
+```
+
 ![img_193.png](img_193.png)
 
 - void*를 매개변수로 받음
@@ -1009,7 +1324,7 @@
 ![img_194.png](img_194.png)
 
 - 형 변환
-- 질문: userdata_t 배열, userdata_t의 크기를 함께 전달하는 것이 무슨 의미
+- [질문]: userdata_t 배열, userdata_t의 크기를 함께 전달하는 것이 무슨 의미
 
 ![img_195.png](img_195.png)
 ![img_196.png](img_196.png)
@@ -1020,7 +1335,187 @@
 
 - qsort의 매개변수로 요소의 개수, 요소의 데이터 크기를 넘겨야함
 
+```c++
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "userdata.h"
+#include "user_sorter.h"
+
+enum { NUM_USERS = 7 };
+
+int main(void)
+{
+    userdata_t users[NUM_USERS];
+    size_t i;
+
+    i = 0u;
+    users[i].id = 482;
+    users[i].sex = SEX_FEMALE;
+    users[i++].age = 102;
+
+    users[i].id = 510;
+    users[i].sex = SEX_MALE;
+    users[i++].age = 22;
+
+    users[i].id = 32;
+    users[i].sex = SEX_UNKNOWN;
+    users[i++].age = 1;
+
+    users[i].id = 221;
+    users[i].sex = SEX_FEMALE;
+    users[i++].age = 38;
+
+    users[i].id = 15;
+    users[i].sex = SEX_FEMALE;
+    users[i++].age = 22;
+
+    users[i].id = 333;
+    users[i].sex = SEX_MALE;
+    users[i++].age = 1;
+
+    users[i].id = 1024;
+    users[i].sex = SEX_UNKNOWN;
+    users[i++].age = 52;
+
+    assert(i == NUM_USERS);
+    // i를 assert에 재활용
+
+    puts("== sort by age, id ==");
+    
+    qsort(users, NUM_USERS, sizeof(userdata_t), compare_age_id);
+    for (i = 0; i < NUM_USERS; ++i) {
+        printf("age: %3d, id: %5d, sex: %d\n",
+            users[i].age, users[i].id, users[i].sex);
+    }
+
+    puts("\n== sort by age(desc), sex ==");
+    
+    qsort(users, NUM_USERS, sizeof(userdata_t), compare_age_desc_sex);
+    for (i = 0; i < NUM_USERS; ++i) {
+        printf("age: %3d, sex: %d, id: %d\n",
+            users[i].age, users[i].sex, users[i].id);
+    }
+
+    return 0;
+}
+```
+
 ## 코드보기: 기수(radix) 정렬
+
+```c++
+typedef enum {
+    SEX_MALE,
+    SEX_FEMALE,
+    SEX_UNKNOWN
+} sex_t;
+
+typedef struct {
+    unsigned short id;
+    unsigned char age;
+    sex_t sex;
+} userdata_t;
+
+typedef struct {
+    unsigned int sort_key;  // sort_key가 첫번째 멤버임을 주목, 구조체 포인터의 주소가 곧 sort_key의 주소
+    userdata_t user;
+} radix_userdata_t;
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "userdata.h"
+
+enum { NUM_USERS = 7 }; // 메크로를 enum으로
+
+int compare_uint(const void* p0, const void* p1);
+
+int main(void)
+{
+    radix_userdata_t users[NUM_USERS];
+    size_t i;
+
+    i = 0u;
+    users[i].user.id = 482;
+    users[i].user.sex = SEX_FEMALE;
+    users[i++].user.age = 102;
+
+    users[i].user.id = 510;
+    users[i].user.sex = SEX_MALE;
+    users[i++].user.age = 22;
+
+    users[i].user.id = 32;
+    users[i].user.sex = SEX_UNKNOWN;
+    users[i++].user.age = 1;
+
+    users[i].user.id = 221;
+    users[i].user.sex = SEX_FEMALE;
+    users[i++].user.age = 38;
+
+    users[i].user.id = 15;
+    users[i].user.sex = SEX_FEMALE;
+    users[i++].user.age = 22;
+
+    users[i].user.id = 333;
+    users[i].user.sex = SEX_MALE;
+    users[i++].user.age = 1;
+
+    users[i].user.id = 1024;
+    users[i].user.sex = SEX_UNKNOWN;
+    users[i++].user.age = 52;
+
+    assert(i == NUM_USERS);
+
+    puts("== sort by age, id ==");
+    for (i = 0; i < NUM_USERS; ++i) {
+        unsigned char age = users[i].user.age;
+        unsigned short id = users[i].user.id;
+
+        users[i].sort_key = age << 16 | id;
+        // 상위 16비트는 age, 하위 16비트는 id
+        // age의 자료형이 unsigned char이기 때문에, 16트면 충분함
+        // id의 자료형이 unsigned short이기 때문에, 16비트면 충분함
+    }
+
+    qsort(users, NUM_USERS, sizeof(radix_userdata_t), compare_uint);
+    for (i = 0; i < NUM_USERS; ++i) {
+        printf("age: %3d, id: %5d, sex: %d\n",
+            users[i].user.age,
+            users[i].user.id,
+            users[i].user.sex);
+    }
+
+    puts("\n== sort by age(desc), sex ==");
+    assert(SEX_UNKNOWN < (1 << 2)); // 성별 개수를 보장하는 방법, inv_age << 2에서 딱 2비트 밀었기 때문에 이 가정이 틀리면 2비트보다 더 밀어야 할 수도 있음
+
+    for (i = 0; i < NUM_USERS; ++i) {
+        unsigned char inv_age = 255 - users[i].user.age;
+        sex_t sex = users[i].user.sex;
+
+        users[i].sort_key = inv_age << 2 | sex;
+    }
+
+    qsort(users, NUM_USERS, sizeof(radix_userdata_t), compare_uint);
+    for (i = 0; i < NUM_USERS; ++i) {
+        printf("age: %3d, sex: %d, id: %d\n",
+            users[i].user.age,
+            users[i].user.sex, 
+            users[i].user.id);
+    }
+
+    return 0;
+}
+
+int compare_uint(const void* p0, const void* p1)
+{
+    const unsigned int* i0 = p0;
+    const unsigned int* i1 = p1;
+
+    return *i0 - *i1;
+}
+```
 
 - 비교 속도를 굉장히 빠르게 만드는 정렬
 
@@ -1074,6 +1569,7 @@ typedef struct {
 - 열거형 원소가 3개뿐이라서 그럼
   - 00, 01, 10
   - 2비트면 4개까지 표현 가능하니까 2비트로 충분함
+- age는 16비트 필요하지만, 30비트나 차지함
 
 ```
 typedef enum {
@@ -1090,5 +1586,6 @@ typedef enum {
 ![img_209.png](img_209.png)
 
 - SEX_UNKNOWN이 enum의 마지막 멤버로 enum의 수를 알 수 있어야함.
+- set_t가 2비트만 필요하다는 가정을 보장
 
 ![img_210.png](img_210.png)
