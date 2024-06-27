@@ -828,3 +828,156 @@ static void print_array(const int* const data[], const size_t size, const int le
 - 2차원 배열은 1차원 배열과 동일함
 - int[]과 int*의 배열은 다르기 때문에 컴파일 불가
 
+### [문제22]: 두 배열이 똑같은 메모리를 공유하면 1, 아니면 0을 반환하는 함수를 구현하라
+
+- 함수 시그니처는 아래와 같음
+
+```c++
+int is_overlap(int nums1[], const size_t length1, int nums2[], const size_t length2);
+```
+
+```c++
+int is_overlap(int nums1[], const size_t length1, int nums2[], const size_t length2)
+{
+    /* num1이 사용하는 메모리: [num1, num1 + lengths1) */
+    /* num2이 사용하는 메모리: [num2, num2 + lengths2) */
+    if (nums1 < nums2) {
+        if (nums1 + length1 > nums2) {  /* num1 + length1 부터 num1의 영역이 아님*/
+            return 1;
+        } else {
+            return 0;
+        }
+    } else if (nums2 < nums1) {
+        if (nums2 + length2 > nums1) {  /* num2 + length2 부터 num2의 영역이 아님*/
+            return 1;
+        } else {
+            return 0;
+        }
+    } else {
+        return 1;
+    }
+}   
+```
+
+[모범 답안]
+
+```c++
+#include <stdio.h>
+
+#define ARRAY_LENGTH(arr) (sizeof(arr) / sizeof(arr[0]))
+
+int is_overlap(int nums1[], const size_t length1, int nums2[], const size_t length2);
+
+int main(void)
+{
+    int nums1[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int nums2[5] = {1, 2, 8, 9, 10};
+    int* nums3 = nums1 + 2;
+    const size_t NUMS3_LENGTH = 5u;
+    char* result = NULL;
+
+    result = is_overlap(nums1, ARRAY_LENGTH(nums1), nums2, ARRAY_LENGTH(nums2))
+             ? "Yes" : "No";
+    printf("Are nums1 and nums2 overlapped?: %s\n", result);
+
+    result = is_overlap(nums1, ARRAY_LENGTH(nums1), nums3, NUMS3_LENGTH)
+             ? "Yes" : "No";
+    printf("Are nums1 and nums3 overlapped?: %s\n", result);
+
+    return 0;
+}
+
+int is_overlap(int nums1[], const size_t length1, int nums2[], const size_t length2)
+{
+    return (nums1 <= nums2
+            ? nums1 + length1 > nums2
+            : nums2 + length2 > nums1);
+}
+>> 출력
+Are nums1 and nums2 overlapped?: No
+Are nums1 and nums3 overlapped?: Yes
+```
+
+### [문제23]: 출력값을 구하라
+
+- 아래의 값을 활용하시오
+- nums[0] address: 0x16dc4735c
+- nums2[0] address: 0x16dc47340
+
+```c++
+#include <stdio.h>
+
+int main(void)
+{
+    const int nums[3][5] = {
+            { 35, 50, 65, 24, 71 },
+            { 52, 93, 30, 18, 83 },
+            { 72, 53, 41, 88, 69 }
+    };
+    const int* nums2[3];
+
+    nums2[0] = nums[0];
+    nums2[1] = nums[1];
+    nums2[2] = nums[2];
+
+    printf("nums[0] address: %p\n", (void*)nums[0]);
+    printf("nums[1] address: %p\n", (void*)nums[1]);
+    printf("nums[2] address: %p\n", (void*)nums[2]);
+    printf("nums[2]'s offset from nums[0]: %d\n", nums[2] - nums[0]);
+    printf("nums[1]'s offset from nums[0]: %d\n", nums[1] - nums[0]);
+
+    printf("\n");
+
+    printf("nums2[0] address: %p\n", (void*)&nums2[0]);
+    printf("nums2[1] address: %p\n", (void*)&nums2[1]);
+    printf("nums2[2] address: %p\n", (void*)&nums2[2]);
+    printf("nums2[0] value: %p\n", (void*)nums2[0]);
+    printf("nums2[1] value: %p\n", (void*)nums2[1]);
+    printf("nums2[2] value: %p\n", (void*)nums2[2]);
+    printf("nums2[2]'s offset from nums2[0]: %d\n", &nums2[2] - &nums2[0]);
+    printf("nums2[1]'s offset from nums2[0]: %d\n", &nums2[1] - &nums2[0]);
+
+    printf("%d", nums[2]);
+
+    return 0;
+}
+```
+
+- nums[0]의 값은 0x16dc4735c이며, 이 주소에 저장된 값은 35
+  - nums는 2차원 배열임, 35에 접근하기 위해서는 nums[0][0]으로 접근할 수 있음
+  - nums는 int의 배열
+  - 포인터 연산 시 int의 크기만큼 주소가 변함
+- nums[1]의 값은 52가 저장된 곳의 주소값, nums[0]에서 sizeof(int) * 5, 즉 20바이트 만틈 더하면 됨
+- nums[2]도 마찬가지로 구할 수 있음
+- nums의 offset을 구할 때는 `주소값 차이 / sizeof(자료형)`으로 구할 수 있음
+- nums[2] - nums[0] 은 int 포인터 연산
+  - 두 주소의 차이는 40바이트
+  - sizeof(int)로 나누면 offset은 10
+
+- num2[0]의 값은 nums[0], nums2[0]는 int*
+- &num2[0]는 int** 타입, &num2[0] 주소에는 nums[0](35가 저장된 곳의 주소)가 값으로 저장됨
+  - nums2는 int*의 배열
+  - 포인터 연산시 int*의 크기만큼 주소가 변함
+- num2[1]의 값은 nums[1], num2[1]의 주소는 num2[0]에서 sizeof(int*)를 더하면 됨
+- &num2[1]는 int** 타입, &num2[1] 주소에는 nums[1](52가 저장된 곳의 주소)가 값으로 저장됨 
+- num2의 offset을 구할 때는 `주소값 차이 / sizeof(자료형)`으로 구할 수 있음
+- num2[2] - num2[0] 은 int* 포인터 연산
+  - 두 주소의 차이는 8바이트(sizeof(int*) * 2)
+  - sizeof(int*)로 나누면 offset은 2
+
+```shell
+nums[0] address: 0x16dc4735c
+nums[1] address: 0x16dc47370
+nums[2] address: 0x16dc47384
+nums[2]'s offset from nums[0]: 10
+nums[1]'s offset from nums[0]: 5
+
+nums2[0] address: 0x16dc47340
+nums2[1] address: 0x16dc47348
+nums2[2] address: 0x16dc47350
+nums2[0] value: 0x16dc4735c
+nums2[1] value: 0x16dc47370
+nums2[2] value: 0x16dc47384
+nums2[2]'s offset from nums2[0]: 2
+nums2[1]'s offset from nums2[0]: 1
+```
