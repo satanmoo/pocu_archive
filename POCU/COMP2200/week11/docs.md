@@ -652,12 +652,14 @@ int main(void)
 
 ![img_60.png](img_60.png)
 
-- 매크로 함수
+### [#undef 식별자]
 
 ![img_61.png](img_61.png)
 
 - 이미 정의된 식별자를 없앰
   - 없앤 식별자를 사용하면 컴파일 오류 발생
+
+### [미리 정의되어 있는 #define]
 
 ![img_62.png](img_62.png)
 
@@ -881,7 +883,7 @@ const char* names[] = {
 ```
 
 - MONSTER_ENTRY(id, name, hp) 텍스트는 name,로 바뀜
-- MONSTER_DATA는 4줄로 바뀌고, 4줄에서 name,으로 바뀌니까?
+- MONSTER_DATA는 4줄로 바뀌고, 4줄에서 name,으로 바뀜
 
 ```c++
 const char* names[] = {
