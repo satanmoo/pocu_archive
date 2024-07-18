@@ -257,7 +257,7 @@ clang -std=c99 -W -Wall -pedantic-errors *.c
 - 함수 앞에 `ìnline` 키워드를 붙이면 됨
 - 컴파일러에게 최적화 해달라고 `힌트`를 주고, 요청
     - 컴파일러가 무시할 수도 있음
-    - inline키워드가 없어도 컴파일러가 알아서 최적화 해줌
+    - inline 키워드가 없어도 컴파일러가 알아서 최적화 해줌
 
 ![img_28.png](img_28.png)
 
@@ -327,6 +327,7 @@ clang -std=c99 -W -Wall -pedantic-errors *.c
 ![img_38.png](img_38.png)
 
 - 링커 오류는 막을 수 있음
+  - 인라인 키워드를 사용하면 반드시 함수의 심볼을 만들지 않음
 - `다른 오류`가 발생함
 
 ### [인라인 키워드를 추가했을 때 링킹 오류]
@@ -363,6 +364,7 @@ clang -std=c99 -W -Wall -pedantic-errors *.c
 
 - 이게 해결법?
     - 코드 중복
+      - 함수 구현부가 코드 중복이 됨
     - 실수가 많아짐
 
 ![img_44.png](img_44.png)
@@ -409,6 +411,7 @@ inline int add(int op1, int op2)
 - 이 파일에서 인라인 함수가 구현된 .h파일 인클루드
 - 그 파일에서 인라인 함수를 extern 키워드를 붙여 인라인 함수를 다시 선언
     - 구현부는 필요없음
+    - 함수 구현부 코드 중복을 제거!
 
 ```shell
 /* simple_math.c */
@@ -478,16 +481,15 @@ void run_adder(void)
 
 - #include "static_math.h"를 통해서 위의 static inline 함수를 복붙
     - static inline 함수는 이 adder.c 파일 안에서만 사용할 수 있음
-        - 즉 함수 심볼을 따로 만들지 않음
-        - 이 translation unit을 만들 때 쓰고, 링킹 단계에서는 사용하지 않기 때문
-    - 따라서 다른 .c 파일에서 이 헤더 파일을 인클루드 해도 중복되는 심볼이 없음
+    - inline 키워드가 붙었기 때문에 함수 심볼을 따로 만들지 않음
+      - 이 translation unit을 만들 때 쓰고, 링킹 단계에서는 사용하지 않기 때문
+    - 다른 .c 파일에서 이 헤더 파일을 인클루드 해도 중복되는 심볼이 없음
         - 심볼이 생성되지 않기 때문임
     - 전처리기에서 복붙하기 때문에 다른 .c 파일에서도 static inline 함수의 구현이 생김
       - 인라인화가 되면 문제없음
       - 인라인화 실패하면 함수 호출이 필요함, 이 때 각기 다른 .c 파일에서 파일 내부의 static inline 함수를 호출
         - 이를 확인하는 것이 run_adder() 함수의 내용
 - 즉 static의 효과
-  - 심볼 생성 X
   - 파일 스코프에서 접근
 
 ```c++
@@ -632,13 +634,20 @@ extern inline int inline_add(int a, int b);
 - x를 a에 더할 때, b에 더할 때 두 번 읽어오는 이유는?
   - a와 x가 동일한 주소를 가리킬 수도 있기 때문
   - a에 x를 더해 x가 변하기 때문에, b에 더하기 전에 x를 한 번 더 읽음
+- movl 지시어(x86 기준)
+  - 말 그대로 데이터를 옮기는 명령어
+    > move data from one location to another
+  - `movl source, destination`
+  - %edx에 x의 값이 저장됨
+    - 참고로 % prefix는 x86 어셈블리에서 레지스터임을 표시
 - 이것이 컴파일러의 방어적인 구현
 
 ![img_62.png](img_62.png)
 
 - 포인터 변수에 restrict 키워드를 사용하면?
-  - movl로 시작하는 명령어가 사라지는 것을 알 수 있음
+  - 두번째 movl로 시작하는 명령어가 사라지는 것을 알 수 있음
   - b에 x를 더하는 코드를 실행할 때 x가 가리키는 값을 다시 레지스터에 읽어오지 않음
+    - 다시 읽어올 필요가 없다고 컴파일러에게 힌트를 주었음
   - 여기서 어떤 포인터라도 서로 같은 메모리를 가리키지 않는다고 restrict 키워드로 힌트를 줬기 때문
 - 이것이 컴파일러의 최적화
 
@@ -697,6 +706,8 @@ extern inline int inline_add(int a, int b);
 
 - va_arg(dest)로 복사한 대상(dest) 에서 다시 가변 인자를 접근하는 코드
 - 마지막에 va_end(dest)를 호출한 것에 주목
+- va_start(arg_list_avg, count) - va_end(arg_list_avg) 쌍
+- va_copy(arg_list_v, arg_list_avg) - va_end(arg_list_v) 쌍
 
 ## snprintf()
 
