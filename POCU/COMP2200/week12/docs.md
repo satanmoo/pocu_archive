@@ -631,7 +631,7 @@ extern inline int inline_add(int a, int b);
 
 ![img_61.png](img_61.png)
 
-- x를 a에 더할 때, b에 더할 때 두 번 읽어오는 이유는?
+- x를 a에 더할 때, b에 더할 때 총 두 번 읽어오는 이유는?
   - a와 x가 동일한 주소를 가리킬 수도 있기 때문
   - a에 x를 더해 x가 변하기 때문에, b에 더하기 전에 x를 한 번 더 읽음
 - movl 지시어(x86 기준)
@@ -669,6 +669,7 @@ extern inline int inline_add(int a, int b);
 ![img_65.png](img_65.png)
 
 - restrict는 inline에 비해서 무시하면 훨씬 위험함
+- 본질적으로 함수 호출자를 100% 제어할 수 없기 때문에 발생함
 
 ## 한 줄 주석
 
