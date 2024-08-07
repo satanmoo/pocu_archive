@@ -245,7 +245,7 @@ int main(void)
 - 출력값
 
 ```text
-50
+55
 ```
 
 ### [문제3: 다음 코드가 안전한가? 안전하다면 출력값, 올바르게 고치려면?]
@@ -261,7 +261,7 @@ int main(void)
     size_t i;
     double sum = 1.0;
 
-    nums = calloc(10, sizeof(double ));
+    nums = calloc(10, sizeof(double));
 
     for (i = 0; i < 10; ++i) {
         sum += nums[i];
@@ -427,11 +427,14 @@ int main(void)
     for (i = 0; i < LENGTH; ++i) {
         printf("%d\n", buffer[i]);
     }
+    
+    printf("------------\n");
 
     tmp = realloc(buffer, 40);
     if (tmp != NULL) {
         buffer = tmp;
     }
+    memset(buffer, 0x00, 20);
     memset((char*)buffer + 20, 0xFF, 20);
     for (i = 0; i < LENGTH * 2; ++i) {
         printf("%d\n", buffer[i]);
@@ -458,16 +461,17 @@ int main(void)
 65535
 65535
 65535
-65535
-65535
-65535
-65535
-65535
-65535
-65535
-65535
-65535
-65535
+------------
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
 65535
 65535
 65535
@@ -492,22 +496,23 @@ int main(void)
 
 int main(void)
 {
-    unsigned int* buffer;
-    unsigned int* tmp;
+    int* buffer;
+    int* tmp;
     size_t i;
 
-    buffer = realloc(NULL, sizeof(unsigned int) * LENGTH);
+    buffer = realloc(NULL, sizeof(int) * LENGTH);
     /* 메모리 할당 예외처리 생략 */
-    memset(buffer, 0xFF, sizeof(unsigned int) * LENGTH);
+    memset(buffer, 0xFF, sizeof(int) * LENGTH);
     for (i = 0; i < LENGTH; ++i) {
         printf("%d\n", buffer[i]);
     }
 
-    tmp = realloc(buffer, sizeof(unsigned int) * LENGTH * 2);
+    tmp = realloc(buffer, sizeof(int) * LENGTH * 2);
     if (tmp != NULL) {
         buffer = tmp;
     }
-    memset((char*)buffer + sizeof(unsigned int) * LENGTH, 0xFF, sizeof(unsigned int) * LENGTH);
+    memset((char*)buffer, 0x00, sizeof(int) * LENGTH);
+    memset((char*)buffer + sizeof(int) * LENGTH, 0xFF, sizeof(int) * LENGTH);
     for (i = 0; i < LENGTH * 2; ++i) {
         printf("%d\n", buffer[i]);
     }
@@ -521,9 +526,10 @@ int main(void)
   - realloc의 첫번째 매개변수에 NULL을 넣으면, malloc과 동일함
   - memset에서 두번재 매개변수 비트패턴 11111111(0xFF)으로 초기화, 세번째 매개변수에 sizeof를 이용해 적절하게 초기화
   - 두번재 realloc에서 임시 포인터 변수를 이용해 buffer 포인터 변수에 저장된 값을 잃어버리지 않게 처리함
-  - 두번째 memset에서 첫번째 매개변수에 char*로 형변환해 sizeof(unsigned int) * LENGTH바이트 만큼 이동
+  - 두번째 memset에서 첫번째 매개변수에 char*로 형변환해 sizeof(int) * LENGTH바이트 만큼 이동
 - 출력
-  - 4바이트의 모든 비트패턴이 1이면, -1이라서 -1이 20개 출력됨
+  - 앞의 10개 원소는 memset()으로 모든 비트패턴을 0으로 초기화, 따라서 0을 출력
+  - 뒤의 10개 원소는 4바이트의 모든 비트패턴이 1이, 따라서 -1을 출력
 
 ```text
 -1
@@ -536,16 +542,16 @@ int main(void)
 -1
 -1
 -1
--1
--1
--1
--1
--1
--1
--1
--1
--1
--1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
 -1
 -1
 -1
@@ -591,6 +597,7 @@ int main(void)
 - 안전하지 않음
   - 구조체 멤버 변수를 적절하게 초기화하지 못함. char 배열 name이 c 스타일 문자열이 아님
     - t1.name[3], t2.name[3]에 쓰레기 값이 있어서 적절히 비교할 수 없음
+    - strncpy는 널문자를 넣어주지 않음
 - 올바르게 고치려면 t1.name[3], t2.name[3]에 널문자를 대입해 c 스타일 문자열을 보장하기
 - 또는 구조체를 비교하기 전 미리 구조체를 memset으로 모든 바이트를 0으로 초기화하기
 - memcmp는 strcmp처럼 매개 변수로 입력받은 lhs, rhs에서 한 바이트씩 비교하는 함수
@@ -660,6 +667,42 @@ int main(void)
   - t1.name, t2.name가 가리키는 값("abc")는 같아도, t1.name, t2.name의 값(주소) 는 다를 수 있음
   - memcmp로 비교할 때 char*의 값을 먼저 비트 패턴으로 비교하고, size_t의 값을 비트패턴으로 비교 
 - 올바르게 수정하려면 구조체의 멤버가 깊은 복사를 할 수 있게, char 배열로 변경
+- 또는 아래 코드 처럼 각 멤버에서 값으로 비교
+
+```c++
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char* name;
+    size_t age;
+} info_t;
+
+int main(void)
+{
+    info_t t1;
+    info_t t2;
+    int res;
+
+    memset(&t1, 0, sizeof(info_t));
+    memset(&t2, 0, sizeof(info_t));
+    t1.name = "abc";
+    t1.age = 8;
+    t2.name = "abc";
+    t2.age = 8;
+
+    // 구조체의 각 필드를 개별적으로 비교
+    if (t1.age == t2.age && strcmp(t1.name, t2.name) == 0) {
+        res = 0; // 같음
+    } else {
+        res = 1; // 다름
+    }
+    
+    printf("%d", res);
+
+    return 0;
+}
+```
 
 ### [문제11: 다음 코드가 안전한가? 안전하다면 출력값, 올바르게 고치려면?]
 
@@ -683,10 +726,10 @@ int main(void)
     memset(&t1, 0, sizeof(info_t));
     memset(&t2, 0, sizeof(info_t));
     input = "abc";
-    t1.name = malloc(sizeof(input) + 1);
+    t1.name = malloc(strlen(input) + 1);
     strcpy(t1.name, input);
     t1.age = 8;
-    t2.name = malloc(sizeof(input) + 1);
+    t2.name = malloc(strlen(input) + 1);    // 주의 sizeof(input)를 넣으면 안 됨, 4byte 포인터의 크기임
     strcpy(t2.name, input);
     t2.age = 8;
     res = memcmp(&t1, &t2, sizeof(info_t));
@@ -734,6 +777,55 @@ int main(void)
     return 0;
 }
 
+```
+
+- 또는 각 멤버의 값을 비교하면 됨
+
+```c++
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct {
+    char* name;
+    size_t age;
+} info_t;
+
+int main(void)
+{
+    info_t t1;
+    info_t t2;
+    int res;
+    char* input;
+
+    memset(&t1, 0, sizeof(info_t));
+    memset(&t2, 0, sizeof(info_t));
+    input = "abc";
+
+    // 문자열 길이를 정확히 할당
+    t1.name = malloc(strlen(input) + 1);
+    strcpy(t1.name, input);
+    t1.age = 8;
+    
+    t2.name = malloc(strlen(input) + 1);
+    strcpy(t2.name, input);
+    t2.age = 8;
+
+    // 각 필드를 개별적으로 비교
+    if (t1.age == t2.age && strcmp(t1.name, t2.name) == 0) {
+        res = 0; // 같음
+    } else {
+        res = 1; // 다름
+    }
+
+    printf("%d\n", res);
+
+    // 동적 할당한 메모리 해제
+    free(t1.name);
+    free(t2.name);
+
+    return 0;
+}
 ```
 
 ### [문제12: 다음 코드가 안전한가? 안전하다면 출력값, 올바르게 고치려면?]
@@ -1016,7 +1108,7 @@ int main(void)
     int** pp3 = &p1;  /* pp3의 주소값: 0x120 */
 
     int*** ppp1 = &pp3;
-    int*** ppp2 = &pp1; // ppp2 = &pp2
+    int*** ppp2 = &pp1;
     int*** ppp3 = &pp2;
 
     pp1 = pp3;
@@ -1053,6 +1145,200 @@ ppp2: 0x11C
 ppp3: 0x11C
 ```
 
-### [문제7: 여러 줄 입력받아 출력하기 구현]
+### [문제18: 여러 줄 입력받아 출력하기 구현]
 
-### [문제7: 단어 정렬 구현]
+```c++
+#define INCERMENT (2)
+#define LINE_LENGTH (2048)
+
+char** lines;
+char line[LiNE_LENGTH]; // 한 줄에 2048바이트까지 입력받을 수 있음
+size_t max_lines;
+size_t num_lines;
+size_t i;
+char** tmp;
+
+max_lines = 0;
+num_lines = 0;
+lines = NULL;   // 반드시 NULL로 초기화 하는 습관, realloc()를 호출할 때 NULL 말고 쓰레기값이 들어가면 크래시
+
+while (1) {
+    if (fgets(line, LINE_LENGTH, stdin) == NULL) {  // 최대 LINE_LENGTH - 1 만큼 입력받을 수 있음, \n(개행문자) 포함
+        clearerr(stdin);    // fgets 성공하면 매개변수의 line, 실패하면 NULL 반환
+        break;
+    }
+    
+    if (num_lines == max_lines) {   // 현재 줄 수가 최대 줄 수와 같으면
+        tmp = realloc(lines, (max_lines + INCREMENT) * sizeof(char*));    // realloc 실패하면 NULL 반환
+        // 처음에 lines == NULL이면, malloc((0 + 2) * sizeof(char*))과 동일하게 동작
+        
+        if (tmp == NULL) {
+            fprintf(stderr, "%s\n", "out of memory");   // realloc 실패 시 errno를 설정한다는 보장이 없어서 perror 사용 불가
+            break;
+        }
+        
+        lines = tmp;
+        max_lines += INCREMENT;
+    }
+    
+    lines[num_lines] = malloc(strlen(line) + 1);    // 문자열이라 sizeof(char) 생략해도 됨, 1바이트
+    if (lines[num_lines] == NULL) { // malloc 실패 시 NULL 반환
+        fprintf(stderr, "%s\n", "out of memory");
+        break;
+    }
+    strcpy(lines[num_lines], line); // strcpy해도 안전함, 메모리가 충분히 할당되었기 때문임, strcpy는 복사 후 널문자까지 추가해줌
+    ++num_lines;
+}
+    
+for (i = 0; i < max_lines; ++i) {
+    printf("%s", lines[i]);
+}
+
+for (i = 0; i < max_lines; ++i) {
+    free(lines[i]);
+}
+    
+free(lines);    // realloc으로 할당했기 때문에 free 필요함
+```
+
+- 아래는 3줄 입력받는 예시
+
+```c++
+#define LINE_LENGTH (2048)
+
+int main(void)
+{
+    char** lines = NULL;
+    char buffer[LINE_LENGTH + 1];
+    size_t max_lines = 0;
+    size_t num_lines = 0;
+    int count = 3;
+
+    while (count > 0) {
+        memset(buffer, 0, LINE_LENGTH + 1);
+        if (fgets(buffer, LINE_LENGTH, stdin) == NULL) {
+            clearerr(stdin);
+            break;
+        };
+
+        if (num_lines == max_lines) {
+            char** tmp = realloc(lines, (max_lines + 1) * sizeof(char*));
+            if (tmp != NULL) {
+                lines = tmp;
+                ++max_lines;
+            }
+        }
+
+        char* line = malloc(strlen(buffer) + 1);
+        memset(line, 0, strlen(buffer) + 1);
+        strcpy(line, buffer);
+        lines[num_lines++] = line;
+
+        --count;
+    }
+
+    for (int i = 0; i < max_lines; ++i) {
+        printf("%s", lines[i]);
+    }
+
+    for (int i = 0; i < max_lines; ++i) {
+        free(lines[i]);
+    }
+    free(lines);
+
+    return 0;
+}
+```
+
+### [문제19: 단어 정렬 구현]
+
+- qsort()는 배열 속에 저장된 각 요소들의 주소를 전달해 줌
+  - char*의 주소니까 char**로 캐스팅해야함
+
+```c++
+enum {
+    NUM_WORDS = 6
+};
+
+int compare_string(const void* a, const void* b)
+{
+    char** p_str_a = (char**)a; // words의 요소의 주소가 인자로 입력, &words[i]
+    char** p_str_b = (char**)b;
+    char* str_a = *p_str_a;
+    char* str_b = *p_str_b;
+
+    while (*str_a != '\0') {
+        if (*str_a != *str_b) {
+            break;
+        }
+        ++str_a;
+        ++str_b;
+    }
+
+    return *str_a - *str_b;
+}
+
+int compare_string_desc(const void* a, const void* b)
+{
+    char** p_str_a = (char**)a;
+    char** p_str_b = (char**)b;
+    char* str_a = *p_str_a;
+    char* str_b = *p_str_b;
+
+    while (*str_a != '\0') {
+        if (*str_a != *str_b) {
+            break;
+        }
+        ++str_a;
+        ++str_b;
+    }
+
+    return *str_b - *str_a;
+}
+
+int main(void)
+{
+    size_t i;
+    const char* words[NUM_WORDS] = {
+            "premium", "level", "cultured",
+            "moaning", "skinny", "curve"
+    };  // 정렬할 단어 6개
+
+    puts("\n== sort ascending ==");
+
+    qsort(words, NUM_WORDS, sizeof(char*), compare_string);
+
+    for (i = 0; i < NUM_WORDS; ++i) {
+        printf("%s\n", words[i]);
+    }
+
+    puts("\n== sort descending ==");
+
+    qsort(words, NUM_WORDS, sizeof(const char*), compare_string_desc);
+    for (i = 0; i < NUM_WORDS; ++i) {
+        printf("%s\n", words[i]);
+    }
+
+    return 0;
+}
+```
+
+- 비교함수 아래와 같이 구현해도 됨
+
+```c++
+int compare_string(const void* a, const void* b)
+{
+    const char** w0 = (const char**)a;
+    const char** w1 = (const char**)b;
+
+    return strcmp(*w0, *w1);
+}
+
+int compare_string_desc(const void* a, const void* b)
+{
+    const char** w0 = (const char**)a; // strcmp의 매개변수가 const char*로 받기 때문
+    const char** w1 = (const char**)b;
+
+    return strcmp(*w1, *w0);    
+}
+```
