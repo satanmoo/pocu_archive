@@ -24,6 +24,16 @@ int s_nums[MAX_NUMS];
 size_t s_num_count = 0;
 
 void insert_at(size_t index, int num);
+
+// 테스트 코드
+insert_at(0, 1);
+insert_at(0, 2);
+insert_at(0, 3);
+insert_at(0, 4);
+insert_at(0, 5);
+insert_at(0, 6);
+insert_at(0, 7);
+insert_at(0, 8);
 ```
 
 ```c++
@@ -51,9 +61,14 @@ void insert_at(size_t index, int num)
 ```
 
 - 시간 복잡도
-  - 평균: O(N)
-  - 최악: O(N)
-  - 최선: O(1), 제일 뒤에 넣는 경우
+    - 평균: O(N)
+    - 최악: O(N)
+    - 최선: O(1), 제일 뒤에 넣는 경우
+
+- 고려할 점
+    - 배열의 처음, 중간에 삽입
+    - 배열의 끝에 삽입
+    - 배열이 가득 찼을 때
 
 ### 문제2: 배열의 삭제 구현하기
 
@@ -69,6 +84,19 @@ int s_nums[MAX_NUMS];
 size_t s_num_count = 0;
 
 void remove_at(size_t index);
+
+// 테스트 코드
+insert_at(0, 1);
+insert_at(0, 2);
+insert_at(0, 3);
+insert_at(0, 4);
+insert_at(0, 5);
+insert_at(0, 6);
+insert_at(0, 7);
+insert_at(0, 8);
+remove_at(7);
+remove_at(0);
+remove_at(0);
 ```
 
 ```c++
@@ -98,9 +126,14 @@ void remove_at(size_t index)
 ```
 
 - 시간 복잡도
-  - 평균: O(N)
-  - 최악: O(N)
-  - 최선: O(1), 가장 마지막 원소 삭제(index == s_num_count - 1)
+    - 평균: O(N)
+    - 최악: O(N)
+    - 최선: O(1), 가장 마지막 원소 삭제(index == s_num_count - 1)
+
+- 고려할 점
+    - 배열의 처음, 중간에 삭제
+    - 배열의 끝 삭제
+    - 배열이 비었을 때
 
 ### 문제3: 배열의 검색 구현하기
 
@@ -143,9 +176,9 @@ size_t find_index(int num)
 ```
 
 - 시간 복잡도
-  - 평균: O(N)
-  - 최악: O(N)
-  - 최선: O(1), 맨 앞에 요소를 찾는 경우
+    - 평균: O(N)
+    - 최악: O(N)
+    - 최선: O(1), 맨 앞에 요소를 찾는 경우
 
 ### 문제4: 빠른 배열의 삭제 구현하기
 
@@ -178,7 +211,7 @@ void remove_at_unordered(size_t index)
 - 마지막 요소: s_nums[s_num_count - 1];
 - s_num_count가 1인 경우, 삭제 후 마지막 요소라는 개념이 없어짐
 - 시간 복잡도
-  - O(N)
+    - O(N)
 
 ### 문제5: 스택의 삽입 구현하기
 
@@ -217,7 +250,10 @@ void push(int n)
 - `Push`라고 표현함
 - 마지막 원소의 다음 위치(s_num_count)에 값을 대입
 - 시간 복잡도
-  - O(1)
+    - O(1)
+
+- 고려할 점
+    - 스택이 꽉찼는지 확인
 
 ### 문제6: 스택의 삭제 구현하기
 
@@ -256,7 +292,7 @@ int pop(void)
 
 - 'Pop'이라고 표현함
 - 시간 복잡도
-  - O(1)
+    - O(1)
 
 ### 문제7: 스택의 검색 구현하기
 
@@ -272,11 +308,11 @@ enum { INVALID_INDEX = -1 };
 int s_nums[MAX_NUMS];
 size_t s_num_count = 0;
 
-int search(int num);
+bool search(int num);
 ```
 
 - 원칙상 스택의 맨 위(끝)요소가 아니면 직접 접근할 수 없음
-  - push, pop으로 임시 배열에 옮기는 방식으로 확인해야함
+    - push, pop으로 임시 배열에 옮기는 방식으로 확인해야함
 
 ```c++
 #include <assert.h>
@@ -309,43 +345,48 @@ int pop(void)
     return s_nums[--s_num_count];
 }
 
-int search(int num)
+bool search(int num)
 {
-    int found = FALSE;
-    int temp_count = 0;
-    int temp_max = (int)s_num_count;
-    int temp[MAX_NUMS];
+    assert(s_num_count > 0);
 
-    while (temp_count < temp_max) {
-        int value = pop();
-        if (value == num) {
-            found = TRUE;
+    int tmp_stack[MAX_NUMS];
+    int tmp_stack_count = 0;
+    int original_stack_size = (int)s_num_count;
+    bool result = false;
+
+    // Pop elements and check for the target number
+    for (int i = 0; i < original_stack_size; ++i) {
+        int e = pop();
+        if (e == num) {
+            result = true;
+            tmp_stack[tmp_stack_count++] = e;
             break;
         }
-        temp[temp_count++] = value;
+        tmp_stack[tmp_stack_count++] = e;
     }
 
-    while (temp_count > 0) {
-        push(temp[--temp_count]);
+    // Push the elements back to the original stack
+    for (int i = tmp_stack_count - 1; i >= 0; --i) {
+        push(tmp_stack[i]);
     }
 
-    return found;
+    return result;
 }
 ```
 
 - 시간 복잡도
-  - O(N)
-  - 요소 제거, 복구 각각 O(N)으로 O(2N)계산 되지만, 빅오 표기법에 따라 O(N)으로 표기
+    - O(N)
+    - 요소 제거, 복구 각각 O(N)으로 O(2N)계산 되지만, 빅오 표기법에 따라 O(N)으로 표기
 
 ### 문제8: 후위 표기법으로 적힌 수식을 스택으로 계산 구현하기
 
 - 한 글자를 읽음
 - 글자를 읽는데 성공한 경우
-  1. 피연산자면, 스택에 넣음
-  2. 연산자면, 스택에서 피연산자 둘을 꺼내 계산하고, 그 결과를 다시 스택에 넣음
-  3. 1번으로 돌아감
+    1. 피연산자면, 스택에 넣음
+    2. 연산자면, 스택에서 피연산자 둘을 꺼내 계산하고, 그 결과를 다시 스택에 넣음
+    3. 1번으로 돌아감
 - 글자를 읽는데 실패한 경우(수식의 끝에 도달)
-  - 스택에서 pop하면 수식의 결과 값임
+    - 스택에서 pop하면 수식의 결과 값임
 
 ```c++
 #include <assert.h>
@@ -464,9 +505,9 @@ int dequeue(void)
 ```
 
 - 삽입 시간 복잡도
-  - O(1)
+    - O(1)
 - 삭제 시간 복잡도
-  - O(1)
+    - O(1)
 
 ### 문제10: 원형 버퍼의 개념을 이용해 큐의 검색 구현
 
@@ -522,9 +563,8 @@ int search(int n)
     int temp_q[MAX_NUMS];
     size_t temp_max = s_num_count;
     size_t temp_count = 0;
-    size_t i;
 
-    while (temp_count < temp_max) {
+    for (int i = 0; i < temp_max; ++i) {
         int value = dequeue();
         if (value == n) {
             found = TRUE;
@@ -532,7 +572,7 @@ int search(int n)
         temp_q[temp_count++] = value;
     }
 
-    for (i = 0; i < temp_max; ++i) {
+    for (int i = 0; i < temp_max; ++i) {
         enqueue(temp_q[i]);
     }
 
@@ -586,7 +626,7 @@ void insert_front(node_t** phead, int n)
 ```
 
 - 시간 복잡도
-  - O(1)
+    - O(1)
 
 ### 문제11: 연결 리스트 오름차순 삽입 구현
 
@@ -654,168 +694,130 @@ typedef struct node {
     struct node* prev;
 } node_t;
 
-void print_node(node_t** head)
+
+void print_node(const node_t* head)
 {
-    node_t** pp = head;
+    const node_t* node = head;
 
-    while (*pp != NULL) {
-        printf("%d ", (*pp)->value);
-        pp = &((*pp)->next);
-    }
-    printf("\n");
-}
+    puts("print node");
 
-void destroy(node_t** head)
-{
-    node_t** pp = head;
-
-    while (*pp != NULL) {
-        node_t* next = (*pp)->next;
-        free(*pp);
-        pp = &next;
+    while (node != NULL) {
+        printf("%d\n", node->value);
+        node = node->next;
     }
 }
 
-void append(node_t** phead, int n)
+void print_node_reverse(const node_t* tail)
 {
-    node_t* current = *phead;
-    node_t* new_node = malloc(sizeof(node_t));
-    new_node->value = n;
-    new_node->next = NULL;
-    new_node->prev = NULL;
+    const node_t* node = tail;
 
-    if (*phead == NULL) {
-        *phead = new_node;
-        return;
-    }
+    puts("print node reverse");
 
-    while (current->next != NULL) {
-        current = current->next;
+    while (node != NULL) {
+        printf("%d\n", node->value);
+        node = node->prev;
     }
-    current->next = new_node;
-    new_node->prev = current;
 }
 
-void insert_front(node_t** phead, int n)
+void destroy(node_t* head)
 {
-    node_t* new_node = malloc(sizeof(node_t));
-    new_node->value = n;
-    new_node->next = NULL;
-    new_node->prev = NULL;
+    node_t* current = head;
 
-    if (*phead == NULL) {
-        *phead = new_node;
-        return;
+    while (current != NULL) {
+        node_t* next = current->next;
+        free(current);
+        current = next;
     }
+}
 
+void insert_front(node_t** phead, node_t** ptail, int n)
+{
+    node_t* new_node = NULL;
+
+    new_node = malloc(sizeof(node_t));
     new_node->next = *phead;
-    (*phead)->prev = new_node;
+    new_node->prev = NULL;
+    new_node->value = n;
+
+    if (*phead == NULL) {
+        *ptail = new_node;
+    } else {
+        (*phead)->prev = new_node;
+    }
+
     *phead = new_node;
 }
 
-void insert_sorted(node_t** phead, int n)
+void insert_sorted(node_t** phead, node_t** ptail, int n)
 {
-    node_t* current = *phead;
-    node_t* new_node = malloc(sizeof(node_t));
+    node_t* new_node = NULL;
+    node_t** p = phead;
+
+    new_node = malloc(sizeof(node_t));
     new_node->value = n;
-    new_node->next = NULL;
-    new_node->prev = NULL;
 
-    // 리스트가 비어있을 경우, 새로운 노드를 헤드로 삽입
-    if (*phead == NULL) {
-        *phead = new_node;
-        return;
-    }
-
-    // 삽입 지점을 찾기 위해 리스트를 순회
-    while (current != NULL && current->value < n) {
-        current = current->next;
-    }
-
-    // 새로운 노드 삽입
-    if (current == NULL) {
-        // 리스트의 끝에 삽입
-        current = *phead;
-        while (current->next != NULL) {
-            current = current->next;
+    while (*p != NULL) {
+        if ((*p)->value >= n) {
+            break;
         }
-        current->next = new_node;
-        new_node->prev = current;
-    } else if (current == *phead) {
-        // 리스트의 시작에 삽입
-        new_node->next = current;
-        current->prev = new_node;
-        *phead = new_node;
-    } else {
-        // 리스트의 중간에 삽입
-        new_node->next = current;
-        new_node->prev = current->prev;
-        current->prev->next = new_node;
-        current->prev = new_node;
+        p = &((*p)->next);
+    }
+
+    new_node->next = *p;
+    if (*p == NULL) {
+        if (*phead == NULL) {   // if adding a new node for the first time
+            *ptail = new_node;
+            *phead = new_node;
+            new_node->prev = NULL;
+        } else {    // if adding a new node after the tail
+            new_node->prev = *ptail;
+            (*ptail)->next = new_node;
+            *ptail = new_node;
+        }
+    } else {    // adding a new node in the middle
+        new_node->prev = (*p)->prev;
+        (*p)->prev = new_node;
+        *p = new_node;
     }
 }
 
-void remove_node(node_t** phead, int n)
+void remove_node(node_t** phead, node_t** ptail, int n)
 {
-    node_t* current = *phead;
+    node_t** p = phead;
 
-    // 삭제 노드를 찾기 위해 리스트를 순회
-    while (current != NULL && current->value != n) {
-        current = current->next;
-    }
-
-    if (current == NULL) {
-        // 못 찾은 경우
-        return;
-    }
-
-    if (current == *phead) {
-        // 헤드 노드를 삭제하는 경우
-        *phead = current->next;
-        free(current);
-        if (*phead != NULL) {   // 오직 헤드 노드만 있는 경우, current->next == NULL
-            (*phead)->prev = NULL;
+    while (*p != NULL) {
+        if ((*p)->value == n) {
+            node_t* found = *p;
+            if (found == *ptail) {
+                *ptail = (*p)->prev;
+            } else {
+                ((*p)->next)->prev = (*p)->prev;
+            }
+            *p = (*p)->next;
+            free(found);
+            break;
         }
-    } else {
-        // 리스트의 마지막 노드를 삭제하는 경우
-        if (current->next == NULL) {
-            current->prev->next = current->next;
-            free(current);
-            return;
-        }
-        // 리스트의 중간에서 삭제하는 경우
-        current->prev->next = current->next;
-        current->next->prev = current->prev;
-        free(current);
+        p = &((*p)->next);
     }
 }
 
-int main()
+int main(void)
 {
     node_t* head = NULL;
-    print_node(&head);
-    insert_sorted(&head, 1);
-    print_node(&head);
-    insert_sorted(&head, 1);
-    print_node(&head);
-    insert_sorted(&head, -1);
-    print_node(&head);
-    insert_sorted(&head, 2);
-    print_node(&head);
-    insert_sorted(&head, 0);
-    print_node(&head);
-    remove_node(&head, -99);
-    print_node(&head);
-    remove_node(&head, 2);
-    print_node(&head);
-    remove_node(&head, 0);
-    print_node(&head);
-    remove_node(&head, -1);
-    print_node(&head);
-    remove_node(&head, 1);
-    print_node(&head);
-    remove_node(&head, 1);
-    print_node(&head);
+    node_t* tail = NULL;
+
+    insert_sorted(&head, &tail, 3);
+    insert_sorted(&head, &tail, 4);
+    insert_sorted(&head, &tail, 1);
+
+    remove_node(&head, &tail, 1);
+    remove_node(&head, &tail, 3);
+    remove_node(&head, &tail, 4);
+
+    print_node(head);
+    print_node_reverse(tail);
+
+    destroy(head);
 
     return 0;
 }
@@ -831,30 +833,163 @@ typedef struct node {
 
 void insert_back(node_t** phead, int n)
 {
-    node_t* newNode;
-    node_t** pp;
+    node_t** p = phead;
 
-    newNode = malloc(sizeof(node_t));
-    newNode->next = NULL;
-    newNode->value = n;
-
-    pp = phead;
-
-    if (*pp == NULL) {
-        *pp = newNode;
-        return;
+    while (*p != NULL) {
+        p = &((*p)->next);
     }
 
-    while (*pp != NULL) {
-        if ((*pp)->next == NULL) {
-            (*pp)->next = newNode;
-            break;
-        }
-
-        pp = &(*pp)->next;
-    }
+    node_t* new_node = malloc(sizeof(node_t));
+    new_node->next = NULL;
+    new_node->value = n;
+    *p = new_node;
 }
 ```
 
 - 노드에서 next값이 NULL이면 마지막 노드임
-  - *pp가 NULL이 되서 반복문이 종료되면, 노드를 추가할 수 없음
+    - *pp가 NULL이 되서 반복문이 종료되면, 노드를 추가할 수 없음
+
+### 문제15: Shunting yard algorithm
+
+- 식을 읽음
+    - 숫자의 경우 output(큐로 구현)에 입력
+    - 연산자의 경우
+        - 스택에 입력
+            - 스택에 입력하기 전 스택의 탑의 우선순위보다 낮은 경우 스택에서 pop해서 output에 입력
+            - 스택에 입력하기 전 스택의 탑과 우선순위가 같고 연산자 평가 순서가 left to right 인 경우 스택에서 pop해서 output에 입력
+    - 괄호의 경우
+      - '(': output에 입력
+      - ')': 스택에서 '('이 top에 위치할 때 까지 pop(), pop()한 결과를 output에 입력, '('가 top에 위치하면 pop()으로 제거
+    - 식을 다 읽었을 때
+        - 스택에서 모두 pop해서 output에 입력
+
+```c++
+#include <assert.h>
+#include <string.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <ctype.h>
+
+enum {
+    MAX_NUMS = 8
+};
+
+char s_operators[MAX_NUMS];
+size_t s_operator_count = 0;
+
+void push(char n)
+{
+    assert(s_operator_count < MAX_NUMS);
+    s_operators[s_operator_count++] = n;
+}
+
+char pop(void)
+{
+    assert(s_operator_count > 0);
+    return s_operators[--s_operator_count];
+}
+
+char top(void)
+{
+    assert(s_operator_count > 0);
+    return s_operators[s_operator_count - 1];
+}
+
+bool is_empty(void)
+{
+    return s_operator_count == 0;
+}
+
+int get_precedence(char op)
+{
+    switch (op) {
+    case '+':
+    case '-':
+        return 1;
+    case '*':
+    case '/':
+        return 2;
+    case '^':
+        return 3;
+    default:
+        return 0;
+    }
+
+    return 0;   // unreachable
+}
+
+bool is_left_associative(char op)
+{
+    switch (op) {
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+        return true; // left associative
+    case '^':
+        return false; // right associative
+    default:
+        return true;  // default to left associative
+    }
+
+    return true;    // unreachable
+}
+
+void process_operator(char op, char* output, int* output_index)
+{
+    while (!is_empty() && get_precedence(top()) >= get_precedence(op) && is_left_associative(op)) {
+        output[(*output_index)++] = pop();
+        output[(*output_index)++] = ' ';
+    }
+    push(op);
+}
+
+void handle_remaining_operators(char* output, int* output_index)
+{
+    while (!is_empty()) {
+        output[(*output_index)++] = pop();
+        output[(*output_index)++] = ' ';
+    }
+}
+
+int main(void)
+{
+    char expression[] = "3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3";
+    const char* token = strtok(expression, " ");
+    char output[50] = { '\0' };
+    int output_index = 0;
+
+    while (token != NULL) {
+        if (isdigit(token[0])) {
+            for (int i = 0; token[i] != '\0'; ++i) {
+                output[output_index++] = token[i];
+            }   // add multi-digit-number
+            output[output_index++] = ' ';
+        } else if (strcmp(token, "(") == 0) {
+            push('(');
+        } else if (strcmp(token, ")") == 0) {
+            while (!is_empty() && top() != '(') {
+                output[output_index++] = pop();
+                output[output_index++] = ' ';
+            }
+            if (!is_empty() && top() == '(') {
+                pop();
+            }
+        } else {
+            process_operator(token[0], output, &output_index);
+        }
+        token = strtok(NULL, " ");
+    }
+
+    handle_remaining_operators(output, &output_index);
+    output[output_index - 1] = '\0'; // remove the trailing space
+
+    printf("Postfix expression: %s\n", output);
+
+    return 0;
+}
+```
+
+#### Reference
+
+https://en.wikipedia.org/wiki/Shunting_yard_algorithm
