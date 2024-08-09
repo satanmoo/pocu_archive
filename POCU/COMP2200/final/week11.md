@@ -15,7 +15,7 @@
 ### [문자열을 KEY로 저장하는 해시 맵(셋)에서 해시 충돌을 막으면 이점?]
 
 - 문자열을 KEY로 저장할 필요가 없음
-  - 문자열로 해시값을 만들어, 해시값을 키로 사용하면 됨
+  - 문자열로 해시값을 만들어, 해시값을 KEY로 사용하면 됨
 - 즉 문자열을 KEY로 저장할 때 보다 동적 메모리 할당을 줄일 수 있음
   - 해시값은 기본 자료형(정수)를 사용
 
@@ -45,6 +45,7 @@ int add(int hash_key, ? value);
   - 전처리기가 소스 코드를 뒤져서 A를 모두 (10)으로 바꿔줌
 - 전자
   - 다른 전처리기 지시어로 A가 정의(define)돼 있는지 판단 가능
+    - A은 단순 공백으로 대체
 - A를 `식별자`라고 부름
 
 ### [매크로 대체: #undef]
@@ -55,6 +56,17 @@ int add(int hash_key, ? value);
 
 - #if 식별자
   - 식별자의 값으로 참/거짓 판단
+```c++
+#if A == 10
+#define B
+#elif A == 1
+#define C
+#else
+#define D (10)
+#endif
+
+```
+
 - #if defined(식별자)
   - `#ifdef 식별자`와 동일
   - 식별자가 정의됬다면 참, 아니면 거짓
@@ -64,6 +76,18 @@ int add(int hash_key, ? value);
 
 - `#ifdef 식별자`와 `#endif` 사이의 코드는 조건을 만족하면 코드에 남아있음, 아니면 사라짐
   - `#if defined(식별자)` == `#ifdef 식별자`
+
+```c++
+#define VERSION_2
+
+#ifdef VERSION_1
+#define A (10)
+#elif defined(VERSION_2)
+#define B (2)
+#else
+#define A (12)
+#endif
+```
 
 ### [컴파일 도중에 매크로 정의하기]
 
@@ -116,7 +140,7 @@ if (!(condition)) { \
 
 /* id(int), "name"(const char*), hp(int) */
 #define MONSTER_DATA \
-    MONSTER_ENTRY(0, "pope",    100)   \
+    MONSTER_ENTRY(0, "pope",    100)   \    
     MONSTER_ENTRY(1, "big rat", 30)    \
     MONSTER_ENTRY(2, "mama",    255)   \
     MONSTER_ENTRY(3, "dragon",  300000)\
@@ -126,7 +150,7 @@ int main(void)
     size_t i;
 
     int ids[] = {
-#define MONSTER_ENTRY(id, name, hp) id,
+#define MONSTER_ENTRY(id, name, hp) id, // id,와 name 사이 공백, name,와 hp사이 공백의 개수는 중요하지 않음, 전처리기에서 적절하게 하나의 공백으로 대체
         MONSTER_DATA
 #undef MONSTER_ENTRY
     };
@@ -291,7 +315,16 @@ size_t hash_65599(const char* string, size_t len)
 ### [문제4: KEY: 문자열, VALUE: int 해시 맵에 저장하는 함수 구현]
 
 ```c++
-int add(const char* key, int value, size_t (*hash_func)(const char*, size_t)) 
+enum {
+    BUCKET_SIZE = 23,
+    TRUE = 1,
+    FALSE = 0
+};
+
+char* s_keys[BUCKET_SIZE];
+int s_values[BUCKET_SIZE];
+
+int add(const char* key, int value, size_t (* hash_func)(const char*, size_t))
 {
     size_t i;
     size_t start_index;
@@ -302,16 +335,19 @@ int add(const char* key, int value, size_t (*hash_func)(const char*, size_t))
     i = start_index;
 
     do {
-        if (s_keys[i] == NULL) {
-            /* 새 키-값을 삽입 */
+        if (s_keys[i] == NULL) {    // empty
+            s_keys[i] = malloc(strlen(key) + 1);
+            strcpy(s_keys[i], key);
+            s_values[i] = value;
             return TRUE;
         }
 
         if (strcmp(s_keys[i], key) == 0) {
-            return TRUE;    /* 이미 문자열이 저장되어있으면 TRUE 반환, 굳이 덮어쓸 필요없음, memcpy 등 성능 생각해 */
+            s_values[i] = value;    // input new value
+            return TRUE;    // if the key already exists
         }
-        i = (i + 1) % BUCKET_SIZE;
-    } while (i != start_index);
+        i = (i + 1) % BUCKET_SIZE;  // if another key already exists
+    } while (i != start_index); // exit when bucket is full
 
     return FALSE;
 }
@@ -330,16 +366,17 @@ int add_fast(size_t hash_key, const char* value)
     i = start_index;
 
     do {
-        if (s_keys[i] == INT_MIN) {
-            /* 새 해시-값 삽입 */
+        if (s_keys[i] == INT_MIN) { // empty
+            /* 새 해시(키)-값 삽입 */
             return TRUE;
         }
 
-        if (s_keys[i] == hash_key) {
+        if (s_keys[i] == hash_key) {    // if the key alredy exists
+            /* 새 해시(키)-값 삽입 */
             return TRUE;
         }
 
-        i = (i + 1) % BUCKET_SIZE;
+        i = (i + 1) % BUCKET_SIZE;  // if another key alredy exists
     } while (i != start_index);
 
     return FALSE;
@@ -347,6 +384,8 @@ int add_fast(size_t hash_key, const char* value)
 ```
 
 - 해시 충돌이 없으면, 해시 함수를 함수 포인터 매개변수로 받을 필요도 없음
+- value의 타입이 const char*라서 value를 저장하는 배열의 요소에 동적할당 필요함
+  - 동적할당을 피하려면, key나 value 모두 기본 자료형으로 설정하면 됨
 
 ### [문제5: 여러 데이터형에 맞는 해시 함수 구현하기]
 
