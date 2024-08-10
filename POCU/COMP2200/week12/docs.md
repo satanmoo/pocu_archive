@@ -327,7 +327,7 @@ clang -std=c99 -W -Wall -pedantic-errors *.c
 ![img_38.png](img_38.png)
 
 - 링커 오류는 막을 수 있음
-  - 인라인 키워드를 사용하면 반드시 함수의 심볼을 만들지 않음
+    - 인라인 키워드를 사용하면 반드시 함수의 심볼을 만들지 않음
 - `다른 오류`가 발생함
 
 ### [인라인 키워드를 추가했을 때 링킹 오류]
@@ -364,7 +364,7 @@ clang -std=c99 -W -Wall -pedantic-errors *.c
 
 - 이게 해결법?
     - 코드 중복
-      - 함수 구현부가 코드 중복이 됨
+        - 함수 구현부가 코드 중복이 됨
     - 실수가 많아짐
 
 ![img_44.png](img_44.png)
@@ -457,8 +457,6 @@ static inline int static_add(int a, int b)
 #endif /* STATIC_MATH_H */
 ```
 
-- static 키워드가 붙어있어서, 파일 스코프
-
 ```c++
 // adder.c
 #include <stdio.h>
@@ -479,18 +477,37 @@ void run_adder(void)
 }
 ```
 
-- #include "static_math.h"를 통해서 위의 static inline 함수를 복붙
-    - static inline 함수는 이 adder.c 파일 안에서만 사용할 수 있음
-    - inline 키워드가 붙었기 때문에 함수 심볼을 따로 만들지 않음
-      - 이 translation unit을 만들 때 쓰고, 링킹 단계에서는 사용하지 않기 때문
-    - 다른 .c 파일에서 이 헤더 파일을 인클루드 해도 중복되는 심볼이 없음
-        - 심볼이 생성되지 않기 때문임
-    - 전처리기에서 복붙하기 때문에 다른 .c 파일에서도 static inline 함수의 구현이 생김
-      - 인라인화가 되면 문제없음
-      - 인라인화 실패하면 함수 호출이 필요함, 이 때 각기 다른 .c 파일에서 파일 내부의 static inline 함수를 호출
-        - 이를 확인하는 것이 run_adder() 함수의 내용
-- 즉 static의 효과
-  - 파일 스코프에서 접근
+- 전처리기
+    - #include "static_math.h"를 위의 static_add() 함수로 교체
+    - translation unit 내부에 static_add() 함수의 선언과 구현이 포함됨
+
+- 컴파일러
+    - 인라인화 되는 경우
+        - translation unit 내부의 static_add() 함수를 호출하는 코드를 static_add() 함수의 구현으로 변경
+        - 함수 호출이 필요없기 때문에 링커에게 필요한 심볼이 생성되지 않음
+    - 함수 호출(인라인화 되지 않는 경우)
+        - static 키워드 때문에 파일 내부에서만 사용할 수 있는 심볼이 생성됨
+            - 내부 링크 함수 처리
+
+```c++
+// inline_math.h
+#ifndef INLINE_MATH_H
+#define INLINE_MATH_H
+
+inline int inline_add(int a, int b)
+{
+    return a + b;
+}
+
+#endif /* INLINE_MATH_H */
+```
+
+```c++
+// inline_math.c
+#include "inline_math.h"
+
+extern inline int inline_add(int a, int b);
+``` 
 
 ```c++
 // main.c
@@ -517,60 +534,12 @@ int main(void)
 ```
 
 - 출력 결과
-    - inline_add 주소 같음
-        - 인라인화 안 되어 함수 호출한다는 가정
-    - static_add 주소 다름
-        - 각 파일마다 실제 호출하는 함수가 있음
-        - 인라인화 안 되어 함수 호출한다는 가정
-        - 파일의 크기만 2배로... 늘어남
-- 결론! static inline 사용하지 말자!!
-
-### [코드 해석]
-
-- #include "adder.h"
-    - void run_adder(void);의 선언을 복붙하기 위함
-    - main() 내부에서 run_adder()을 호출해야하기 때문
-- #include "inline_math.h"
-  - 아래 인라인 함수를 복붙하기 위함
-  - 인라인 함수는 심볼이 생성되지 않음
-    - 인라인화 실패해서, 함수 호출이 필요할 경우 링커에서 찾을 수 없음
-    - 인라인화 성공해서, 복붙하면 문제없음
-    
-```c++
-// inline_math.h
-#ifndef INLINE_MATH_H
-#define INLINE_MATH_H
-
-inline int inline_add(int a, int b)
-{
-    return a + b;
-}
-
-#endif /* INLINE_MATH_H */
-```
-  - 따라서 인라인 함수 베스트 프렉티스에 따라 아래와 같이 inline_math.c 파일이 필요함
-
-```c++
-// inline_math.c
-#include "inline_math.h"
-
-extern inline int inline_add(int a, int b);
-``` 
-  - #include "inline_math.h"로 인라인 함수의 선언/구현 복붙
-  - extern 키워드를 인라인 함수의 선언에 붙여서 다시 선언
-  - inline_math.c 파일 안에서만 함수 심볼이 생성됨
-  - 인라인화 성공하면 문제없음
-  - 인라인화 실패하면 함수 호출이 필요할 때 함수 심볼 하나를 찾을 수 있음
-    - 따라서 링커에서 심볼 중복되서 발생하는 오류는 발생 X
-
-- #include "static_math.h"
-  - static inline int static_add(int a, int b); 의 선언/구현을 복붙하기 위함
-  - 이 때 static 키워드가 붙었기 때문에 인라인화가 실패하면 main.c 내부의 복붙한 함수를 호출함
-  - 따라서 아래 run_adder()로 adder.c 파일의 static_add 함수를 호출할 때와 주소가 다름!!!
-
-- 나머지 코드
-  - main.c 내부의 static_add() 주소와 adder.c 파일의 static_add()의 주소가 다른 것을 확인하는 코드
-  - inline_add()의 주소는 inline_math.c 안의 함수의 주소
+    - inline_add()의 주소값은 동일함
+        - 링커는 inline_math.c의 심볼과 링킹
+        - inline_math.c의 함수를 호출
+    - static_add() 주소값은 서로 다름
+        - 각 파일마다 존재하는 내부 링크 함수를 호출
+        - 파일의 크기만 늘어남
 
 ## restrict
 
@@ -580,26 +549,26 @@ extern inline int inline_add(int a, int b);
 
 - dest가 src와 범위가 겹치는 경우
 - 어떻게 값이 들어가야 맞는 거지?
-  - 2가지 케이스를 상상해보자
+    - 2가지 케이스를 상상해보자
 
 ![img_55.png](img_55.png)
 
 - 덮어 쓰인 값이 복사
-  - src가 변하면, 변한 후 dest에 복사
+    - src가 변하면, 변한 후 dest에 복사
 - 원래 문자열이 복사
-  - src가 변해도, dest에 그대로 복사
+    - src가 변해도, dest에 그대로 복사
 
 ![img_56.png](img_56.png)
 
 - 이것이 `정의되지 않은 결과`
-  - 알 수 없음
+    - 알 수 없음
 
 ![img_57.png](img_57.png)
 
 - 왜 이런 문제가 발생할까요?
 - 이런 문제의 근본적인 원인은 `함수 호출자를 100% 제어할 수 없기` 때문임
-  - 나눗셈할 때 분모가 0인 경우와 마찬가지
-  - 상식적이지 않은 호출자는 막을 수 없음
+    - 나눗셈할 때 분모가 0인 경우와 마찬가지
+    - 상식적이지 않은 호출자는 막을 수 없음
 - 기술적으로는 가능하나 상식적으로 불가능함
 
 ![img_58.png](img_58.png)
@@ -617,38 +586,38 @@ extern inline int inline_add(int a, int b);
 
 - `정의되지 않은 결과` 때문에 컴파일러가 방어적으로 구현되어 있기 때문에 생긴 키워드
 - 컴파일러에게 메모리 범위가 겹치는 포인터가 아니라고 힌트를 줌
-  - restrict 키워드는 포인터 변수에만 붙일 수 있음
-  - 컴파일러가 힌트를 무시할 수 있음
-    - 힌트를 무시하면 여전히 방어적으로 구현
-    - 힌트를 무시하지 않으면 방어적으로 구현하지 않고 최적화로 성능이 좋아짐
+    - restrict 키워드는 포인터 변수에만 붙일 수 있음
+    - 컴파일러가 힌트를 무시할 수 있음
+        - 힌트를 무시하면 여전히 방어적으로 구현
+        - 힌트를 무시하지 않으면 방어적으로 구현하지 않고 최적화로 성능이 좋아짐
 - 여전히 함수 호출자가 비상식적으로 범위가 겹치는 포인터를 전달할 수 있음
-  - 컴파일러가 이 키워드에 따라 최적화를 하면 컴파일러의 방어적인 구현이 작동하지 않고, 성능이 좋아짐
-    - 이 경우 정의되지 않은 결과
-  - 컴파일러가 이 키워드를 무시해 방어적인 구현이 작동하면, 성능은 저하
-    - 정의되지 않은 결과를 막을 수 있음
+    - 컴파일러가 이 키워드에 따라 최적화를 하면 컴파일러의 방어적인 구현이 작동하지 않고, 성능이 좋아짐
+        - 이 경우 정의되지 않은 결과
+    - 컴파일러가 이 키워드를 무시해 방어적인 구현이 작동하면, 성능은 저하
+        - 정의되지 않은 결과를 막을 수 있음
 
 ### [restrict를 사용 안 할 경우 예시]
 
 ![img_61.png](img_61.png)
 
 - x를 a에 더할 때, b에 더할 때 총 두 번 읽어오는 이유는?
-  - a와 x가 동일한 주소를 가리킬 수도 있기 때문
-  - a에 x를 더해 x가 변하기 때문에, b에 더하기 전에 x를 한 번 더 읽음
+    - a와 x가 동일한 주소를 가리킬 수도 있기 때문
+    - a에 x를 더해 x가 변하기 때문에, b에 더하기 전에 x를 한 번 더 읽음
 - movl 지시어(x86 기준)
-  - 말 그대로 데이터를 옮기는 명령어
-    > move data from one location to another
-  - `movl source, destination`
-  - %edx에 x의 값이 저장됨
-    - 참고로 % prefix는 x86 어셈블리에서 레지스터임을 표시
+    - 말 그대로 데이터를 옮기는 명령어
+      > move data from one location to another
+    - `movl source, destination`
+    - %edx에 x의 값이 저장됨
+        - 참고로 % prefix는 x86 어셈블리에서 레지스터임을 표시
 - 이것이 컴파일러의 방어적인 구현
 
 ![img_62.png](img_62.png)
 
 - 포인터 변수에 restrict 키워드를 사용하면?
-  - 두번째 movl로 시작하는 명령어가 사라지는 것을 알 수 있음
-  - b에 x를 더하는 코드를 실행할 때 x가 가리키는 값을 다시 레지스터에 읽어오지 않음
-    - 다시 읽어올 필요가 없다고 컴파일러에게 힌트를 주었음
-  - 여기서 어떤 포인터라도 서로 같은 메모리를 가리키지 않는다고 restrict 키워드로 힌트를 줬기 때문
+    - 두번째 movl로 시작하는 명령어가 사라지는 것을 알 수 있음
+    - b에 x를 더하는 코드를 실행할 때 x가 가리키는 값을 다시 레지스터에 읽어오지 않음
+        - 다시 읽어올 필요가 없다고 컴파일러에게 힌트를 주었음
+    - 여기서 어떤 포인터라도 서로 같은 메모리를 가리키지 않는다고 restrict 키워드로 힌트를 줬기 때문
 - 이것이 컴파일러의 최적화
 
 ### [여전히 비상식적 호출자는 막을 수 없음]
@@ -693,15 +662,15 @@ extern inline int inline_add(int a, int b);
 
 - va_copy()
 - 가변 인자 목록을 복사하는 `매크로 함수`
-  - va_arg()로 가변 인자 목록으로 부터 다음 가변 인자를 가져왔을 때, 이전 가변 인자로 돌아갈 수 없기 때문에 돌아가기 위해 복사할 때 유용하다
+    - va_arg()로 가변 인자 목록으로 부터 다음 가변 인자를 가져왔을 때, 이전 가변 인자로 돌아갈 수 없기 때문에 돌아가기 위해 복사할 때 유용하다
 - dest를 사용한 뒤 va_end()를 호출해야함
 
 ![img_71.png](img_71.png)
 
 - arg_list_v에 arg_list_agv의 시작(주소)을 복사함
 - va_copy(dest, src);
-  - dest == arg_list_v
-  - src == arg_list_agv
+    - dest == arg_list_v
+    - src == arg_list_agv
 
 ![img_72.png](img_72.png)
 
@@ -722,7 +691,7 @@ extern inline int inline_add(int a, int b);
 
 - 포인터 매개변수 buffer, format에 모두 restrict 키워드가 붙음
 - bufsz로 크기를 입력
-  - bufsz - 1의 문자열을 buffer에 출력, 마지막은 널문자
+    - bufsz - 1의 문자열을 buffer에 출력, 마지막은 널문자
 - buffer은 반드시 c-style 문자열을 보장
 
 ### [snprintf() 예시]
@@ -742,8 +711,8 @@ extern inline int inline_add(int a, int b);
 ![img_78.png](img_78.png)
 
 - 실제로는 마지막 공간에 널문자를 넣는 코드를 많이 사용함
-  - 필요는 없음...
-  - 역사적인 이유가 있음
+    - 필요는 없음...
+    - 역사적인 이유가 있음
 
 ![img_79.png](img_79.png)
 
@@ -756,13 +725,13 @@ extern inline int inline_add(int a, int b);
 - bufsz가 0인 경우
 - 아무것도 write하지 않아서, 널 문자도 안 붙여줌
 - buffer를 미리 널문자로 초기화하는 것이 좋음
-  - buffer[0] = '\0'
+    - buffer[0] = '\0'
 
 ![img_81.png](img_81.png)
 
 - buffer, format이 NULL인 경우도 문제 발생
-  - 호출자의 문제임
-  - c11에는 더 안전하게 이를 처리해주는 함수가 있음
+    - 호출자의 문제임
+    - c11에는 더 안전하게 이를 처리해주는 함수가 있음
 
 ## 새로운 자료형 long long int
 
@@ -787,12 +756,12 @@ extern inline int inline_add(int a, int b);
 ![img_86.png](img_86.png)
 
 - _Bool
-  - _(언더바)가 붙으면 표준이 아닌 경우가 많은데, 불은 표준임
+    - _(언더바)가 붙으면 표준이 아닌 경우가 많은데, 불은 표준임
 - 참은 0, 거짓은 1로 표현
 
 ![img_87.png](img_87.png)
 
-- #include <stdbool.h>를 해야 사용할 수 있음 
+- #include <stdbool.h>를 해야 사용할 수 있음
 - true, false로 표현!
 
 ### [왜 _Bool이 기본이고, bool은 헤더를 인클루드 해야만 쓸 수 있나?]
@@ -800,20 +769,20 @@ extern inline int inline_add(int a, int b);
 ![img_90.png](img_90.png)
 
 - C99에 새로 표준을 고칠 때, 후방 호환성 때문
-  - 이미 자체적으로 bool을 만들었었음
+    - 이미 자체적으로 bool을 만들었었음
 
 ![img_91.png](img_91.png)
 
 - 이미 자체적으로 만든 bool과 충돌나지 않게, _Bool을 만듦
-- 새로 C99로 작성하는 코드는 이제  #inclue <stdbool.h>해서 bool 사용하면 됨
-  - 매크로로 c89, c99 조건부 컴파일해서 많이 사용함 
+- 새로 C99로 작성하는 코드는 이제 #inclue <stdbool.h>해서 bool 사용하면 됨
+    - 매크로로 c89, c99 조건부 컴파일해서 많이 사용함
 
 ## 고정 폭 정수형
 
 ![img_88.png](img_88.png)
 
 - 기본 자료형들의 크기는 `최소` 몇 비트
-  - 고정된 것이 아님
+    - 고정된 것이 아님
 
 ![img_89.png](img_89.png)
 
@@ -843,4 +812,4 @@ extern inline int inline_add(int a, int b);
 ![img_97.png](img_97.png)
 
 - IEEE 754는 C99에 정식으로 표준에 들어왔음
-  - 사칙 연산과 제곱근의 올림이 IEEE 754에서 정의한대로 처리
+    - 사칙 연산과 제곱근의 올림이 IEEE 754에서 정의한대로 처리
