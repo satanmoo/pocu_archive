@@ -32,6 +32,7 @@
 ![img_2.png](img_2.png)
 
 - math_errhandling은 비트 플래그
+    - 비트 플래그에서 & 연산을 했을 때, 두 피연산자의 비트가 모두 1일 때 연산 결과가 1임을 이용
 - 여전히 errno를 사용해 구현한 경우
     - #define MATH_ERRNO (1)
     - math_errhandling의 비트 패턴에서 1을 나타내는 비트는 켜져있음
@@ -44,10 +45,27 @@
 - 둘다 지원
     - math_errhandling의 비트 패턴에서 1을 나타내는 비트, 2를 나타내는 비트 모두 켜져있음
 
+```c++
+#include <math.h>
+#include <stdio.h>
+
+int main() {
+    printf("math_errhandling: %d\n", math_errhandling);
+
+    if (math_errhandling & MATH_ERRNO) {
+        printf("MATH_ERRNO is supported.\n");
+    }
+
+    if (math_errhandling & MATH_ERREXCEPT) {
+        printf("MATH_ERREXCEPT is supported.\n");
+    }
+
+    return 0;
+}
+```
+
 - IEEE 부동 소수점 연산(IEC 60559)라고 부동 소수점 연산에서 가장 많이 쓰이는 표준이 있음
     - math_errhandling & MATH_ERREXCEPT != 0 이면 IEEE 부동 소수점 연산을 지원하는지 확인할 수 있음
-
-[질문]: math_errhandling 비트 플래그 값이 MATH_ERRNO, MATH_ERREXCEPT 등 매크로 값으로 설정된다는 말인가요?
 
 ### 새로운 부동 소수점 예외의 구현
 
@@ -55,10 +73,11 @@
 
 - <fenv.h> 헤더에 정의됨
 - 메크로 값은 비트 플래그로 쓸 수 있도록 `2의 승수`
+    - ex) FE_INEXACT: 0000 1000
 - FE_ALL_EXCEPT는 모든 비트가 켜져있다고 볼 수 있음
-    - 다른 모든 매크로가 2의 승수기 때문에 비트에서 오직 한 자리만 1
     - FE_INEXACT & FE_ALL_EXCEPT 의 결과가 0이 아니면 FE_INEXACT의 비트가 켜져있다는 것
-        - 즉 오류가 있었다는 것이죠?
+        - 즉 특정 부동 소수점 예외가 정의됬다는 것
+    - 1111 1111 & 0000 1000 != 0
 
 ### errno와 부동 소수점 예외의 비교
 
@@ -70,19 +89,60 @@
 
 ![img_5.png](img_5.png)
 
-- <fenv.h> 헤더에서 제공하는 함수를 사용하면 됨
-- 한 번 비트 플래그가 설정되면 자동으로 지워지는 것은 아니기 때문에 `feclearexcept()`를 호출해서 비트 플래그 초기화
-- 참고로 FE_INEXACT의 경우 정확하지 않은 값이 `오류 조건`임
-    - 부동 소수점 나누기 연산이 정확하지 않기 때문
+- <fenv.h> 헤더에서 제공하는 함수
+- 한 번 비트 플래그가 전역적으로 설정되면 자동으로 지워지는 것은 아니기 때문에 `feclearexcept()`를 호출해서 비트 플래그 초기화하는 함수를 제공
 
-### 커스텀 부동 소수점 예외 설정
+#### reference
+
+https://en.cppreference.com/w/c/numeric/fenv/fetestexcept
+https://en.cppreference.com/w/c/numeric/fenv/feclearexcept
+
+### 부동 소수점 예외 설정
 
 ![img_6.png](img_6.png)
 
+- 이 함수를 호출하면 전역적으로 부동 소수점 예외를 설정함
 - 함수를 구현하는 사람이 부동 소수점 예외를 설정해도, 함수 호출자는 모르는 경우가 많음
-    - 그래서 가독성이 좋지 않음
-    - 전역 변수에 설정되는 것도 문제
-- 함수에서 오류 코드를 직접 반환하는 방법이 좋음!
+    - 전역 변수에 설정하기 때문
+    - 전역적으로 설정한다는 사실은 함수의 구현을 까보지 않는 이상 함수 호출자는 알 수 없음
+- 함수 호출자가 알 수 있도록 함수에서 오류 코드를 직접 반환하는 방법이 좋음!
+
+```c++
+#include <stdio.h>
+#include <fenv.h>
+
+void show_fe_exceptions(void)
+{
+    printf("current exceptions raised: ");
+    if(fetestexcept(FE_DIVBYZERO))     printf(" FE_DIVBYZERO");
+    if(fetestexcept(FE_INEXACT))       printf(" FE_INEXACT");
+    if(fetestexcept(FE_INVALID))       printf(" FE_INVALID");
+    if(fetestexcept(FE_OVERFLOW))      printf(" FE_OVERFLOW");
+    if(fetestexcept(FE_UNDERFLOW))     printf(" FE_UNDERFLOW");
+    if(fetestexcept(FE_ALL_EXCEPT)==0) printf(" none");
+    printf("\n");
+}
+
+int main(void)
+{
+    
+    if (fetestexcept(FE_INEXACT)) {
+        puts("hi");
+    }
+
+    feraiseexcept(FE_INEXACT);
+    feraiseexcept(FE_UNDERFLOW);
+    feclearexcept(FE_UNDERFLOW);
+
+    show_fe_exceptions();
+
+    return 0;
+}
+```
+
+#### reference
+
+https://en.cppreference.com/w/c/numeric/fenv/feraiseexcept
 
 ### 부동 소수점 연산 환경 설정
 
@@ -247,7 +307,7 @@ int main(void)
 - 컴파일 도중에 알 수 있다면, 최적화 가능!
     - loop unrolling
         - 8번 반복하는 반복문이 있으면, 그냥 코드를 8줄 적어주는게 빠름
-        - 반복문 중 4회씩 묶어서 벡터연산 [SMID](https://ko.wikipedia.org/wiki/SIMD)
+        - 반복문 중 4회씩 묶어서 벡터연산 [SIMD](https://ko.wikipedia.org/wiki/SIMD)
 
 ### 한계 1, 한계 2를 극복하여 나온 것이 배열 색인 안의 static 키워드
 
@@ -262,7 +322,7 @@ int main(void)
 ![img_25.png](img_25.png)
 
 - 실행 중에 그 보다 작은 배열이 들어오면 정의되지 않은 결과
-    - 컴파일러는 최소 8개가 들어온다고 가정하고 최적화하기 때
+    - 컴파일러는 **최소** 8개가 들어온다고 가정하고 최적화하기 때
 - 그래서 assert로 디버깅 중에 문제 찾는게 좋은 습관!!
 - sizeof(nums) 호출하면 여전히 8 나옴! 포인터로 캐스팅 되는 것은 변하지 않음
     - sizeof(void*)의 값
@@ -273,6 +333,26 @@ int main(void)
 
 - dest는 `int* const`로 캐스팅한다고 생각하면 됨
 - src는 `const int*`로 캐스팅한다고 생각하면 됨
+
+```c++
+int sum(int nums[static const 8], size_t count)
+{
+    assert(count >= 8);
+
+    int a;
+    int* p = NULL;
+     *nums = 5;  // int* const 라서 indirection으로 값을 변경하는 것은 허용됨
+    nums[3] = 4;    // int* const 라서 indirection으로 값을 변경하는 것은 허용됨
+    *(nums + 5) = 3;    // int* const 라서 indirection으로 값을 변경하는 것은 허용됨
+    a = sizeof(nums);   // 포인터 변수의 크기 sizeof(void*)와 동일한 값, 플랫폼에 따라 다름
+    nums = &a;  // 컴파일 오류
+    nums = p;   // 컴파일 오류
+    nums = malloc(sizeof(int) * count); // 컴파일 오류
+    free(nums);
+
+    return 0;
+}
+```
 
 ### restrict 한정자 사용 예
 
@@ -960,10 +1040,10 @@ strcpy_s(dest, sizeof(dest), src);
 ![img_101.png](img_101.png)
 
 - 오류 감지
-  - destsz == strlen_s(src, destsz)
-    - 즉 dest에 널문자가 들어갈 공간이 없는 경우
-    - src의 길이가 dest보다 긴 경우 strlen_s()는 destsz를 반환함
-  - src, dest 메모리가 겹칠 때 restrict 가 붙어있어서 감지
+    - destsz == strlen_s(src, destsz)
+        - 즉 dest에 널문자가 들어갈 공간이 없는 경우
+        - src의 길이가 dest보다 긴 경우 strlen_s()는 destsz를 반환함
+    - src, dest 메모리가 겹칠 때 restrict 가 붙어있어서 감지
 
 - [참고: destsz == strlen_s(src, destsz) 시나리오]
 
@@ -1021,20 +1101,20 @@ int main() {
 
 - 동작 최대 count개의 문자를 src에서 복사 후, 널 문자 붙여줌
 - strncpy()와 차이점
-  - strncpy()는 복사 후 남은 공간을 0으로 채워줌
-    - 비효율적임
-  - strncpy_s()는 널 문자 뒤 쓰레기값이 들어올 수 있음
+    - strncpy()는 복사 후 남은 공간을 0으로 채워줌
+        - 비효율적임
+    - strncpy_s()는 널 문자 뒤 쓰레기값이 들어올 수 있음
 
 ![img_103.png](img_103.png)
 
 - 오류 감지
-  - count가 0이거나 RSIZE_MAX보다 클 때 조건이 추가됨
-  - destsz <= strnlen_s(src, count)
-    - src가 dest보다 클 때
+    - count가 0이거나 RSIZE_MAX보다 클 때 조건이 추가됨
+    - destsz <= strnlen_s(src, count)
+        - src가 dest보다 클 때
 - 결과가 정의되지 않은 경우
-  - src의 실제 공간이 매개변수로 입력한 count보다 작은 경우
-  - dest의 실제 공간이 매개변수로 입력한 destsz보다 작은 경우
-  - 개념적으로 문제가 있음!
+    - src의 실제 공간이 매개변수로 입력한 count보다 작은 경우
+    - dest의 실제 공간이 매개변수로 입력한 destsz보다 작은 경우
+    - 개념적으로 문제가 있음!
 
 ### _s 함수를 과연 써야 할까?
 
@@ -1043,11 +1123,11 @@ int main() {
 - 과연 이걸 쓴다고 실수를 막을 수 있을까?
 - 함수 스펙이 너무 복잡한데요..?
 - [후기 강조] 복잡한 규칙의 문제점
-  - ㄹㅇ 인생 교훈이죠?
+    - ㄹㅇ 인생 교훈이죠?
 - 언매니지드 언어에서는 성능을 포기하지 않고, 다른 방법으로 오류를 통제하는 것이 더 나은 방법!
 - 에러 핸들러를 또 따로 구현하는 것도 문제임
-  - 일이 많아짐
-  - 함수의 역할이 늘어나죠? 함수는 한 가지 일을 하는 것이 좋음
+    - 일이 많아짐
+    - 함수의 역할이 늘어나죠? 함수는 한 가지 일을 하는 것이 좋음
 
 ![img_105.png](img_105.png)
 
@@ -1056,7 +1136,7 @@ int main() {
 ![img_106.png](img_106.png)
 
 - 오히려 C99의 방향성과 상반됨
-  - restrict는 성능 최적화 방향인데?
+    - restrict는 성능 최적화 방향인데?
 - C11은 왜 안전임?
 
 ![img_107.png](img_107.png)
