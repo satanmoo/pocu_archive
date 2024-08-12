@@ -20,6 +20,10 @@
 - 가변 인자 함수를 사용할 때, 반드시 최소 한 개의 정해진 자료형의 매개변수가 필요
     - 일반적인 매개변수가 반드시 1개 필요함
 
+### Reference
+
+[ap?](https://stackoverflow.com/questions/24345199/what-does-ap-stand-for-in-c-examples)
+
 ## 가변 인자 함수는 언제 사용하는가?
 
 ![img_3.png](img_3.png)
@@ -364,3 +368,113 @@ void printf_simple(const char* format, ...)
     va_end(ap);
 }
 ```
+
+## 오류 처리
+
+- Learn strategies for handling error situations
+- C has no exceptions provided by the language
+- So how do you deal with problems that arise during execution?
+
+![img_33.png](img_33.png)
+
+- There is little relationship between exception handling and software quality
+- Humans are creatures that cannot handle exceptions perfectly
+- Some people just cover up exceptions and move on because they are lazy.
+
+### why is the problem occuring
+
+![img_34.png](img_34.png)
+
+- consider only happy path
+
+### Advantages of a language without exceptions
+
+![img_35.png](img_35.png)
+
+- Responds quickly to program crashes
+  - imagine "blue screen" in windows
+
+## Example of bad error handling
+
+![img_36.png](img_36.png)
+
+![img_37.png](img_37.png)
+
+- A crash occurs if NULL is entered as a function argument.
+
+![img_38.png](img_38.png)
+
+- Stupid thing happens that checks for NULL in all your code
+
+### "Using the analogy of a circuit breaker."
+
+![img_39.png](img_39.png)
+
+![img_40.png](img_40.png)
+
+![img_41.png](img_41.png)
+
+- It is efficient to find the problem in only one place
+
+## Difference between bugs and errors, correct error handling strategies
+
+![img_42.png](img_42.png)
+
+![img_43.png](img_43.png)
+
+- Since C99, static assertions have been introduced, allowing bugs to be detected during compilation
+
+![img_44.png](img_44.png)
+
+- The precondition of this function is that the deposit must be greater than 0.
+- The postcondition of this function is "before_total < after_total"
+
+### Error handling in RUNTIME
+
+![img_45.png](img_45.png)
+
+- Data must be filtered at the boundaries
+
+![img_46.png](img_46.png)
+
+- By adding "_or_null" to the name of the function, it indicates that it can return null
+  - The same goes for parameters
+- It helps you check for null when checking data at the boundaries
+
+![img_47.png](img_47.png)
+
+- Returning an error code from a function is also good error handling
+  - try_get_student() function is boundary(FILE IO)
+
+![img_48.png](img_48.png)
+
+- make enum for error code
+
+![img_49.png](img_49.png)
+
+- this is limitation of C language
+
+![img_50.png](img_50.png)
+
+- the method to store at errno is not intuitive
+  - You have to read the function comments or docs to find out.
+
+![img_51.png](img_51.png)
+
+- 시험에 나올 듯 ㅋㅋ
+
+## What if it crashes?
+
+![img_52.png](img_52.png)
+
+- fix bug
+- Code needs to be fixed
+
+![img_53.png](img_53.png)
+
+- What if you want to deal with even expected bugs?
+- There is no way in C
+
+![img_54.png](img_54.png)
+
+
