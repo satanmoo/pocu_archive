@@ -13,7 +13,7 @@ int add_ints(const size_t param1, const int param2, ...)
 
     va_start(ap, param2);
     {
-        for (i = 0; i < count; i++) {
+        for (i = 0; i < param1; i++) {
             sum += va_arg(ap, int);
         }
     }
@@ -133,4 +133,3 @@ int add_ints(const int param1, ..., const char param2)
 
 - 안 됨
 - 가변인자는 반드시 매개변수 중 마지막에 위치해야함
-- 
