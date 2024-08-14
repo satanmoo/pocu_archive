@@ -693,7 +693,7 @@ fprintf(stderr, "internal error: %s, line %d.\n", __FILE__, __LINE__);
 - #if defined(A)는 식별자 A가 정의됬으면 참, 아니면 거짓
 - #if A는 식별자 A의 값을 봄
   - 지금 A의 값에 대입을 안해줬기 때문에 거짓임
-  - 만약에 #define A (10) 이렇게 0이 아닌 값을 대입했으면 참
+  - A는 공백으로 대체
 
 ### [조건부 컴파일: 버전 관리]
 

@@ -756,7 +756,7 @@ while (1) {
         fprintf(stderr, "%s\n", "out of memory");
         break;
     }
-    strcpt(lines[num_lines], line); // strcpy해도 안전함, 메모리가 충분히 할당되었기 때문임, 복사 후 널문자 추가해줌
+    strcpy(lines[num_lines], line); // strcpy해도 안전함, 메모리가 충분히 할당되었기 때문임, 복사 후 널문자 추가해줌
     ++num_lines;
 }
     
