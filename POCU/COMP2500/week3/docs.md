@@ -196,9 +196,9 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 
 - Conceptually refers to state
 - it is represented that member variable happiness is initialized to 0.
-  - name, age is initialized by constructor. their value is determined by the value of constructor's parameters.
+    - name, age is initialized by constructor. their value is determined by the value of constructor's parameters.
 
-###  Member Function(Method)
+### Member Function(Method)
 
 ![img_73.png](image/img_73.png)
 
@@ -215,6 +215,9 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 
 ![img_77.png](image/img_77.png)
 ![img_78.png](image/img_78.png)
+
+### Step1: Waterspray modeling
+
 ![img_79.png](image/img_79.png)
 ![img_80.png](image/img_80.png)
 ![img_81.png](image/img_81.png)
@@ -223,16 +226,25 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_84.png](image/img_84.png)
 ![img_85.png](image/img_85.png)
 ![img_86.png](image/img_86.png)
+
+### Step2: define behavior(watering)
+
 ![img_87.png](image/img_87.png)
 ![img_88.png](image/img_88.png)
 ![img_89.png](image/img_89.png)
 ![img_90.png](image/img_90.png)
 ![img_91.png](image/img_91.png)
+
+#### Determine method signature
+
 ![img_92.png](image/img_92.png)
 ![img_93.png](image/img_93.png)
 ![img_94.png](image/img_94.png)
 ![img_95.png](image/img_95.png)
 ![img_96.png](image/img_96.png)
+
+#### Think about whether the behavior is necessary
+
 ![img_97.png](image/img_97.png)
 ![img_98.png](image/img_98.png)
 ![img_99.png](image/img_99.png)
@@ -241,9 +253,15 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_102.png](image/img_102.png)
 ![img_103.png](image/img_103.png)
 ![img_104.png](image/img_104.png)
+
+### Step3: Add a status(reflecting capacity of bottle)
+
 ![img_105.png](image/img_105.png)
 ![img_106.png](image/img_106.png)
 ![img_107.png](image/img_107.png)
+
+#### Constants in UML
+
 ![img_108.png](image/img_108.png)
 ![img_109.png](image/img_109.png)
 ![img_110.png](image/img_110.png)
@@ -254,15 +272,27 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 
 - Constant is not state
 
+#### Member variable in UML
+
 ![img_115.png](image/img_115.png)
 ![img_116.png](image/img_116.png)
 ![img_117.png](image/img_117.png)
+
+- Unlike constants, member variables are reflected in UML.
+
+#### Additional behavior
+
 ![img_118.png](image/img_118.png)
 ![img_119.png](image/img_119.png)
 ![img_120.png](image/img_120.png)
 ![img_121.png](image/img_121.png)
 ![img_122.png](image/img_122.png)
 ![img_123.png](image/img_123.png)
+
+- We can add status and behavior **when we need them**
+
+### Step4: Think about additional object
+
 ![img_124.png](image/img_124.png)
 ![img_125.png](image/img_125.png)
 ![img_126.png](image/img_126.png)
@@ -273,16 +303,26 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_131.png](image/img_131.png)
 
 - member variable `remainingWater` in class `WaterSpray` is private member variable.
-  - because of ***Encapsulation***
-- public member function `addWater` can be called anywhere. so anyone other than the `Faucet`class can modify `remaingWater`
+    - because of ***Encapsulation***
+- public member function `addWater` can be called anywhere. so anyone other than the `Faucet`class can
+  modify `remaingWater`
 
 ![img_132.png](image/img_132.png)
 ![img_133.png](image/img_133.png)
+
+#### Is this absolutely need?
+
 ![img_134.png](image/img_134.png)
 ![img_135.png](image/img_135.png)
 ![img_136.png](image/img_136.png)
 ![img_137.png](image/img_137.png)
 ![img_138.png](image/img_138.png)
+
+- In conclusion, step4 is cancel.
+
+### Step5: Add object(flowerpot)
+
+#### status of flowerpot
 
 ![img_139.png](image/img_139.png)
 ![img_140.png](image/img_140.png)
@@ -293,6 +333,9 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_144.png](image/img_144.png)
 ![img_146.png](image/img_146.png)
 ![img_147.png](image/img_147.png)
+
+#### behavior of flowerpot
+
 ![img_148.png](image/img_148.png)
 ![img_149.png](image/img_149.png)
 ![img_150.png](image/img_150.png)
@@ -300,6 +343,9 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_152.png](image/img_152.png)
 ![img_153.png](image/img_153.png)
 ![img_154.png](image/img_154.png)
+
+#### Implementations that don't accurately reflect state
+
 ![img_155.png](image/img_155.png)
 ![img_156.png](image/img_156.png)
 ![img_157.png](image/img_157.png)
@@ -313,6 +359,11 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_165.png](image/img_165.png)
 ![img_166.png](image/img_166.png)
 ![img_167.png](image/img_167.png)
+
+### Step6: Autonomy of Object in OOP
+
+#### Method1
+
 ![img_168.png](image/img_168.png)
 ![img_169.png](image/img_169.png)
 ![img_170.png](image/img_170.png)
@@ -320,6 +371,8 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_172.png](image/img_172.png)
 
 - Better encapsulation and data abstraction
+
+#### Method2
 
 ![img_173.png](image/img_173.png)
 ![img_174.png](image/img_174.png)
@@ -329,6 +382,11 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_178.png](image/img_178.png)
 ![img_179.png](image/img_179.png)
 ![img_180.png](image/img_180.png)
+
+- This is concept of encapsulation and object autonomy
+- Objects act with ***autonomy***
+    - So when translating to Korean, understand that "개체" are more appropriate than "객체"
+
 ![img_181.png](image/img_181.png)
 
 - The parameter's type was changed from int to WaterSpray, dependency between two class gets stronger.
@@ -337,6 +395,8 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_183.png](image/img_183.png)
 
 - less flexible
+
+### Step7: separate object
 
 ![img_184.png](image/img_184.png)
 ![img_185.png](image/img_185.png)
@@ -347,7 +407,7 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_190.png](image/img_190.png)
 
 - this is ***Aggregation*** not ***Composition***
-  - instance of each class can be used independently
+    - instance of each class can be used independently
 
 ![img_191.png](image/img_191.png)
 ![img_192.png](image/img_192.png)
@@ -358,7 +418,7 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_197.png](image/img_197.png)
 ![img_198.png](image/img_198.png)
 
-## Flexible design is not the best!
+#### Flexible design is not the best!
 
 ![img_199.png](image/img_199.png)
 ![img_200.png](image/img_200.png)
@@ -373,21 +433,35 @@ happy.happiness +=1.0;     // compile error! Application.java exists in a differ
 ![img_209.png](image/img_209.png)
 ![img_210.png](image/img_210.png)
 
-## OOP guideline
+#### OOP guideline
 
 ![img_211.png](image/img_211.png)
 ![img_212.png](image/img_212.png)
 
-## Increase Reusability By Standard
+### Step8: Increase reusability correctly
+
+#### Method1: Introduce the concept of standards
+
+- problem: caller create head and body separately. this is complicated for user(caller) and it has poor readability
 
 ![img_213.png](image/img_213.png)
 ![img_214.png](image/img_214.png)
 ![img_215.png](image/img_215.png)
 ![img_216.png](image/img_216.png)
+
+- Implementing standards as enum
+
 ![img_217.png](image/img_217.png)
 ![img_218.png](image/img_218.png)
 ![img_219.png](image/img_219.png)
 ![img_220.png](image/img_220.png)
+
+- Make it easier for callers by creating a constructor that takes an enumeration as an argument
+
+#### Method2: Integrating common logic
+
+- problem: The FlowerPot.addWater() method logic is complex
+
 ![img_221.png](image/img_221.png)
 ![img_222.png](image/img_222.png)
 ![img_223.png](image/img_223.png)
