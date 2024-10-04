@@ -699,9 +699,7 @@ has-a 관계는 집합을 말함
     - `reader1`은 `readSignature()` 매서드를 호출해 4 바이트 읽고, String format으로 반환
         - String "POCU"를 반환
 
-[질문]
-
-아래와 같이 rawData를 private로 변경?
+### [질문] Record 클래스를 변경
 
 ```java
 public class Record {
@@ -749,27 +747,43 @@ public class RecordReader {
 }
 ```
 
+- 장점
+  - 캡슐화 강화
+- 단점
+  - 함수 호출이 늘어남
+    - 자주 호출되는 함수의 경우 함수 호출에 따른 오버헤드로 성능 저하
+- 고민할 점
+  - 데이터만 있는 개체(Record 개체)를 캡슐화할 필요가 있는가?
+  - 패키지 구조를 고려하기
+    - 같은 패키지안의 클래스는 읽고/쓰기가 가능하게 만드려면 원래의 방식을 사용해야함
+    - 지금 방식을 사용하면 외부 클래스에서 읽기는 가능하고 쓰기는 불가능함
+
+> 그렇게 설계하셔도 괜찮으며 이로 인해 캡슐화가 강화되는 건 맞습니다. 하지만 이런 단점 및 고민도 있습니다.
+> 함수 호출이 늘어난다. (자주 호출되는 함수일 경우 당연히 성능 저하)
+> 과연 데이터만 있는 개체를 캡슐화할 필요가 있는지에 대한 고민
+> 참고로 강의 중에 보여드린 코드는 package default로 멤버 변수를 선언했기에 같은 패키지 안에 있는 클래스들만 읽기/쓰기가 가능합니다. 보여주신 코드는 어느 클래스라도 읽기는 가능하고 쓰기는 불가능하게
+> 만들었습니다. 이런 차이점이 있습니다. 따라서 이건 패키지 구조가 어떻게 되는지에 따라서도 달라지는 부분입니다.
+
 ### 내포 클래스를 사용해 Record, RecordReader 구현
 
 ![img_100.png](image/img_100.png)
 ![img_101.png](image/img_101.png)
 
 - inner class(non-static nested class)에서 outer class의 멤버에 접근할 수 있음
-  - 접근 제어자가 private여도 접근할 수 있음
-  - 이전 구현은 패키지 접근 제어자를 사용했지만, 이번에는 private를 사용해 더 강한 캡슐화
+    - 접근 제어자가 private여도 접근할 수 있음
+    - 이전 구현은 패키지 접근 제어자를 사용했지만, 이번에는 private를 사용해 더 강한 캡슐화
 - 이전 구현에서 `RecordReader`은 생성자로 `Record` 개체를 입력 받았으나, 이제는 그럴 필요가 없음
-  - `Record` 내부에 `RecordReader`을 구현함으로써 더 긴밀한 연관관계 형성
+    - `Record` 내부에 `RecordReader`을 구현함으로써 더 긴밀한 연관관계 형성
 
 ![img_102.png](image/img_102.png)
 
 - `<외부 클래스 개체명>.new` 로 생성자 호출
-  - 외부 클래스를 개체로 만들지 않으면 비정적 내포 클래스의 개체를 생성할 수 없음
-    - 내포 클래스의 개체는 외부 클래스 개체의 참조를 저장
-    - `reader0`, `reader1` 모두 record의 참조를 저장
-  - 비정적 내포 클래스의 접근제어자에 따라 외부에서 생성 할 수 없는 경우가 있음
-    - 비정적 내포 클래스 `Reader`의 접근제어자가 private면 외부에서 생성자를 호출할 수 없음
+    - 외부 클래스를 개체로 만들지 않으면 비정적 내포 클래스의 개체를 생성할 수 없음
+        - 내포 클래스의 개체는 외부 클래스 개체의 참조를 저장
+        - `reader0`, `reader1` 모두 record의 참조를 저장
+    - 비정적 내포 클래스의 접근제어자에 따라 외부에서 생성 할 수 없는 경우가 있음
+        - 비정적 내포 클래스 `Reader`의 접근제어자가 private면 외부에서 생성자를 호출할 수 없음
 - 타입은 `<외부 클래스명>.<비정적 내포 클래스명>`
-
 
 ![img_104.png](image/img_104.png)
 ![img_103.png](image/img_103.png)
@@ -780,18 +794,22 @@ public class RecordReader {
 
 - 내포 클래스에 static 키워드 추가
 - 생성자로 `Record` 개체를 받아야함
-  - 그렇지 않으면 외부 클래스의 멤버에 바로 접근할 수 없음
-  - 외부 클래스의 멤버가 static이면 바로 접근할 수 있음
+    - 그렇지 않으면 외부 클래스의 멤버에 바로 접근할 수 없음
+    - 외부 클래스의 멤버가 static이면 바로 접근할 수 있음
 - 외부 클래스의 private 멤버에 접근 가능
 
 ![img_106.png](image/img_106.png)
 ![img_107.png](image/img_107.png)
 
 - static을 붙이는 것은 outer class의 레퍼런스가 없다는 의미
-  - 반대로 non-static nested class는 이를 자동으로 해줌
+    - 반대로 non-static nested class는 이를 자동으로 해줌
 - 외부에서 입력받은 outer class의 개체를 통해서만 outer class의 non-static 멤버에 접근할 수 있음
 
 ![img_108.png](image/img_108.png)
+
+- PPT 이미지에서 "rawData가 다시 private", "내포 클래스 안 쓸 때와 똑같아 짐"
+  - 비정적 내포 클래스를 사용할 때 멤버변수 rawData의 접근제어자를 private로 설정했다는 것과 동일해짐
+
 ![img_109.png](image/img_109.png)
 
 - outer class의 static 멤버는 outer class의 개체를 통하지 않고 바로 멤버에 접근할 수 있음
