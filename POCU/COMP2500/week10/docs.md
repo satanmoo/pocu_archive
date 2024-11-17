@@ -123,7 +123,7 @@
 ![img_30.png](image/img_30.png)
 
 - Troll 클래스에 abstract 키워드 붙이면 개체로 만들 수 없음
-  - Troll 클래스도 abstract로 만들면 깊은 상속관계로 또 다른 구체 클래스로 상속받아 사용할 수 있긴 함
+    - Troll 클래스도 abstract로 만들면 깊은 상속관계로 또 다른 구체 클래스로 상속받아 사용할 수 있긴 함
 - 따라서 컴파일 하려면 Troll 클래스에서 만드시 추상 매서드를 오버라이딩 구현해야함
 
 ![img_31.png](image/img_31.png)
