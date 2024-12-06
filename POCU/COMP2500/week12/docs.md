@@ -585,9 +585,13 @@ public class LoadingScreen extends Screen {
 
 ### 더 직관적인 방법
 
+![img.png](img.png)
+
+- 왜 굳이 Logger 클래스에 next 멤버 변수를 사용했을까?
+
 ![img_131.png](images/img_131.png)
 
-- LoggerManager 클래스로 관리
+- LoggerManager 클래스로 관리하면 다형적으로 매서드 호출 가능한데?
 
 ![img_132.png](images/img_132.png)
 
@@ -611,10 +615,15 @@ public class LoadingScreen extends Screen {
 - LogManager 개체 생성
 - addHandler() 로 등록
 - message() 함수 호출
+- 아까 next 멤버 변수 설정하는 것 보다 훨씬 간단함
 
 ![img_138.png](images/img_138.png)
 
+- 위키의 예가 잘못됨
+
 ![img_139.png](images/img_139.png)
+
+- next 멤버 변수는 "책임"을 위해 필요함
 
 ![img_140.png](images/img_140.png)
 
@@ -623,6 +632,7 @@ public class LoadingScreen extends Screen {
     - 두번째 예에서는 for 문으로 this.loggers 순회해서 기회를 줌
 - 책임은?
     - 한 개체가 처리하면 책임을 지고, 그 뒤의 개체들은 메세지 처리할 기회를 받지 못함!!
+    - 이 때 next 멤버 변수를 사용함
 
 ![img_141.png](images/img_141.png)
 
@@ -778,16 +788,21 @@ void default_error_handler(const char* msg)
 
 - try 블록 위에서 부터 순서대로 실행
 - 예외 발생하면 예외 종류에 따라 분기해서 catch
+    - 언어 자체에서 제공하는 예외
+    - 사용하는 함수에서 자체적으로 제공하는 예외
 - 예외 발생 여부와 관계없이 finally 블록 실행
     - catch 에서 return 문이 있더라도 finally 블록 실행
 
 ![img_164.png](images/img_164.png)
 
 - Exception 클래스는 최상위 예외 부모
+- catch 문에 부모 클래스 넣으면 자식 클래스 예외가 발생하면 캐치함
 
 ![img_165.png](images/img_165.png)
 
 - 부모 예외 클래스 catch 블락이 자식 예외 클래스 catch 블락보다 위에 나오면 안 됨
+    - catch 문에 부모 클래스 넣으면 자식 클래스 예외가 발생하면 캐치하기 때문
+    - 왼쪽의 예에서는 `FileNotFoundException` 예외가 발생할 수 없음
 - specific to general 로 작성하자~
 
 ### 예외 예시 사용법
@@ -823,6 +838,7 @@ void default_error_handler(const char* msg)
 ![img_174.png](images/img_174.png)
 
 - 예외가 발생하는 순간 다음은 실행 안 됨
+  - `Files.readAllLines(path)`에서 예외 발생하고, `System.out.format...` 은 건너뜀
 
 ![img_175.png](images/img_175.png)
 
@@ -873,6 +889,8 @@ void default_error_handler(const char* msg)
 ![img_185.png](images/img_185.png)
 
 - finally 블록에서 if (fs != null) 조건으로 파일 열렸는지 확인
+- catch 블록에서 return 문으로 함수를 리턴할 때 finally 블록은 실행하고 리턴함
+  - 컴파일러 과정에서 반드시 finally 블록을 실행하도록 블록 실행 루틴을 삽입한다고 생각하면 됨
 
 ![img_186.png](images/img_186.png)
 
@@ -1709,7 +1727,7 @@ public static void main(String[] args) throws UserNotFoundException {
 
 - 결론적으로 종료 시키는 방법
 - 최종 사용자에게 메시지를 보여주기 싫거나, 불가능한 경우
-  - 고치기 어려운 경우는 몰라서 불가능한 경우라고 생각하면 됨
+    - 고치기 어려운 경우는 몰라서 불가능한 경우라고 생각하면 됨
 
 ![img_337.png](images/img_337.png)
 
@@ -1734,5 +1752,3 @@ public static void main(String[] args) throws UserNotFoundException {
 - 걍 결론은 이게 핵심임 ㅋㅋ
 - 오류내고 잘 고치자!
 - 좀비는 피하자
-
-
