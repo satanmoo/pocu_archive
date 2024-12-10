@@ -22,7 +22,7 @@
 ![img_4.png](images/img_4.png)
 
 - SOLID 정신에서 얻을 수 있는 것은 유연함
-  - 추상화, 일반화, 인터페이스
+    - 추상화, 일반화, 인터페이스
 
 ![img_5.png](images/img_5.png)
 
@@ -181,7 +181,8 @@
 ![img_54.png](images/img_54.png)
 
 - 부모 클래스가 할 수 있는 일은 자식도 다 할 수 있어야함
-- 상속, 다형성으로 부모 클래스 타입에 의존해서 코드를 작성했는데, 이게 작동 안 할 수도
+- 상속, 다형성으로 부모 클래스 변수에 자식 개체를 대입(컴파일러에서 허용, 치환개념)
+    - 이 때 문제없이 동작해야함
 
 ![img_55.png](images/img_55.png)
 
@@ -200,6 +201,75 @@
 ![img_58.png](images/img_58.png)
 
 ![img_59.png](images/img_59.png)
+
+- 직사각형 자료형 변수가 정사각형 개체를 참조한다고 가정
+- 정사각형 개체에서 setWidth(), setHeight() 오버라이딩
+    - 이 때 내부적으로 width == height 만족하도록 구현됨
+    - 따라서 직사각형 모양으로 set 할 수 없음
+    - 오직 정사각형 모양만 가능함. 개념적으로 정사각형이 직사각형에 포함되지만, h
+
+```java
+// Base class: Rectangle
+class Rectangle {
+    protected int width;
+    protected int height;
+
+    public Rectangle(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getArea() {
+        return width * height;
+    }
+}
+
+// Subclass: Square
+class Square extends Rectangle {
+    public Square(int side) {
+        super(side, side);
+    }
+
+    @Override
+    public void setWidth(int width) {
+        this.width = width;
+        this.height = width; // Enforce square property
+    }
+
+    @Override
+    public void setHeight(int height) {
+        this.width = height; // Enforce square property
+        this.height = height;
+    }
+}
+
+// Test class
+public class LiskovViolationExample {
+    public static void printRectangleArea(Rectangle rectangle) {
+        rectangle.setWidth(5);
+        rectangle.setHeight(10);
+        System.out.println("Expected Area: 50, Actual Area: " + rectangle.getArea());
+    }
+
+    public static void main(String[] args) {
+        // Test with a Rectangle
+        Rectangle rect = new Rectangle(4, 6);
+        printRectangleArea(rect); // Expected Area: 50, works as intended
+
+        // Test with a Square
+        Square square = new Square(5);
+        printRectangleArea(square); // Expected Area: 50, but Actual Area: 100
+    }
+}
+```
 
 ![img_60.png](images/img_60.png)
 
@@ -256,7 +326,7 @@ public final class Stack<E> extends ArrayList<E> {
 
 - add() 함수를 오버라이딩해서 index를 함수 내부에서 사용하지 않게 만듬
 - remove() 함수를 오버라이딩 해서 index 매개변수 값이 어떻든 무시하고 pop 기능으로 동작하게 마지막 원소를 제거하도록 만듬
-  - remove() 함수가 오버로딩으로 여러 개라서 두번째 remove() 함수도 매개변수는 무시하고 pop 기능으로 동작하게 
+    - remove() 함수가 오버로딩으로 여러 개라서 두번째 remove() 함수도 매개변수는 무시하고 pop 기능으로 동작하게
 
 ```java
 package academy.pocu.comp2500samples.w13.stack;
@@ -318,13 +388,15 @@ public class Program {
 ```
 
 - addInOrder 함수 내부에서 list.add() 호출함
-  - list 개체가 ArrayList 타입이냐, Stack 이냐에 따라 동작이 다름
-  - Stack 인 경우 정렬된채로 들어가는게 아니라, 스택 규칙에 따라 들어감
-  - is-a 관계가 깨짐
-  - ArrayList 관계에서 보장하는 것들이 Stack 에서 보장 X
+    - list 개체가 ArrayList 타입이냐, Stack 이냐에 따라 동작이 다름
+    - Stack 인 경우 정렬된채로 들어가는게 아니라, 스택 규칙에 따라 들어감
+    - is-a 관계가 깨짐
+    - ArrayList 관계에서 보장하는 것들이 Stack 에서 보장 X
 - 상속을 남용하면 리스코프 치환 원칙을 깰 수 있음
 - 그리고 애초에 스택 자료구조를 순회하는건 불가능하죠? 스택은 top 만 활용할 수 있음
 - 올바르게 고치려면? Stack이 상속을 받는게 아니라 내부적으로 ArrayList를 컴포지션으로 들고 있으면 됨
+- 아니면 Stack, ArrayList 의 공통 인터페이스, 추상 클래스를 이용하면 됨
+    - List
 
 ## 인터페이스 분리
 
@@ -346,7 +418,82 @@ public class Program {
 ![img_69.png](images/img_69.png)
 
 - 개체끼리 통신할 때 추상적인 것에 의존하자
+    - 인터페이스로 갈 수록 추상적
+    - loose coupling
 - 11주차에 배운 '인터페이스를 어디에 사용해야 하는가'를 가이드 삼으면 됨
+
+```java
+// 하위 수준 모듈
+class PaymentProcessor {
+    public void processPayment() {
+        System.out.println("Processing payment...");
+    }
+}
+
+// 상위 수준 모듈
+class OrderService {
+    private PaymentProcessor paymentProcessor;
+
+    public OrderService() {
+        this.paymentProcessor = new PaymentProcessor(); // 직접 생성
+    }
+
+    public void placeOrder() {
+        System.out.println("Placing order...");
+        paymentProcessor.processPayment(); // 하위 모듈 호출
+    }
+}
+```
+
+- 전통적인 설계에서는 상위 수준 모듈(High-level Module)이 하위 수준 모듈(Low-level Module)에 의존
+
+```java
+// 추상화 (인터페이스)
+interface PaymentProcessor {
+    void processPayment();
+}
+
+// 하위 수준 모듈 (구현 클래스)
+class CreditCardPaymentProcessor implements PaymentProcessor {
+    public void processPayment() {
+        System.out.println("Processing payment with credit card...");
+    }
+}
+
+class PayPalPaymentProcessor implements PaymentProcessor {
+    public void processPayment() {
+        System.out.println("Processing payment with PayPal...");
+    }
+}
+
+// 상위 수준 모듈
+class OrderService {
+    private final PaymentProcessor paymentProcessor;
+
+    // 의존성을 생성자가 주입받음
+    public OrderService(PaymentProcessor paymentProcessor) {
+        this.paymentProcessor = paymentProcessor;
+    }
+
+    public void placeOrder() {
+        System.out.println("Placing order...");
+        paymentProcessor.processPayment();
+    }
+}
+
+// 사용 예시
+public class Main {
+    public static void main(String[] args) {
+        PaymentProcessor paymentProcessor = new CreditCardPaymentProcessor();
+        OrderService orderService = new OrderService(paymentProcessor);
+
+        orderService.placeOrder();
+    }
+}
+```
+
+- 상위 모듈(OrderService)이 직접 하위 모듈(구현체)에 의존하지 않고, 추상화(인터페이스)에 의존
+- 구체적인 것에서 일반적인 것에 의존하도록 방향이 바뀜
 
 ## 소프트웨어 품질 보장에 대한 고찰
 
@@ -354,7 +501,7 @@ public class Program {
 
 - 시작은 개발자의 실수를 줄이는 환경을 구축
 - 모두가 이해하기 쉬운 코드는 구체적인 코드
-  - 일반화, 추상화는 사람이 알기 어려움
+    - 일반화, 추상화는 사람이 알기 어려움
 - 규모가 커지면 디커플링 고려
 
 ![img_71.png](images/img_71.png)
@@ -364,4 +511,4 @@ public class Program {
 ![img_72.png](images/img_72.png)
 
 - 사실 결론은 필요하면 사용하자
-  - 장,단점에 따라 밸런스를 잡자
+    - 장,단점에 따라 밸런스를 잡자

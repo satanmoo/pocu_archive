@@ -200,6 +200,9 @@
 - 매개변수를 구조체처럼 받기
     - 빼먹거나 순서 바뀌는 실수를 그나마 줄일 수 있음
     - DTO 개념
+    - CreateEmployeeParams 클래스의 멤버변수를 모두 final로 선언하면 반드시 초기화 필요하게 컴파일 시점에 강제할 수 있음
+      - 엥 Employee 클래스 멤버에 final 붙이면 안 되나요? 이건 이 클래스의 멤버 변수의 성격에 따라 final을 붙여야함 만약에 멤버 변수가 변할 수 있으면?
+      - CreateEmployeeParams 클래스의 경우 멤버변수 값을 전달하는 용도이기 때문에 모두 final로 해도 Employee 클래스의 성격에 영향을 주지 않죠
 
 ![img_52.png](images/img_52.png)
 
