@@ -44,3 +44,9 @@ for each group of GameStats for player:
     aggregate statistics (points, assists, passes, shotsMade, shotsAttempted)
     calculate avgPoints, avgAssists, avgPasses, shootingPercentage
 ```
+
+### GamsStat 정렬 함수
+
+- 
+
+### 집계 함수

@@ -260,24 +260,20 @@ private static int findMinIndex(final int[] nums, final int start) {
 
 ![img_44.png](images/img_44.png)
 
+- PPT 삽입 정렬임
+    - 오타입니다..
 - OK
 
 ```java
 public static void insertionSort(final int[] nums) {
     for (int i = 1; i < nums.length; ++i) {
-        int cur = i;
-        while (cur > 0) {
-            int r = nums[cur];
-            int l = nums[cur - 1];
-            if (l > r) {
-                int temp = nums[cur - 1];
-                nums[cur - 1] = nums[cur];
-                nums[cur] = temp;
-                --cur;
-            } else {
-                break;
-            }
+        int cur = nums[i];  // current value
+        int j = i - 1;  // previous index
+        while (j >= 0 && cur < nums[j]) {
+            nums[j + 1] = nums[j];
+            --j;
         }
+        nums[j + 1] = cur;
     }
 }
 ```
@@ -1409,7 +1405,7 @@ public class Program {
 
 - 정렬에 O(NlogN) 사용해도, 값을 찾는데 O(N)이라 brute force 2중 for문 방식보다 유리함
 - 최소 차이를 구하려면, 정렬된 상태에서 인접한 원소만 비교하면 됨
-  - 너무 직관적이죠?
-  - 정렬된 상태에서 굳이 먼 요소랑 비교할 필요가 없지..
+    - 너무 직관적이죠?
+    - 정렬된 상태에서 굳이 먼 요소랑 비교할 필요가 없지..
 
 ![img_208.png](images/img_208.png)
