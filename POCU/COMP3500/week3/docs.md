@@ -668,28 +668,11 @@ public static void insertionSort(final int[] nums) {
     - 이 경우 left를 포함한 오른쪽 구간이 모두 pivot 이상의 값으로 구성 됨
     - 그래서 pivotPos = i + 1 그대로 구해버리면 left + 1이 다음 pivotPos가 되어서 문제가 생김
 - 미리 1빼두고 더하는 식으로 구현
-
-```java
-public static int partition(int[] nums, int left, int right) {
-    int pivot = nums[right];
-
-    int i = left;
-    for (int j = left; j < right - 1; ++j) {
-        if (nums[j] < pivot) {
-            swap(nums, i, j);
-            ++i;
-        }
-    }
-
-    int pivotPos = i;
-    swap(nums, pivotPos, right);
-
-    return pivotPos;
-}
-```
-
-- 이렇게 구현해도 문제 없겠는데..?
-- i는 pivot 이상값 시작 위치
+- 논리적으로 i는 바꿀값의 포인터, j는 순회하는 포인터
+    - if 절로 바꿀 상황이 생기면 i가 범위 내로 들어오는게 논리적으로 맞음
+    - 한 번도 바꿀 상황이 일어나지 않으면 i는 범위 밖의 초기값
+      - 근데 초기값 + 1 == new pivot position 식에 딱 맞게 left - 1로 구현하면 편함
+      - 모드 pivot 보다 크면 new pivot position 값이 0이 되게 설계
 
 - 이 방법을 "Lomuto Partition" 이라고 부름
 
