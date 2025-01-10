@@ -671,8 +671,8 @@ public static void insertionSort(final int[] nums) {
 - 논리적으로 i는 바꿀값의 포인터, j는 순회하는 포인터
     - if 절로 바꿀 상황이 생기면 i가 범위 내로 들어오는게 논리적으로 맞음
     - 한 번도 바꿀 상황이 일어나지 않으면 i는 범위 밖의 초기값
-      - 근데 초기값 + 1 == new pivot position 식에 딱 맞게 left - 1로 구현하면 편함
-      - 모드 pivot 보다 크면 new pivot position 값이 0이 되게 설계
+        - 근데 초기값 + 1 == new pivot position 식에 딱 맞게 left - 1로 구현하면 편함
+        - 모드 pivot 보다 크면 new pivot position 값이 0이 되게 설계
 
 - 이 방법을 "Lomuto Partition" 이라고 부름
 
@@ -715,6 +715,7 @@ function partition(arr, low, high):
 ![img_162.png](images/img_162.png)
 
 - 기준값 뽑는 기준을 바꾸면 원래 코드 정상동작 X
+- [질문]: 그림에서 21375 으로 배열이 변하고 끝아닌가? 반환하는 pivotpos은 2로 5의 위치가 아님
 
 ![img_163.png](images/img_163.png)
 
@@ -751,6 +752,24 @@ public static int hoarePartition(int nums[], int left, int right) {
     }
 
     return j + 1;
+}
+```
+
+- Hoare Partition의 경우 헬퍼함수 구현이 살짝 달라짐
+- 재귀호출할 때 범위 [left, pivotPos], [pivotPost + 1, right]
+  - pivot이 분할될 때 포함됨
+  - Lomuto Partition은 pivot 위치가 고정되어 포함되지 않았음
+
+```java
+private static void sortGameStatsRecursive(final GameStat[] gameStats, int left, int right) {
+    if (left >= right) {
+        return;
+    }
+
+    int pivotPos = partitionGameStats(gameStats, left, right);
+
+    sortGameStatsRecursive(gameStats, left, pivotPos);
+    sortGameStatsRecursive(gameStats, pivotPos + 1, right);
 }
 ```
 
