@@ -172,8 +172,32 @@ Function findPlayerShootingPercentage(players, targetShootingPercentage):
 ## findDreamTeamSize() 메서드를 구현한다
 
 - findDreamTeam() 메서드 완전탐색
+    - 이거 하면 시간초과인데?
+- 휴리스틱 풀이
+    - 두 요소 중 하나를 우선으로 고려하는 방식
+    - 시간 복잡도:
+        - 정렬 비용:
+            - O(n long n)
+        - 순회 비용:
+            - O(n)
+- 방법1:
+    - 어시스트 수 내림차순으로 정렬
+        - 어시스트 수가 0이 되면 팀워크 값 0임
+        - 극단값은 어시스트 수에서 발생
+    - 팀 사이즈를 늘려가면서 팀워크 계산
+    - 정렬했기 때문에 [팀에 속한 각 선수의 경기당 어시스트수 중 최솟값] 을 최대한 크게 뽑으면서 구성
+- 방법2:
+    - 패스 수 내림차순으로 정렬
+    - 팀 사이즈를 늘려가면서 팀워크 계산
+    - 팀 인원 수 늘릴 때 어시스트 수를 변수에 저장하고 갱신하는 식으로
+
+- 이 두 방법 모두 사용해서 최적 구하기
+    - 두 방법 각각 사용하고 그 두개 결과 비교하기
+    - Commit cf63254
 
 ## ETC
+
+### 입력에 조심
 
 ```java
 private static long calculateTeamWork(final Player[] players, final int teamSize) {
@@ -198,4 +222,9 @@ private static long calculateTeamWork(final Player[] players, final int teamSize
 
 - players 배열의 크기와 teamSize가 다를 수 있음
 - findDreamTeamSize 함수의 매개변수로 Player[] scratch 최대 크기로 들어오기 때문임.
-  - [p, p2, p3, null, null]; 이렇게 들어올 수 있음
+    - [p, p2, p3, null, null]; 이렇게 들어올 수 있음
+
+### 정렬은 최대한 적게 하자
+
+- commit-f569631
+    - 정렬을 getMaxTeamWork 함수 호출할 때 마다 하는게 아니라, 호출자에서 미리 정렬하고 호출해서 정렬 횟수를 줄임
