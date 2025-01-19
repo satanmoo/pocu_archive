@@ -258,6 +258,9 @@ public static void puff(int n, int a, int b) {
 > 2. 각 부분 집합의 원소들의 합을 구한다.
 > 3. 원소들의 합이 정확히 x인 부분 집합을 찾는다.
 
+- 위와 같은 위 알고리듬의 Big-O 시간 복잡도는 무엇인가요?
+    - O(n * 2^n)
+
 ## P 분류
 
 ![img_45.png](images/img_45.png)
@@ -391,8 +394,8 @@ public static boolean hasGreater(int[] nums, int k) {
 ![img_61.png](images/img_61.png)
 
 - 이거 성공하면?
-  - 대박임ㅋㅋ
-  - 정보처리량이 엄청~
+    - 대박임ㅋㅋ
+    - 정보처리량이 엄청~
 
 ![img_62.png](images/img_62.png)
 
