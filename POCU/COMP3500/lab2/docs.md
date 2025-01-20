@@ -239,3 +239,53 @@ public static Node interleaveOrNull(final Node root0OrNull, final Node root1OrNu
 
 - 시간 복잡도 O(1)
 - 큐의 크기 반환
+
+## REVIEW
+
+```java
+public static Node insertAt(final Node rootOrNull, final int index, final int data) {
+    if (index == 0) {
+        return prepend(rootOrNull, data);
+    }
+
+    Node newNode = new Node(data);
+    Node current = rootOrNull;
+    int currentIndex = 0;
+    while (current != null) {
+        if (currentIndex == index - 1) {
+            newNode.setNext(current.getNextOrNull());
+            current.setNext(newNode);
+            break;
+        }
+        current = current.getNextOrNull();
+        ++currentIndex;
+    }
+
+    return rootOrNull;
+}
+```
+
+```java
+public static Node insertAt(final Node rootOrNull, final int index, final int data) {
+    if (index == 0) {
+        return prepend(rootOrNull, data);
+    }
+
+    Node current = rootOrNull;
+    int currentIndex = 0;
+    while (current != null) {
+        if (currentIndex == index - 1) {
+            Node newNode = new Node(data);
+            newNode.setNext(current.getNextOrNull());
+            current.setNext(newNode);
+            break;
+        }
+        current = current.getNextOrNull();
+        ++currentIndex;
+    }
+
+    return rootOrNull;
+}
+```
+
+- 리뷰 반영해서 실제로 삽입이 발생할 때 노드 생성하기
