@@ -715,7 +715,6 @@ function partition(arr, low, high):
 ![img_162.png](images/img_162.png)
 
 - 기준값 뽑는 기준을 바꾸면 원래 코드 정상동작 X
-- [질문]: 그림에서 21375 으로 배열이 변하고 끝아닌가? 반환하는 pivotpos은 2로 5의 위치가 아님
 
 ![img_163.png](images/img_163.png)
 
@@ -751,14 +750,16 @@ public static int hoarePartition(int nums[], int left, int right) {
         }
     }
 
-    return j + 1;
+    return j;
 }
 ```
 
 - Hoare Partition의 경우 헬퍼함수 구현이 살짝 달라짐
+    - partition 함수에서 반환하는 pivotPos가 확정이 아님
+    - 그냥 j 반환
 - 재귀호출할 때 범위 [left, pivotPos], [pivotPost + 1, right]
-  - pivot이 분할될 때 포함됨
-  - Lomuto Partition은 pivot 위치가 고정되어 포함되지 않았음
+    - pivot이 분할될 때 포함됨
+    - Lomuto Partition은 pivot 위치가 고정되어 포함되지 않았음
 
 ```java
 private static void sortGameStatsRecursive(final GameStat[] gameStats, int left, int right) {
@@ -872,7 +873,7 @@ public static int hoarePartition(int nums[], int left, int right) {
         }
     }
 
-    return j + 1;
+    return j;
 }
 ```
 
@@ -900,7 +901,7 @@ public static int hoarePartition(int nums[], int left, int right) {
         }
     }
 
-    return j + 1;
+    return j;
 }
 ```
 
@@ -929,7 +930,7 @@ public static int hoarePartition(int nums[], int left, int right) {
         }
     }
 
-    return j + 1;
+    return j;
 }
 ```
 
@@ -980,7 +981,7 @@ public static int hoarePartition(int nums[], int left, int right) {
         }
     }
 
-    return j + 1;
+    return j;
 }
 ```
 
@@ -1231,7 +1232,7 @@ public static int[] mergeArray(int[] arr1, int[] arr2) {
 ```java
 public static int[] mergeSort(int[] arr) {
     if (arr.length == 1) {
-        return;
+        return arr;
     }
 
     int mid = arr.length / 2;
@@ -1243,7 +1244,73 @@ public static int[] mergeSort(int[] arr) {
 
     return mergeArray(sortedLeft, sortedRight);
 }
+
+public static int[] mergeArray(int[] arr1, int[] arr2) {
+    int[] res = new int[arr1.length + arr2.length];
+
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    while (i < arr1.length && j < arr2.length) {
+        if (arr1[i] <= arr2[j]) {
+            res[k++] = arr1[i++];
+        } else {
+            res[k++] = arr2[j++];
+        }
+    }
+
+    while (i < arr1.length) {
+        res[k++] = arr1[i++];
+    }
+
+    while (j < arr2.length) {
+        res[k++] = arr2[j++];
+    }
+
+    return res;
+}
 ```
+
+- 이렇게 구현하면 공간복잡도 O(nlogn)
+
+```java
+private static void mergeSort(final int[] array) {
+    int[] temp = new int[array.length];
+
+    mergeSortRecursive(0, array.length - 1, array, temp);
+}
+
+private static void mergeSortRecursive(int left, int right, int[] array, int[] temp) {
+    if (left >= right) {
+        return;
+    }
+
+    int mid = (left + right) / 2;
+    mergeSortRecursive(left, mid, array, temp);
+    mergeSortRecursive(mid + 1, right, array, temp);
+    merge(left, right, mid, array, temp);
+}
+
+private static void merge(int left, int right, int mid, int[] array, int[] temp) {
+    assert (right >= left);
+    System.arraycopy(array, left, temp, left, right + 1 - left);
+
+    int i = left, j = mid + 1, k = left;
+    while (i <= mid && j <= right) {
+        if (temp[i] < temp[j]) {
+            array[k++] = temp[i++];
+        } else {
+            array[k++] = temp[j++];
+        }
+    }
+
+    while (i <= mid) {
+        array[k++] = temp[i++];
+    }
+}
+```
+
+- temp 배열 선언하고 재활용해서, in-place 정렬하면 공간복잡도 O(n)
 
 ## 힙 정렬
 
@@ -1352,7 +1419,7 @@ public static int[] mergeSort(int[] arr) {
 - 이 과정 반복해서 계속 제거하면 됨
 - 영상 참고
 
-## 코드보기:  코드보기: 배열 요소의 최소 차이 찾기
+## 코드보기: 배열 요소의 최소 차이 찾기
 
 ```java
 package academy.pocu.comp3500samples.w03.minimumdiff;
