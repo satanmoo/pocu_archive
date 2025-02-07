@@ -23,8 +23,7 @@
 
 ![img_2.png](images/img_2.png)
 
-- 일대일 함수
-    - 해시 충돌은 발생할 수 있음
+- 해시 충돌은 발생할 수 있음
 
 ![img_3.png](images/img_3.png)
 
@@ -150,7 +149,7 @@
 
 - this.age << 8 | this.order
     - 이 코드가 비트 패킹인데, 이것도 (비암호학적) 해시 함수의 정의를 만족함
-        - 일대일 함수
+        - 결정론적 작동(수학에서 함수의 정의 만족)
         - 고정된 크기의 출력
 
 ## 올바른 해시 함수를 고르는 법
@@ -878,7 +877,7 @@ public final class User {
 ```
 
 - SALT_LENGTH_IN_BYTES
-  - 이 길이는 NIST 에서 권고하는 salt 길이
+    - 이 길이는 NIST 에서 권고하는 salt 길이
 
 - Key spec은 위키 찾아보면 됨
 
