@@ -225,24 +225,6 @@
 
 ![img_52.png](images/img_52.png)
 
-```java
-public static void insertNodeRecursive(Node node, Node newNode) {
-    if (node.data > newNode.data) {
-        if (node.left == null) {
-            node.left = newNode;
-        } else {
-            insertNodeRecursive(node.left, newNode);
-        }
-    } else {
-        if (node.right == null) {
-            node.right = newNode;
-        } else {
-            insertNodeRecursive(node.right, newNode);
-        }
-    }
-}
-```
-
 - 같은 값을 가지는 노드는 오른쪽 서브 트리로 넣는다고 가정
 
 ![img_53.png](images/img_53.png)
@@ -368,37 +350,156 @@ public class Node {
 ![img_70.png](images/img_70.png)
 
 ```java
-private static Node deleteNodeRecursive(final Node root, final int key) {
-    if (root == null) {
+public class BST {
+    // BST Node class
+    class Node {
+        int key;
+        Node left, right;
+
+        Node(int key) {
+            this.key = key;
+            left = right = null;
+        }
+    }
+
+    Node root;
+
+    public BST() {
+        root = null;
+    }
+
+    // Insert a key into the BST.
+    public void insert(int key) {
+        root = insertRecursive(root, key);
+    }
+
+    private Node insertRecursive(Node root, int key) {
+        if (root == null) {
+            return new Node(key);
+        }
+        if (key < root.key) {
+            root.left = insertRecursive(root.left, key);
+        } else if (key > root.key) {
+            root.right = insertRecursive(root.right, key);
+        }
         return root;
     }
 
-    if (key < root.data) {
-        deleteNodeRecursive(root.left, key);
-    } else if (key > root.data) {
-        deleteNodeRecursive(root.right, key);
-    } else {
-        if (root.left == null) {
-            return root.right;
-        } else if (root.right == null) {
-            return root.left;
+    // Delete a key from the BST using in-order successor.
+    public void deleteUsingSuccessor(int key) {
+        root = deleteUsingSuccessorRecursive(root, key);
+    }
+
+    private Node deleteUsingSuccessorRecursive(Node root, int key) {
+        if (root == null) return root;
+
+        if (key < root.key) {
+            root.left = deleteUsingSuccessorRecursive(root.left, key);
+        } else if (key > root.key) {
+            root.right = deleteUsingSuccessorRecursive(root.right, key);
         } else {
-            // in-order successor
-            root.data = findMinValue(root.right);
-            root.right = deleteNodeRecursive(root.right, root.data);
+            // Node to be deleted found.
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+            // Node with two children: Get the in-order successor (smallest in right subtree)
+            Node successor = minValueNode(root.right);
+            // Copy the successor's value to this node
+            root.key = successor.key;
+            // Delete the successor
+            root.right = deleteUsingSuccessorRecursive(root.right, successor.key);
+        }
+        return root;
+    }
+
+    private Node minValueNode(Node root) {
+        Node current = root;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current;
+    }
+
+    // Delete a key from the BST using in-order predecessor.
+    public void deleteUsingPredecessor(int key) {
+        root = deleteUsingPredecessorRec(root, key);
+    }
+
+    private Node deleteUsingPredecessorRec(Node root, int key) {
+        if (root == null) return root;
+
+        if (key < root.key) {
+            root.left = deleteUsingPredecessorRec(root.left, key);
+        } else if (key > root.key) {
+            root.right = deleteUsingPredecessorRec(root.right, key);
+        } else {
+            // Node to be deleted found.
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+            // Node with two children: Get the in-order predecessor (largest in left subtree)
+            Node predecessor = maxValueNode(root.left);
+            // Copy the predecessor's value to this node
+            root.key = predecessor.key;
+            // Delete the predecessor
+            root.left = deleteUsingPredecessorRec(root.left, predecessor.key);
+        }
+        return root;
+    }
+
+    private Node maxValueNode(Node root) {
+        Node current = root;
+        while (current.right != null) {
+            current = current.right;
+        }
+        return current;
+    }
+
+    // In-order traversal for printing
+    public void inorder() {
+        inorderRec(root);
+        System.out.println();
+    }
+
+    private void inorderRec(Node root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.key + " ");
+            inorderRec(root.right);
         }
     }
-    return root;
-}
 
-private static int findMinValue(final Node root) {
-    Node node = root;
+    // Main method for testing
+    public static void main(String[] args) {
+        BST bst = new BST();
+        bst.insert(50);
+        bst.insert(30);
+        bst.insert(20);
+        bst.insert(40);
+        bst.insert(70);
+        bst.insert(60);
+        bst.insert(80);
 
-    while (node != null) {
-        node = node.left;
+        System.out.print("Original Inorder: ");
+        bst.inorder();
+
+        // Delete node with two children using in-order successor
+        bst.deleteUsingSuccessor(50);
+        System.out.print("After deleting 50 (using successor): ");
+        bst.inorder();
+
+        // For demonstration, insert 50 again.
+        bst.insert(50);
+
+        // Delete node with two children using in-order predecessor
+        bst.deleteUsingPredecessor(50);
+        System.out.print("After deleting 50 (using predecessor): ");
+        bst.inorder();
     }
-
-    return node.data;
 }
 ```
 
@@ -452,7 +553,7 @@ private static int findMinValue(final Node root) {
 - '*' 연산자 만나서 A, B - C pop 해서 연산
 - A * (B - C) 스택에 push
 - '-' 연산자 만나서 A * (B - C), D + E pop 해서 연산
-- 결과는 A * (B - C) 0 (D + E)
+- 결과는 A * (B - C) - (D + E)
 
 ## 후위 순회
 
