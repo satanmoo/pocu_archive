@@ -4,15 +4,16 @@
 
 ### 훌륭한 알고리듬이 갖춰야할 자질
 
-- 입쳑과 출력이 명확히 정의
+- 입력과 출력이 명확히 정의
 - 알고리즘의 각 단계가 명확해야 한다.
 - 유한 시간 안에 결과(출력)이 나와야 함
+- 같은 문제를 푸는 다양한 방법 중 효율적인 방법
 
 ### 알고리듬의 효율성:
 
-- 시간:
-    - CPU 속도
-- 공간:
+- 시간을 적게 사용할 수록 효율성이 좋음:
+    - CPU 시간
+- 공간을 적게 사용할 수록 효율성이 좋음:
     - 메모리 사용량
 
 ### 기본 자료구조 시간 복잡도, 공간복잡도:
@@ -362,8 +363,13 @@ public static int barTail(String str, int acc) {
 #### 유형 2
 
 - 개념 묻는 문제
-- 재귀 함수의 단점과 꼬리 재귀 최적화의 연결
-    - 스택 오버 플로우 방지
+    - 재귀 함수 장점
+        - 가독성
+        - 스택 프레임에 변수 자동 저장
+    - 단점
+        - 함수 호출 오버헤드
+        - 스택 오버 플로우
+            - 꼬리 재귀 최적화
 
 #### 유형 3
 
@@ -462,11 +468,6 @@ private static int partition(int[] nums, int low, int high) {
     return pivotIndex;
 }
 ```
-
-- 시험 준비:
-    - 재귀 함수로 구현하는 코드 보기에서 풀 만한 것들 찾아보기
-        - 이진 탐색
-    - GPT 생성
 
 #### 유형 4
 
@@ -639,6 +640,28 @@ private static int findIndexRec(int[] arr, int val, int left, int right) {
         return findIndexRec(arr, val, mid + 1, right);
     }
     return findIndexRec(arr, val, left, mid - 1);
+}
+```
+
+- 중복을 포함하는 정렬된 배열에서 처음으로 등장하는 찾고자 하는 값의 색인 찾기
+
+```java
+public static int findFirstPositionInSortedArray(int nums[], int target) {
+    int left = 0;
+    int right = nums.length - 1;
+    int res = -1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] == target) {
+            res = mid;
+            right = mid - 1;
+        } else if (nums[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return res;
 }
 ```
 
@@ -1846,6 +1869,7 @@ c5 + 2 * 0e + 3 * cd + 02
 
 - 트리 순회의 활용
     - 중위 표기법
+        - 정렬된 순서로 데이터 출력
     - 전위 표기법
         - (폴란드 표기법)
     - 후위 표기법
