@@ -6,3 +6,5 @@
 - [week7, week9](https://docs.google.com/document/d/12_71i8hrhIIBctjY5M32Y0nsHCyI_ZN9sowYsMiHG1I/edit?tab=t.0#heading=h.ucl679kesvax)
 - [week10](https://docs.google.com/document/d/18kDzaofWcg8AUAbzudgVGGnGqz63VaaPWH0fk4TQl_Q/edit?tab=t.0#heading=h.ucl679kesvax)
 - [week11](https://docs.google.com/document/d/16jYQXWKLRaUd8ww6Tpw06xChHPFQzAmPxDuwAVWR4qQ/edit?tab=t.0#heading=h.6tjczko7alzf)
+- [week12](https://docs.google.com/document/d/1NaNFoX0ZfTtQwV8DURk-oFC7hEVKZmTrK-yJTqYROgo/edit?tab=t.0#heading=h.5j9nkw5r79s0)
+- [week13](https://docs.google.com/document/d/1ibep7pijx9CC4wzFbENI10xga5oveqNacroMSHDY1jo/edit?tab=t.0#heading=h.5j9nkw5r79s0)
