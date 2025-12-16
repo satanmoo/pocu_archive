@@ -1,7 +1,7 @@
 # COMP1500
 
 - [week1](./docs/week1.md)
-- [week2](./docs/week2.md)
+- [week2](week2/docs)
 - [week3](./docs/week3.md)
 - [week4](./docs/week4.md)
 - [week5](./docs/week5.md)

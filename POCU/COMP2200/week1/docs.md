@@ -854,17 +854,33 @@ unsigned/signed를 정할 때 제약이 생긴다.
 
 ## 범위(scope) 개요
 
-![img_141.png](img_141.png)
+![img_156.png](img_156.png)
 
-- 4가지 범위가 있음
-    - 블록 범위
-    - 파일 범위
-    - 함수 범위
-    - 함수 선언 범위
+- 4가지 범위
 
 ## 블록 범위
 
-![img_142.png](img_142.png)
+![img_157.png](img_157.png)
+
+- for문 내부의 변수가 바깥의 변수에 접근할 수 있음
+    - 반대는 불가능
+
+```
+
+int main(void)
+{
+
+    for (int i = 0; i < 5; ++i) {
+        int inner = 5;
+        i++;
+    }
+
+    inner = 6;
+
+    return 0;
+}
+```
+
 ![img_143.png](img_143.png)
 
 - 블록 범위는 중괄호로 둘러싸인 범위를 말한다.
