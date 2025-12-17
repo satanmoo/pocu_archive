@@ -11,14 +11,12 @@
             "id": "3cd020b18bdcde44",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "COMP2300/디지털 컴퓨터 구조(기초)/006. 트랜지스터와 논리 연산.md",
-                "mode": "source",
-                "source": false
+                "file": "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012106.png"
               },
-              "icon": "lucide-file",
-              "title": "006. 트랜지스터와 논리 연산"
+              "icon": "lucide-image",
+              "title": "Pasted image 20251218012106"
             }
           }
         ]
@@ -183,26 +181,30 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "3cd020b18bdcde44",
+  "active": "3af2eb032998d8a5",
   "lastOpenFiles": [
+    "COMP2300/디지털 컴퓨터 구조(기초)/010. 어셈블리어 프로그래밍은 소프트웨어 작성.md",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012533.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012515.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012454.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012445.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012400.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012341.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012324.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012136.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012106.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218010852.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/009. ALU.md",
+    "COMP2300/디지털 컴퓨터 구조(기초)/008. 논리 게이트와 산술 연산.md",
+    "COMP2300/디지털 컴퓨터 구조(기초)/007. 논리 게이트.md",
+    "COMP2300/디지털 컴퓨터 구조(기초)/006. 트랜지스터와 논리 연산.md",
     "무제.base",
     "무제 1.base",
-    "COMP2300/디지털 컴퓨터 구조(기초)/006. 트랜지스터와 논리 연산.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/005. 트랜지스터.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/004. 동작의 디지털 저장법.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/003. 데이터의 디지털 저장법.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/002. 아날로그 신호의 저장과 재생.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/001. 어셈블리어와 컴퓨터 구조 공부.md",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217012034.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217012419.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217012329.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217012306.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217012300.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217012255.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217012222.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217011806.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217011939.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251217011607.png",
     "COMP2300/디지털 컴퓨터 구조(기초)/Images",
     "환영합니다!.md",
     "COMP2300/디지털 컴퓨터 구조(기초)",
