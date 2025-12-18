@@ -11,12 +11,14 @@
             "id": "3cd020b18bdcde44",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012106.png"
+                "file": "COMP2300/디지털 컴퓨터 구조(기초)/012. 튜링 기계와 하드웨어.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20251218012106"
+              "icon": "lucide-file",
+              "title": "012. 튜링 기계와 하드웨어"
             }
           }
         ]
@@ -181,19 +183,21 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "3af2eb032998d8a5",
+  "active": "3cd020b18bdcde44",
   "lastOpenFiles": [
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012920.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/012. 튜링 기계와 하드웨어.md",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012914.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012802.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012744.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012717.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012709.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012637.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012628.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012605.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012551.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/011. 튜링 기계.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/010. 어셈블리어 프로그래밍은 소프트웨어 작성.md",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012533.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012515.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012454.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012445.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012400.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012341.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012324.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012136.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218012106.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251218010852.png",
     "COMP2300/디지털 컴퓨터 구조(기초)/009. ALU.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/008. 논리 게이트와 산술 연산.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/007. 논리 게이트.md",
