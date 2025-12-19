@@ -11,14 +11,26 @@
             "id": "3cd020b18bdcde44",
             "type": "leaf",
             "state": {
+              "type": "image",
+              "state": {
+                "file": "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220013508.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20251220013508"
+            }
+          },
+          {
+            "id": "49b7d7bfda277b11",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "COMP2300/디지털 컴퓨터 구조(기초)/012. 튜링 기계와 하드웨어.md",
+                "file": "COMP2300/디지털 컴퓨터 구조(기초)/013. 범용 튜링 기계와 소프트웨어.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "012. 튜링 기계와 하드웨어"
+              "title": "013. 범용 튜링 기계와 소프트웨어"
             }
           }
         ]
@@ -185,17 +197,22 @@
   },
   "active": "3cd020b18bdcde44",
   "lastOpenFiles": [
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012920.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/017. 연산자 디코딩 예.md",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220014553.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220014449.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220014355.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220014232.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220014203.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220014119.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220014005.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220013757.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220013658.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251220013543.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/016. 명령어 사이클.md",
+    "COMP2300/디지털 컴퓨터 구조(기초)/015. 폰 노이만 구조.md",
+    "COMP2300/디지털 컴퓨터 구조(기초)/013. 범용 튜링 기계와 소프트웨어.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/012. 튜링 기계와 하드웨어.md",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012914.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012802.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012744.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012717.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012709.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012637.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012628.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012605.png",
-    "COMP2300/디지털 컴퓨터 구조(기초)/Images/Pasted image 20251219012551.png",
+    "COMP2300/디지털 컴퓨터 구조(기초)/014. 튜링 완전.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/011. 튜링 기계.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/010. 어셈블리어 프로그래밍은 소프트웨어 작성.md",
     "COMP2300/디지털 컴퓨터 구조(기초)/009. ALU.md",
