@@ -25,12 +25,28 @@
             "id": "aded7f3ce68d3465",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "COMP2300/Images/Pasted image 20260103153911.png"
+                "file": "COMP2300/002. 기계어 프로그래밍/032. 마지막 확인.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260103153911"
+              "icon": "lucide-file",
+              "title": "032. 마지막 확인"
+            }
+          },
+          {
+            "id": "f8672e0235ca7e86",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "COMP2300/002. 기계어 프로그래밍/033. ROM과 RAM의 분리.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "033. ROM과 RAM의 분리"
             }
           },
           {
@@ -96,7 +112,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -258,34 +274,36 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "3af2eb032998d8a5",
+  "active": "f8672e0235ca7e86",
   "lastOpenFiles": [
+    "COMP2300/Images/Pasted image 20260104221700.png",
+    "COMP2300/002. 기계어 프로그래밍/033. ROM과 RAM의 분리.md",
+    "COMP2300/Images/Pasted image 20260104223732.png",
+    "COMP2300/Images/Pasted image 20260104223503.png",
+    "COMP2300/002. 기계어 프로그래밍/032. 마지막 확인.md",
+    "COMP2300/Images/Pasted image 20260104223327.png",
+    "COMP2300/Images/Pasted image 20260104223034.png",
+    "COMP2300/Images/Pasted image 20260104223012.png",
+    "COMP2300/Images/Pasted image 20260104222953.png",
+    "COMP2300/Images/Pasted image 20260104222659.png",
+    "COMP2300/002. 기계어 프로그래밍/005. 브레드보드 준비하기.md",
+    "COMP2300/Images/Pasted image 20260104221752.png",
     "COMP2300/002. 기계어 프로그래밍/031. RAM 쓰기 타이밍 다이어그램.md",
-    "COMP2300/002. 기계어 프로그래밍/028. RAM 읽기 타이밍 다이어그램 2.md",
     "COMP2300/002. 기계어 프로그래밍/027. RAM 읽기 타이밍 다이어그램 1.md",
+    "COMP2300/002. 기계어 프로그래밍/030. 논리 게이트 딜레이 계산하기.md",
+    "COMP2300/Images/Pasted image 20260103153911.png",
+    "COMP2300/002. 기계어 프로그래밍/028. RAM 읽기 타이밍 다이어그램 2.md",
     "COMP2300/002. 기계어 프로그래밍/029. RAM을 클럭에 동기화시키기.md",
-    "COMP2300/Images/Pasted image 20260104023442.png",
-    "COMP2300/Images/Pasted image 20260104023019.png",
-    "COMP2300/Images/Pasted image 20260104023003.png",
-    "COMP2300/Images/Pasted image 20260104022900.png",
-    "Pasted image 20260104022514.png",
-    "COMP2300/Images/Pasted image 20260104022526.png",
-    "COMP2300/Images/Pasted image 20260104021016.png",
     "COMP2300/002. 기계어 프로그래밍/024. CPU 주소 타이밍 다이어그램.md",
     "COMP2300/002. 기계어 프로그래밍/025. CPU 데이터 타이밍 다이어그램.md",
     "COMP2300/002. 기계어 프로그래밍/023. 타이밍 다이어그램을 봐야 하는 이유.md",
     "COMP2300/002. 기계어 프로그래밍/020. RAM 설치하기.md",
-    "COMP2300/Images/Pasted image 20260104020736.png",
     "COMP2300/002. 기계어 프로그래밍/016. OE, CE, WE.md",
     "COMP2300/002. 기계어 프로그래밍/021. RAM 주소 매핑.md",
     "COMP2300/002. 기계어 프로그래밍/022. RAM 결과 확인하기.md",
-    "COMP2300/Images/Pasted image 20260104014946.png",
-    "COMP2300/Images/Pasted image 20260104014924.png",
-    "COMP2300/002. 기계어 프로그래밍/030. 논리 게이트 딜레이 계산하기.md",
     "Pasted image 20260103162704.png.sb-60b4d672-UpCpcW",
     "COMP2300/002. 기계어 프로그래밍/007. 클럭 및 기타 선 연결하기.md",
     "COMP2300/002. 기계어 프로그래밍/006. CPU 설치하기.md",
-    "COMP2300/002. 기계어 프로그래밍/005. 브레드보드 준비하기.md",
     "COMP2300/002. 기계어 프로그래밍/004. 65C02의 핀 구성.md",
     "COMP2300/002. 기계어 프로그래밍/011. 스파이더 연결하기.md",
     "COMP2300/002. 기계어 프로그래밍/010. 클럭 속도 늦추기.md",
@@ -296,8 +314,6 @@
     "COMP2300/002. 기계어 프로그래밍/002. 6502 CPU 소개.md",
     "COMP2300/002. 기계어 프로그래밍/019. 간단한 덧셈 프로그램.md",
     "Pasted image 20251231014651.png.sb-60b4d672-Avnj8h",
-    "COMP2300/002. 기계어 프로그래밍/014. ROM 주소 매핑.md",
-    "COMP2300/002. 기계어 프로그래밍/015. ROM 설치하기.md",
     "Pasted image 20251226010046.png.sb-60b4d672-OCVNgf",
     "COMP2300/002. 기계어 프로그래밍/무제",
     "COMP2300/002. 기계어 프로그래밍",
