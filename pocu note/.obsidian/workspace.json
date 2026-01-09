@@ -8,29 +8,29 @@
         "type": "tabs",
         "children": [
           {
-            "id": "627f2caba03d92cd",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "COMP2300/Images/Pasted image 20260109014940.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260109014940"
-            }
-          },
-          {
             "id": "a6ee4ba0e1801c3d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "COMP2300/003. 6502 어셈블리 기초 문법/901. 6502 Address Modes in Detail.md",
+                "file": "COMP2300/003. 6502 어셈블리 기초 문법/010. 올바른 A 모드의 사이클 수 세기.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "901. 6502 Address Modes in Detail"
+              "title": "010. 올바른 A 모드의 사이클 수 세기"
+            }
+          },
+          {
+            "id": "cb9bb452e6938fe3",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "COMP2300/Images/Pasted image 20260110024225.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20260110024225"
             }
           }
         ]
@@ -65,7 +65,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "32KB",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -195,24 +195,32 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "3af2eb032998d8a5",
+  "active": "a6ee4ba0e1801c3d",
   "lastOpenFiles": [
+    "COMP2300/Images/Pasted image 20260110014203.png",
+    "COMP2300/Images/Pasted image 20260110024225.png",
+    "COMP2300/003. 6502 어셈블리 기초 문법/010. 올바른 A 모드의 사이클 수 세기.md",
+    "COMP2300/Images/Pasted image 20260110025001.png",
+    "COMP2300/Images/Pasted image 20260110024805.png",
+    "COMP2300/Images/Pasted image 20260110024208.png",
+    "COMP2300/Images/Pasted image 20260110024156.png",
+    "COMP2300/Images/Pasted image 20260110024137.png",
+    "COMP2300/Images/Pasted image 20260110024108.png",
+    "COMP2300/Images/Pasted image 20260110023909.png",
+    "COMP2300/Images/Pasted image 20260110023405.png",
+    "COMP2300/Images/Pasted image 20260110023202.png",
+    "COMP2300/001. 디지털 컴퓨터 구조(기초)/016. 명령어 사이클.md",
+    "COMP2300/001. 디지털 컴퓨터 구조(기초)/009. ALU.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/009. CPU 파이프라인.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/008. A 모드의 사이클 수 세기.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/007. A 주소지정 모드.md",
+    "COMP2300/002. 기계어 프로그래밍/007. 클럭 및 기타 선 연결하기.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/006. 6502의 주소지정 모드.md",
-    "COMP2300/Images/Pasted image 20260109020517.png",
+    "COMP2300/003. 6502 어셈블리 기초 문법/900. DASM 지시문.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/901. 6502 Address Modes in Detail.md",
-    "COMP2300/Images/Pasted image 20260109015739.png",
-    "COMP2300/Images/Pasted image 20260109015359.png",
-    "COMP2300/Images/Pasted image 20260109015330.png",
-    "COMP2300/Images/Pasted image 20260109015310.png",
-    "COMP2300/Images/Pasted image 20260109015248.png",
-    "COMP2300/Images/Pasted image 20260109015223.png",
-    "COMP2300/Images/Pasted image 20260109015024.png",
-    "COMP2300/Images/Pasted image 20260109015006.png",
-    "COMP2300/Images/Pasted image 20260109014940.png",
     "COMP2300/003. 6502 어셈블리 기초 문법/005. 6502 명령어의 구성.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/004. 헬로 16 바이너리 파일 생성.md",
     "COMP2300/002. 기계어 프로그래밍/017. 프로그램을 ROM에 플래시 하기.md",
-    "COMP2300/003. 6502 어셈블리 기초 문법/900. DASM 지시문.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/003. 헬로 16 코드 작성 및 어셈블.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/002. 어셈블리어와 헬로 월드.md",
     "Pasted image 20260108015435.png.sb-60b4d672-1rptCs",
@@ -228,13 +236,6 @@
     "COMP2300/002. 기계어 프로그래밍/033. ROM과 RAM의 분리.md",
     "COMP2300/003. 6502 어셈블리 기초 문법",
     "COMP2300/002. 기계어 프로그래밍/005. 브레드보드 준비하기.md",
-    "COMP2300/002. 기계어 프로그래밍/027. RAM 읽기 타이밍 다이어그램 1.md",
-    "COMP2300/002. 기계어 프로그래밍/030. 논리 게이트 딜레이 계산하기.md",
-    "COMP2300/002. 기계어 프로그래밍/028. RAM 읽기 타이밍 다이어그램 2.md",
-    "COMP2300/002. 기계어 프로그래밍/029. RAM을 클럭에 동기화시키기.md",
-    "COMP2300/002. 기계어 프로그래밍/025. CPU 데이터 타이밍 다이어그램.md",
-    "COMP2300/002. 기계어 프로그래밍/023. 타이밍 다이어그램을 봐야 하는 이유.md",
-    "COMP2300/002. 기계어 프로그래밍/020. RAM 설치하기.md",
     "Pasted image 20260103162704.png.sb-60b4d672-UpCpcW",
     "Pasted image 20260102014440.png.sb-60b4d672-erFVw4",
     "Pasted image 20251231014651.png.sb-60b4d672-Avnj8h",
