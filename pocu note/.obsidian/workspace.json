@@ -8,75 +8,34 @@
         "type": "tabs",
         "children": [
           {
-            "id": "473cfef77f4c634f",
+            "id": "1560442ca92f46ac",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "COMP2300/003. 6502 어셈블리 기초 문법/026. 프로세서 상태 레지스터.md",
+                "file": "COMP2300/004. 산술 논리 연산/005. 2배 정밀도 덧셈.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "026. 프로세서 상태 레지스터"
+              "title": "005. 2배 정밀도 덧셈"
             }
           },
           {
-            "id": "ca983839e2b31cc9",
+            "id": "78b6a64061a47e0a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "COMP2300/004. 산술 논리 연산/002. 최상위 비트 받아올림의 처리.md",
+                "file": "COMP2300/003. 6502 어셈블리 기초 문법/025. S 레지스터.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "002. 최상위 비트 받아올림의 처리"
-            }
-          },
-          {
-            "id": "a4b0754ad85e4a4a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "COMP2300/004. 산술 논리 연산/004. 가산기와 비트 수.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "004. 가산기와 비트 수"
-            }
-          },
-          {
-            "id": "824e8d7b3b5d8c3d",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "COMP2300/Images/Pasted image 20260127012748.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260127012748"
-            }
-          },
-          {
-            "id": "11c4d422ac6b5cc5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "COMP2300/004. 산술 논리 연산/002. 최상위 비트 받아올림의 처리.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "002. 최상위 비트 받아올림의 처리"
+              "title": "025. S 레지스터"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -108,7 +67,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "스택",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -129,7 +88,8 @@
               "title": "북마크"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -238,23 +198,33 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "a4b0754ad85e4a4a",
+  "active": "1560442ca92f46ac",
   "lastOpenFiles": [
-    "COMP2300/Images/Pasted image 20260127013013.png",
+    "COMP2300/003. 6502 어셈블리 기초 문법/025. S 레지스터.md",
+    "COMP2300/004. 산술 논리 연산/005. 2배 정밀도 덧셈.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/015. 6502의 메모리 페이지 레이아웃.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/021. 상수, 포인터 변수.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/011. 즉시 모드.md",
     "COMP2300/004. 산술 논리 연산/004. 가산기와 비트 수.md",
-    "COMP2300/Images/Pasted image 20260127012942.png",
+    "COMP2300/004. 산술 논리 연산/002. 최상위 비트 받아올림의 처리.md",
+    "Pasted image 20260128010235.png",
+    "COMP2300/004. 산술 논리 연산/003. 받아올림 플래그 C.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/024. X, Y 색인 레지스터.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/901. 6502 Address Modes in Detail.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/014. zp 주소지정 모드.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/013. 절대 주소 모드.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/007. A 주소지정 모드.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/026. 프로세서 상태 레지스터.md",
     "COMP2300/Images/Pasted image 20260127012748.png",
+    "COMP2300/Images/Pasted image 20260127013013.png",
+    "COMP2300/Images/Pasted image 20260127012942.png",
     "COMP2300/Images/Pasted image 20260127012531.png",
     "COMP2300/Images/Pasted image 20260127012435.png",
     "COMP2300/Images/Pasted image 20260127012259.png",
     "COMP2300/Images/Pasted image 20260127011030.png",
     "COMP2300/Images/Pasted image 20260127010920.png",
     "COMP2300/Images/Pasted image 20260127010859.png",
-    "COMP2300/Images/Pasted image 20260127010825.png",
-    "COMP2300/004. 산술 논리 연산/003. 받아올림 플래그 C.md",
-    "COMP2300/004. 산술 논리 연산/002. 최상위 비트 받아올림의 처리.md",
     "COMP2300/001. 디지털 컴퓨터 구조(기초)/009. ALU.md",
-    "COMP2300/003. 6502 어셈블리 기초 문법/026. 프로세서 상태 레지스터.md",
     "COMP2300/004. 산술 논리 연산/001. 정수의 덧셈.md",
     "COMP2300/002. 기계어 프로그래밍/032. 마지막 확인.md",
     "COMP2300/002. 기계어 프로그래밍/020. RAM 설치하기.md",
@@ -267,15 +237,6 @@
     "COMP2300/002. 기계어 프로그래밍/031. RAM 쓰기 타이밍 다이어그램.md",
     "COMP2300/002. 기계어 프로그래밍/030. 논리 게이트 딜레이 계산하기.md",
     "COMP2300/001. 디지털 컴퓨터 구조(기초)/007. 논리 게이트.md",
-    "COMP2300/002. 기계어 프로그래밍/012. 핀 값 읽는 프로그램 작성하기.md",
-    "COMP2300/002. 기계어 프로그래밍/014. ROM 주소 매핑.md",
-    "COMP2300/002. 기계어 프로그래밍/007. 클럭 및 기타 선 연결하기.md",
-    "COMP2300/002. 기계어 프로그래밍/006. CPU 설치하기.md",
-    "COMP2300/003. 6502 어셈블리 기초 문법/007. A 주소지정 모드.md",
-    "COMP2300/003. 6502 어셈블리 기초 문법/004. 헬로 16 바이너리 파일 생성.md",
-    "COMP2300/003. 6502 어셈블리 기초 문법/003. 헬로 16 코드 작성 및 어셈블.md",
-    "COMP2300/002. 기계어 프로그래밍/029. RAM을 클럭에 동기화시키기.md",
-    "COMP2300/002. 기계어 프로그래밍/033. ROM과 RAM의 분리.md",
     "Clippings",
     "Pasted image 20260108015435.png.sb-60b4d672-1rptCs",
     "Pasted image 20260108002104.png.sb-60b4d672-LwhSG6",
