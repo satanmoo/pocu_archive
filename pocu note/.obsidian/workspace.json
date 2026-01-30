@@ -11,14 +11,38 @@
             "id": "4c3df438e71a7c96",
             "type": "leaf",
             "state": {
+              "type": "image",
+              "state": {
+                "file": "COMP2300/Images/Pasted image 20260131014759.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20260131014759"
+            }
+          },
+          {
+            "id": "6c0996165eac9d1e",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "COMP2300/003. 6502 어셈블리 기초 문법/026. 프로세서 상태 레지스터.md",
+                "file": "COMP2300/004. 산술 논리 연산/008. 제로 플래그 Z, 음수 플래그 N.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "026. 프로세서 상태 레지스터"
+              "title": "008. 제로 플래그 Z, 음수 플래그 N"
+            }
+          },
+          {
+            "id": "6cf2503a67ca504e",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "COMP2300/Images/Pasted image 20260131021529.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20260131021529"
             }
           },
           {
@@ -209,35 +233,39 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "4c3df438e71a7c96",
+  "active": "3af2eb032998d8a5",
   "lastOpenFiles": [
-    "COMP2300/Images/Pasted image 20260130003048.png",
-    "COMP2300/004. 산술 논리 연산/007. 오버플로 플래그 V.md",
-    "COMP2300/Images/Pasted image 20260130013442.png",
-    "COMP2300/Images/Pasted image 20260130013405.png",
-    "COMP2300/Images/Pasted image 20260130013314.png",
-    "COMP2300/Images/Pasted image 20260130013018.png",
-    "COMP2300/Images/Pasted image 20260130012706.png",
-    "COMP2300/Images/Pasted image 20260130012258.png",
-    "COMP2300/Images/Pasted image 20260130012200.png",
-    "COMP2300/Images/Pasted image 20260130011905.png",
-    "COMP2300/Images/Pasted image 20260130011858.png",
-    "COMP2300/Images/Pasted image 20260130011814.png",
+    "COMP2300/004. 산술 논리 연산/009. 코드보기 adc의 상태 플래그.md",
+    "COMP2300/004. 산술 논리 연산/008. 제로 플래그 Z, 음수 플래그 N.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/021. 상수, 포인터 변수.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/020. 스택 메모리.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/018. 전역적인 데이터 저장.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/019. 변수명과 가독성.md",
+    "COMP2300/Images/Pasted image 20260131022757.png",
+    "COMP2300/Images/Pasted image 20260131022429.png",
+    "COMP2300/Images/Pasted image 20260131022424.png",
+    "COMP2300/Images/Pasted image 20260131022417.png",
     "COMP2300/004. 산술 논리 연산/006. signed 정수의 덧셈.md",
-    "COMP2300/무제",
-    "COMP2300/003. 6502 어셈블리 기초 문법/026. 프로세서 상태 레지스터.md",
+    "COMP2300/Images/Pasted image 20260131022258.png",
+    "COMP2300/Images/Pasted image 20260131022254.png",
+    "COMP2300/Images/Pasted image 20260131022248.png",
     "COMP2300/004. 산술 논리 연산/005. 2배 정밀도 덧셈.md",
+    "COMP2300/004. 산술 논리 연산/004. 가산기와 비트 수.md",
+    "COMP2300/004. 산술 논리 연산/003. 받아올림 플래그 C.md",
+    "COMP2300/004. 산술 논리 연산/007. 오버플로 플래그 V.md",
+    "COMP2300/Images/Pasted image 20260131021545.png",
+    "COMP2300/Images/Pasted image 20260131021529.png",
+    "COMP2300/Images/Pasted image 20260131021508.png",
+    "COMP2300/003. 6502 어셈블리 기초 문법/026. 프로세서 상태 레지스터.md",
+    "COMP2300/무제",
     "COMP2300/004. 산술 논리 연산/images",
     "Pasted image 20260128010235.png.sb-d7584f12-SP09WU",
     "COMP2300/003. 6502 어셈블리 기초 문법/901. 6502 Address Modes in Detail.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/024. X, Y 색인 레지스터.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/025. S 레지스터.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/015. 6502의 메모리 페이지 레이아웃.md",
-    "COMP2300/003. 6502 어셈블리 기초 문법/021. 상수, 포인터 변수.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/011. 즉시 모드.md",
-    "COMP2300/004. 산술 논리 연산/004. 가산기와 비트 수.md",
     "COMP2300/004. 산술 논리 연산/002. 최상위 비트 받아올림의 처리.md",
-    "COMP2300/004. 산술 논리 연산/003. 받아올림 플래그 C.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/014. zp 주소지정 모드.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/013. 절대 주소 모드.md",
     "COMP2300/003. 6502 어셈블리 기초 문법/007. A 주소지정 모드.md",
@@ -247,10 +275,6 @@
     "COMP2300/002. 기계어 프로그래밍/020. RAM 설치하기.md",
     "COMP2300/004. 산술 논리 연산",
     "COMP2300/002. 기계어 프로그래밍/021. RAM 주소 매핑.md",
-    "COMP2300/002. 기계어 프로그래밍/025. CPU 데이터 타이밍 다이어그램.md",
-    "COMP2300/002. 기계어 프로그래밍/024. CPU 주소 타이밍 다이어그램.md",
-    "COMP2300/002. 기계어 프로그래밍/015. ROM 설치하기.md",
-    "COMP2300/002. 기계어 프로그래밍/027. RAM 읽기 타이밍 다이어그램 1.md",
     "Clippings",
     "Pasted image 20260108015435.png.sb-60b4d672-1rptCs",
     "Pasted image 20260108002104.png.sb-60b4d672-LwhSG6",
