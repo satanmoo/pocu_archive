@@ -4,87 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "6cc65bd1819c279e",
+        "id": "345c9023bfe448ac",
         "type": "tabs",
         "children": [
           {
-            "id": "2f91b7596dbd660f",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "COMP2300/Images/Pasted image 20260217012425.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260217012425"
-            }
-          },
-          {
-            "id": "7278a182493c60ed",
+            "id": "f8488838d41aefd5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "COMP2300/006. 반복문과 배열/003. 더 빠른 반복문.md",
+                "file": "COMP2300/006. 반복문과 배열/007. 최대값 찾기.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "003. 더 빠른 반복문"
-            }
-          },
-          {
-            "id": "58a622512f0e4709",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "COMP2300/005. 조건문/003. 분기.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "003. 분기"
-            }
-          },
-          {
-            "id": "00b32c071ccfbeb6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "COMP2300/004. 산술 논리 연산/005. 2배 정밀도 덧셈.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "005. 2배 정밀도 덧셈"
-            }
-          },
-          {
-            "id": "4464696965bdffee",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "COMP2300/Images/Pasted image 20260216013715.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260216013715"
-            }
-          },
-          {
-            "id": "34db7a781aa6f58c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "COMP2300/005. 조건문/009. jmp의 주소지정 모드.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "009. jmp의 주소지정 모드"
+              "title": "007. 최대값 찾기"
             }
           }
         ]
@@ -119,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "종료",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -251,41 +185,41 @@
   },
   "active": "3af2eb032998d8a5",
   "lastOpenFiles": [
-    "COMP2300/006. 반복문과 배열/004. 코드보기 > 나눗셈.md",
+    "COMP2300/Images/Pasted image 20260218160254.png",
+    "COMP2300/003. 6502 어셈블리 기초 문법/029. 프로그램 종료.md",
+    "COMP2300/006. 반복문과 배열/007. 최대값 찾기.md",
+    "COMP2300/Images/Pasted image 20260219015513.png",
+    "COMP2300/Images/Pasted image 20260219015429.png",
+    "COMP2300/Images/Pasted image 20260219015340.png",
+    "COMP2300/Images/Pasted image 20260219015250.png",
+    "COMP2300/Images/Pasted image 20260219015103.png",
+    "COMP2300/Images/Pasted image 20260219014846.png",
+    "COMP2300/Images/Pasted image 20260219014748.png",
+    "COMP2300/Images/Pasted image 20260219014411.png",
+    "COMP2300/Images/Pasted image 20260219014311.png",
+    "COMP2300/006. 반복문과 배열/006. 배열의 합 구하기.md",
+    "COMP2300/005. 조건문/005. cmp의 판단 기준.md",
+    "COMP2300/004. 산술 논리 연산/010. 8비트 뺄셈.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/004. 헬로 16 바이너리 파일 생성.md",
+    "COMP2300/005. 조건문/004. 고수준 조건문 옮기기.md",
+    "COMP2300/005. 조건문/002. 비교.md",
     "COMP2300/005. 조건문/003. 분기.md",
+    "COMP2300/005. 조건문/006. signed 비교 방법 1.md",
+    "COMP2300/005. 조건문/007. signed 비교 방법 2.md",
+    "COMP2300/004. 산술 논리 연산/011. 16비트 뺄셈.md",
+    "COMP2300/005. 조건문/009. jmp의 주소지정 모드.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/003. 헬로 16 코드 작성 및 어셈블.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/021. 상수, 포인터 변수.md",
+    "COMP2300/004. 산술 논리 연산/013. 색인 주소지정 모드.md",
+    "COMP2300/004. 산술 논리 연산/015. 코드보기 zp,x 레핑(wrapping).md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/022. 데이터 블록.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/007. A 주소지정 모드.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/006. 6502의 주소지정 모드.md",
+    "COMP2300/003. 6502 어셈블리 기초 문법/005. 6502 명령어의 구성.md",
+    "COMP2300/006. 반복문과 배열/005. 배열의 올바른 정의.md",
+    "COMP2300/006. 반복문과 배열/004. 코드보기 > 나눗셈.md",
     "COMP2300/006. 반복문과 배열/003. 더 빠른 반복문.md",
     "COMP2300/006. 반복문과 배열/002. 1부터 20까지 더하기.md",
-    "COMP2300/Images/Pasted image 20260217012425.png",
-    "COMP2300/Images/Pasted image 20260217010523.png",
-    "COMP2300/Images/Pasted image 20260217010455.png",
-    "COMP2300/Images/Pasted image 20260217003042.png",
-    "COMP2300/Images/Pasted image 20260217003036.png",
-    "COMP2300/Images/Pasted image 20260217003028.png",
-    "COMP2300/Images/Pasted image 20260217002843.png",
-    "COMP2300/Images/Pasted image 20260217002708.png",
-    "COMP2300/Images/Pasted image 20260217002640.png",
-    "COMP2300/Images/Pasted image 20260217002613.png",
-    "COMP2300/004. 산술 논리 연산/005. 2배 정밀도 덧셈.md",
-    "COMP2300/004. 산술 논리 연산/001. 정수의 덧셈.md",
-    "COMP2300/004. 산술 논리 연산/003. 받아올림 플래그 C.md",
-    "COMP2300/004. 산술 논리 연산/004. 가산기와 비트 수.md",
-    "COMP2300/006. 반복문과 배열/001. 반복문.md",
-    "COMP2300/005. 조건문/001. 조건문.md",
-    "COMP2300/003. 6502 어셈블리 기초 문법/022. 데이터 블록.md",
-    "COMP2300/005. 조건문/009. jmp의 주소지정 모드.md",
-    "COMP2300/005. 조건문/005. cmp의 판단 기준.md",
-    "COMP2300/005. 조건문/007. signed 비교 방법 2.md",
-    "COMP2300/005. 조건문/002. 비교.md",
-    "COMP2300/005. 조건문/004. 고수준 조건문 옮기기.md",
-    "COMP2300/005. 조건문/008. 상대 주소지정 모드.md",
-    "COMP2300/005. 조건문/010. 기타 if 문 관련.md",
-    "COMP2300/005. 조건문/013. 코드보기 계산기.md",
-    "COMP2300/005. 조건문/012. 코드보기 ABCDE 등급.md",
-    "COMP2300/005. 조건문/011. 예 문자열 패딩하기.md",
-    "COMP2300/004. 산술 논리 연산/013. 색인 주소지정 모드.md",
-    "COMP2300/003. 6502 어셈블리 기초 문법/014. zp 주소지정 모드.md",
-    "COMP2300/004. 산술 논리 연산/008. 제로 플래그 Z, 음수 플래그 N.md",
-    "COMP2300/004. 산술 논리 연산/015. 코드보기 zp,x 레핑(wrapping).md",
     "COMP2300/006. 반복문과 배열",
     "COMP2300/900. 참고자료",
     "COMP2300/005. 조건문/무제",
