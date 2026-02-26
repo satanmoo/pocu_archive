@@ -1,0 +1,214 @@
+{
+  "main": {
+    "id": "ee8b96649084c64e",
+    "type": "split",
+    "children": [
+      {
+        "id": "c2b4f35d393a903b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1d2996473d9e3c39",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "COMP2300/Images/Pasted image 20260226202148.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20260226202148"
+            }
+          },
+          {
+            "id": "31e676fbc3eb5199",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "COMP2300/007. 함수/002. 회귀주소 전달에 대한 고민.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "002. 회귀주소 전달에 대한 고민"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6a6372f621a77e6c",
+    "type": "split",
+    "children": [
+      {
+        "id": "cbbc04096d001ede",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2f2dad80e0a097ea",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "2225e6563fba33c9",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          },
+          {
+            "id": "d46a77da959cdf52",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "북마크"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "1a9d5afdbf0b6da4",
+    "type": "split",
+    "children": [
+      {
+        "id": "2145c75a5251d96b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d63d0ed7a3b082a6",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "COMP2300/Images/Pasted image 20260226202148.png",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Pasted image 20260226202148 의 백링크"
+            }
+          },
+          {
+            "id": "3ca2ca9bad76c8ed",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "COMP2300/Images/Pasted image 20260226202148.png",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Pasted image 20260226202148 의 나가는 링크"
+            }
+          },
+          {
+            "id": "a08f9b7a5d209955",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "태그"
+            }
+          },
+          {
+            "id": "bad21102877ede7b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "모든 속성"
+            }
+          },
+          {
+            "id": "a9c69d7c1e8254a5",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "COMP2300/Images/Pasted image 20260226202148.png",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Pasted image 20260226202148 의 개요"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:빠른 전환기 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false,
+      "bases:새 베이스 생성하기": false
+    }
+  },
+  "active": "2f2dad80e0a097ea",
+  "lastOpenFiles": [
+    "COMP2300/007. 함수/006. zp 회귀주소의 문제.md",
+    "COMP2300/007. 함수/002. 회귀주소 전달에 대한 고민.md",
+    "COMP2300/instruction.md",
+    "COMP2300/Images/Pasted image 20260226203807.png",
+    "COMP2300/Images/Pasted image 20260226203605.png",
+    "COMP2300/Images/Pasted image 20260226203139.png",
+    "COMP2300/Images/Pasted image 20260226203042.png",
+    "COMP2300/Images/Pasted image 20260226203025.png",
+    "COMP2300/Images/Pasted image 20260226202943.png",
+    "COMP2300/Images/Pasted image 20260226202857.png",
+    "COMP2300/Images/Pasted image 20260226202742.png",
+    "COMP2300/Images/Pasted image 20260226202654.png",
+    "COMP2300/Images/Pasted image 20260226202549.png"
+  ]
+}
