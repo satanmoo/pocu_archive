@@ -18,3 +18,9 @@
 "" 로 묶은 단어는 띄어쓰기를 포함해 모두 하나의 의미 단위로 취급하기 위함이니, "example" 대신 **example** 로 BOLD 처리해주세요.
 - "절대 주소지정 모드" 같은 것을 **절대 주소지정 모드** 로 변경
 
+## 커밋 메시지
+
+[과목 코드] [WeekN] update lecture note
+
+ex) [COMP2300] [week9] update lecture note
+
