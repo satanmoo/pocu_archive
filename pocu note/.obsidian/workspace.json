@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "COMP2300/009. x86-16 소개/009. Hello x86(1).md",
+                "file": "COMP2300/900. 참고자료/902.  x86-16 개발환경 설정 방법.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "009. Hello x86(1)"
+              "title": "902.  x86-16 개발환경 설정 방법"
             }
           }
         ]
@@ -185,8 +185,8 @@
   },
   "active": "311345385a069f1f",
   "lastOpenFiles": [
-    "COMP2300/009. x86-16 소개/010. Hello x86(2).md",
     "COMP2300/009. x86-16 소개/009. Hello x86(1).md",
+    "COMP2300/009. x86-16 소개/010. Hello x86(2).md",
     "COMP2300/Images/Pasted image 20260306195203.png",
     "COMP2300/Images/Pasted image 20260306194139.png",
     "COMP2300/Images/Pasted image 20260306193554.png",
