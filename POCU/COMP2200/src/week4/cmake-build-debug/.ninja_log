@@ -1,0 +1,24 @@
+# ninja log v5
+1	78	1714404474846113281	my_buffer/CMakeFiles/my_buffer.dir/main.c.o	2998f95837f0dff
+171	211	1714461130489455491	my_strtok/my_strtok	61698d67e5b90fa7
+2	97	1714409105202036281	my_buffer/CMakeFiles/my_buffer.dir/buffered_print.c.o	542415d97eab475f
+32	70	1714463155079024619	string_toupper_tolower/string_toupper_tolower	eb1d0bd3ac16ae4d
+97	203	1714409105307378388	my_buffer/my_buffer	8b344c24f2250f6d
+1	40	1714415158751648182	my_strstr/CMakeFiles/my_strstr.dir/main.c.o	68bffe03259453e
+1	69	1714463054611241497	string_toupper_tolower/CMakeFiles/string_toupper_tolower.dir/main.c.o	bb97d8bedac74873
+4	43	1714415140843944480	my_strstr/CMakeFiles/my_strstr.dir/a.c.o	f8f2d0dc0620906f
+2	171	1714461130452823956	my_strtok/CMakeFiles/my_strtok.dir/main.c.o	28e19604cb3d3786
+2	171	1714461130452823539	my_strtok/CMakeFiles/my_strtok.dir/a.c.o	915292fa7dd9afac
+2	32	1714463155042615419	string_toupper_tolower/CMakeFiles/string_toupper_tolower.dir/a.c.o	3bbc15014e6c11c2
+40	75	1714415158785799183	my_strstr/my_strstr	3704879d68dd14a
+1	72	1714477202100378552	print_ascii_table/CMakeFiles/print_ascii_table.dir/a.c.o	5d85174c235fe3e3
+1	72	1714477202100385468	print_ascii_table/CMakeFiles/print_ascii_table.dir/main.c.o	c4c9bfa674afe413
+72	114	1714477202137906200	print_ascii_table/print_ascii_table	27ed946436735ff9
+1	30	1714477225635806055	print_ascii_table/CMakeFiles/print_ascii_table.dir/a.c.o	5d85174c235fe3e3
+30	66	1714477225671848783	print_ascii_table/print_ascii_table	27ed946436735ff9
+1	40	1714477249741320676	print_ascii_table/CMakeFiles/print_ascii_table.dir/a.c.o	5d85174c235fe3e3
+40	75	1714477249775355082	print_ascii_table/print_ascii_table	27ed946436735ff9
+1	40	1714477624147603847	print_ascii_table/CMakeFiles/print_ascii_table.dir/a.c.o	5d85174c235fe3e3
+40	76	1714477624182155239	print_ascii_table/print_ascii_table	27ed946436735ff9
+2	39	1714477727732187922	print_ascii_table/CMakeFiles/print_ascii_table.dir/a.c.o	5d85174c235fe3e3
+39	74	1714477727766549777	print_ascii_table/print_ascii_table	27ed946436735ff9

@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="one_char" targetName="one_char" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="false" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ee52f91a-4c8b-46d3-bcde-92849ea8ea59" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/one_char/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/white_space_counter/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/white_space_counter/main.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/docs.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_101.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_102.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_103.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_104.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_105.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_106.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_107.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_108.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_109.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_110.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_111.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_112.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_113.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_114.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_115.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_116.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_117.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_118.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_119.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_120.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_121.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_122.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_123.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_124.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_125.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_126.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_127.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_128.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_129.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_130.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_131.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_132.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_133.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_134.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_135.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_136.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_137.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_138.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_139.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_140.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_141.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_142.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_143.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_144.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_145.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_146.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_147.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_148.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_149.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_150.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_151.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_152.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_153.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_154.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_155.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_156.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_157.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_158.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_159.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_160.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_161.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_162.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_163.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_164.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_165.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_166.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_167.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_168.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_169.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_17.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_170.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_171.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_172.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_173.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_174.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_175.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_176.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_177.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_178.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_179.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_180.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_181.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_182.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_183.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_184.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_185.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_186.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_187.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_188.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_189.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_19.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_190.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_191.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_193.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_194.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_195.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_196.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_197.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_198.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_199.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_200.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_201.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_202.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_203.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_204.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_205.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_206.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_207.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_208.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_209.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_21.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_210.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_211.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_212.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_213.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_214.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_215.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_216.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_217.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_218.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_219.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_22.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_220.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_221.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_222.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_223.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_224.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_225.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_226.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_227.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_228.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_229.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_23.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_230.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_231.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_232.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_233.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_234.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_235.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_236.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_237.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_238.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_239.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_24.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_240.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_241.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_242.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_243.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_244.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_245.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_246.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_247.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_248.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_249.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_25.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_250.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_251.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_252.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_253.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_254.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_255.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_256.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_257.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_258.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_259.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_26.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_260.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_27.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_28.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_29.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_30.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_31.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_33.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_34.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_35.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_36.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_37.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_38.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_39.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_40.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_41.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_42.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_43.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_45.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_46.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_47.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_48.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_49.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_51.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_52.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_53.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_54.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_55.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_56.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_57.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_58.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_59.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_60.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_61.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_62.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_63.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_64.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_65.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_66.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_67.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_68.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_69.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_70.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_71.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_72.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_73.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_74.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_75.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_76.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_77.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_78.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_79.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_80.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_81.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_82.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_83.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_84.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_85.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_86.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_87.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_88.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_89.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_90.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_91.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_92.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_93.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_94.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_95.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_96.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_97.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_98.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week5/img_99.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/docs.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_101.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_102.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_103.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_104.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_105.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_106.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_107.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_108.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_109.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_110.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_111.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_112.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_113.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_114.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_115.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_116.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_117.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_118.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_119.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_120.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_121.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_122.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_123.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_124.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_125.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_126.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_127.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_128.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_129.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_130.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_131.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_132.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_133.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_134.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_135.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_136.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_137.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_138.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_139.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_140.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_141.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_142.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_143.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_144.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_145.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_146.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_147.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_148.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_149.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_150.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_151.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_152.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_153.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_154.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_155.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_156.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_157.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_158.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_159.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_160.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_161.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_162.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_163.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_164.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_165.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_166.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_167.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_168.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_169.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_17.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_170.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_171.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_172.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_173.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_174.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_175.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_176.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_177.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_178.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_179.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_180.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_181.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_182.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_183.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_184.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_185.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_186.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_187.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_188.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_189.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_19.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_190.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_191.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_193.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_194.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_195.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_196.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_197.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_198.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_199.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_200.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_201.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_202.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_203.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_204.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_205.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_206.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_207.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_208.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_209.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_21.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_210.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_22.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_23.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_24.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_25.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_26.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_27.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_28.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_29.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_30.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_31.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_33.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_34.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_35.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_36.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_37.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_38.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_39.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_40.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_41.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_42.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_43.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_45.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_46.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_47.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_48.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_49.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_51.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_52.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_53.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_54.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_55.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_56.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_57.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_58.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_59.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_60.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_61.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_62.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_63.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_64.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_65.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_66.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_67.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_68.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_69.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_70.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_71.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_72.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_73.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_74.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_75.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_76.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_77.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_78.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_79.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_80.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_81.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_82.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_83.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_84.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_85.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_86.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_87.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_88.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_89.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_90.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_91.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_92.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_93.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_94.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_95.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_96.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_97.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_98.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../week6/img_99.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2024" />
+    <option name="minorVersion" value="1" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2g34W5frFp2eA5w0TTMtnhTu9BR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "C/C++ File.main.c (1).executor": "Run",
+    "C/C++ File.main.c.executor": "Debug",
+    "CMake Application.one_char.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/gyo/studyroom/POCU_Archive/POCU/COMP2200/src/week5",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CMakeSettings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ee52f91a-4c8b-46d3-bcde-92849ea8ea59" name="Changes" comment="" />
+      <created>1714912955796</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1714912955796</updated>
+      <workItem from="1714912956850" duration="38000" />
+      <workItem from="1714913026287" duration="33000" />
+      <workItem from="1714913067983" duration="3340000" />
+      <workItem from="1714916614073" duration="483000" />
+      <workItem from="1714917103727" duration="469000" />
+      <workItem from="1714917578783" duration="11000" />
+      <workItem from="1714917594146" duration="496000" />
+      <workItem from="1714918095549" duration="203000" />
+      <workItem from="1714918342951" duration="216000" />
+      <workItem from="1714918616461" duration="15000" />
+      <workItem from="1714918731788" duration="697000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+        <breakpoint type="CMakeExceptionBreakpoint" />
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

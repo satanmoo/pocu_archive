@@ -1,0 +1,4 @@
+# ninja log v5
+0	38	1714919566487064976	CMakeFiles/white_space_counter.dir/main.c.o	77a809468de9f1b4
+1	55	1714919566504310465	CMakeFiles/white_space_counter.dir/a.c.o	7706e9531691a5b9
+55	94	1714919566541856094	white_space_counter	906453e63dbe199

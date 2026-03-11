@@ -1,0 +1,3 @@
+/Users/gyo/studyroom/POCU_Archive/POCU/COMP2200/src/week5/white_space_counter/cmake-build-debug/CMakeFiles/white_space_counter.dir
+/Users/gyo/studyroom/POCU_Archive/POCU/COMP2200/src/week5/white_space_counter/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/gyo/studyroom/POCU_Archive/POCU/COMP2200/src/week5/white_space_counter/cmake-build-debug/CMakeFiles/rebuild_cache.dir
